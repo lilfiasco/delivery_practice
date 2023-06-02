@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+{% load widget_tweaks %}
+
+<!-- Логин -->
+<section class="vh-100 gradient-custom">
+    <div class="container mt-5 py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-6">
+          <div class="card bg-dark text-white" style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center">
+  
+              <div class="card-login">
+  
+                <h2 class="fw-bold mb-2 text-uppercase">Login</h2><hr>
+
+                <!-- {% if form.errors %}
+                {{form.errors}}                 
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <strong>{{ field.label }}:</strong> {{ error }}
+                                <br>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                {% endif %} -->
+                
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="log_div">                       
+                        <label class="form-label" for="typeEmailX" >Номер телефона</label>
+                        <input type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="12" placeholder="Введите номер телефона" class="form-control" required="" id="phone-number-input">                     
+                        <br><br>
+                        <label class="form-label" for="typeEmailX">Пароль</label>
+                        {{ form.password|attr:"class:form-control"|attr:"placeholder:Введите пароль" }}
+                        <br><br>
+                    </div>        
+                    {% if form.errors %}
+                                <span class="text-danger">{{ form.errors }}</span>
+                    {% endif %}
+                <div class="col-12 d-flex flex-column flex-lg-row justify-content-between m-0 p-0">
+                  <p class="small mb-3 pb-lg-2"><a class="text-white-50" href="{% url 'registration' %}">Зарегистрироваться</a></p>
+                  <p class="small mb-3 pb-lg-2"><a class="text-white-50" href="{% url 'registration_coworker' %}">Зарегистрироваться, как франшиза</a></p>
+                </div>
+                <p class="small mb-3 pb-lg-2"><a class="text-white-50" href="#!">Forgot password?</a></p>
+
+  
+                <button type="submit" class="mb-0">Вход</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <script src="/static/js/phone_number_input.js" defer></script>
+  
+{% endblock %}
+
+
+

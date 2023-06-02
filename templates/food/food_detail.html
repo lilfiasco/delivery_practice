@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load widget_tweaks %}
+
+
+<link rel="stylesheet" type="text/css" href="/static/css/food_detail.css">
+
+<!-- <p style="color: aliceblue;"> Название: {{food.title}}</p>
+<p style="color: aliceblue;"> Категория: {{food.category}}</p>
+<p style="color: aliceblue;"> Цена: {{food.price}}</p>
+<img src="/media/{{food.image}}"> -->
+
+
+<!-- <h2>{{food.franchise.title}}</h2> -->
+
+<a href="/menu" class="back-link mt-5 ml-5">
+  <span class="arrow">&#8592;</span>
+  Вернуться к поиску
+</a>
+
+
+<div class="food-franchise-title text-center mt-5 mb-5">
+  <h2>{{ food.franchise.title }}</h2>
+</div>
+
+<div class="food-detail">
+  <div class="food-image ml-5">
+    <img class="food-photo" src="/media/{{food.image}}">
+  </div>
+
+
+  <div class="food-info">
+    <div class="col-12 d-flex flex-row justify-content-between">
+      <div class="food-title">
+        <p>{{food.title}}</p>
+      </div>
+
+      <div class="food-category">
+        <p class="category">{{food.category}}</p>
+      </div>
+    </div>
+
+    <div class="col-12 ">
+      <div class="food-description">
+        <p>{{food.description}}</p>
+      
+        <div class="food-price">
+          <p class="food-price-border">{{food.price}} ТГ</p>
+        </div>
+      </div>
+    </div>
+    <div class="button-wrapper">
+      <div class="quantity-wrapper mr-3">
+        <button class="quantity-button" onclick="decreaseQuantity()">-</button>
+        <p class="quantity-value">0</p>
+        <button class="quantity-button" onclick="increaseQuantity()">+</button>
+      </div>
+      <button type="submit" class="button-food">Добавить в корзину</button>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  let quantityValue = 0;
+
+  function decreaseQuantity() {
+    if (quantityValue > 0) {
+      quantityValue--;
+      document.querySelector('.quantity-value').textContent = quantityValue;
+    }
+  }
+
+  function increaseQuantity() {
+    quantityValue++;
+    document.querySelector('.quantity-value').textContent = quantityValue;
+  }
+</script>
+
+
+
+{%endblock%}

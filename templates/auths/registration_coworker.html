@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+<!-- {% block title %}Sign Page{% endblock title %} -->
+{% block content %}
+
+<!-- {% load static %}
+
+{% block css_add %} -->
+<link rel="stylesheet" type="text/css" href="/static/css/registration.css">
+
+<!-- {% endblock %} -->
+
+{% load widget_tweaks %}
+
+<!-- registration -->
+<section class="vh-100 gradient-custom">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-6">
+                <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                    <div class="card-body p-5 text-center">
+
+                        <div class="card-login">
+                            <h2 class="text-center">Создайте аккаунт коворкера</h2>
+                            <hr>
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label class="form-label text-left"
+                                        for="{{ form.first_name.id_for_label }}">Имя:</label>
+                                    {{ form.first_name|attr:"class:form-control"|attr:"placeholder:Введите имя" }}
+                                    {% if form.first_name.errors %}
+                                    <small class="form-text text-danger">
+                                        {% for error in form.first_name.errors %}
+                                        {{ error }}
+                                        {% endfor %}
+                                    </small>
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="{{ form.last_name.id_for_label }}">Фамилия:</label>
+                                    {{ form.last_name|attr:"class:form-control"|attr:"placeholder:Введите фамилию" }}
+                                    {% if form.last_name.errors %}
+                                    <small class="form-text text-danger">
+                                        {% for error in form.last_name.errors %}
+                                        {{ error }}
+                                        {% endfor %}
+                                    </small>
+                                    {% endif %}
+                                </div>
+
+                                <div class="col-12 d-flex flex-column flex-lg-row justify-content-between m-0 p-0">
+                                    <div class="form-group m-0 mr-lg-3">
+                                        <label class="form-label" for="{{ form.phone_number.id_for_label }}">Номер
+                                            телефона:</label>
+                                        {{ form.phone_number|attr:"class:form-control"|attr:"placeholder:Введите номер телефона" }}
+                                        {% if form.phone_number.errors %}
+                                        <small class="form-text text-danger">
+                                            {% for error in form.phone_number.errors %}
+                                            {{ error }}
+                                            {% endfor %}
+                                        </small>
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label" for="{{ form.birth_date.id_for_label }}">Дата
+                                            рождения:</label>
+                                        {{ form.birth_date|attr:"class:form-control"|attr:"placeholder:Введите рождения" }}
+                                        {% if form.birth_date.errors %}
+                                        <small class="form-text text-danger">
+                                            {% for error in form.birth_date.errors %}
+                                            {{ error }}
+                                            {% endfor %}
+                                        </small>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <!-- <label class="form-label" for="{{ form.password.id_for_label }}">Пароль:</label>
+                                <div class="form-group">
+                                    {{ form.id_franchise|attr:"class:form-control"|attr:"placeholder:Введите пароль" }}
+                                    {% if form.password.errors %}
+                                    <small class="form-text text-danger">
+                                        {% for error in form.password.errors %}
+                                        {{ error }}
+                                        {% endfor %}
+                                    </small>
+                                    {% endif %}
+                                </div> -->
+
+                                <label class="form-label" for="{{ form.password.id_for_label }}">Франшиза:</label>
+                                <div class="form-group">
+                                    {{ form.franchise|attr:"class:form-control"|attr:"placeholder:Введите пароль" }}
+                                    {% if form.password.errors %}
+                                    <small class="form-text text-danger">
+                                        {% for error in form.password.errors %}
+                                        {{ error }}
+                                        {% endfor %}
+                                    </small>
+                                    {% endif %}
+                                </div>
+
+                                <label class="form-label" for="{{ form.password.id_for_label }}">Пароль:</label>
+                                <div class="form-group">
+                                    {{ form.password|attr:"class:form-control"|attr:"placeholder:Введите пароль" }}
+                                    {% if form.password.errors %}
+                                    <small class="form-text text-danger">
+                                        {% for error in form.password.errors %}
+                                        {{ error }}
+                                        {% endfor %}
+                                    </small>
+                                    {% endif %}
+                                </div>
+
+                                <label class="form-label" for="{{ form.password2.id_for_label }}">Повторите
+                                    пароль:</label>
+                                <div class="form-group">
+                                    {{ form.password2|attr:"class:form-control"|attr:"placeholder:Повторите пароль" }}
+                                    {% if form.password2.errors %}
+                                    <small class="form-text text-danger">
+                                        {% for error in form.password2.errors %}
+                                        {{ error }}
+                                        {% endfor %}
+                                    </small>
+                                    {% endif %}
+                                </div>
+
+
+                                <button class="button-reg" type="submit" class="mb-0">Зарегистрироваться</button>
+                            </form>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="/static/js/phone_number_input.js" defer></script>
+
+
+{% endblock %}
+{% comment%}
+<div class="container card-margintop">
+    <div class="shadow-lg p-3 mb-5 bg-white rounded">
+        <div class="card my-3">
+            <h5 class="card-header"></h5>
+            <div class="card-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endcomment%}

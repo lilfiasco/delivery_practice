@@ -1,0 +1,51 @@
+.arrow {
+    color: rgb(12, 240, 88);
+    margin-right: 5px;
+  }
+
+  .cart-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .quantity-wrapper {
+    display: flex;
+    align-items: center;
+    }
+
+    .quantity-button {
+        width: 30px;
+        height: 30px;
+        background-color: #f0f0f0;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 16px;
+        }
+        
+        .quantity-value {
+        margin: 0 10px;
+        color: white;
+        }
+
+.mr-6 {
+    margin-right: 15rem !important;
+}
+
+.ml-6 {
+    margin-left: 6rem !important;
+}
+
+.from-modal {
+    color: aliceblue;
+}
+
+.cart-modal {
+    border: 2px solid rgb(12, 240, 88);
+    display: inline-block;
+    padding: 5px;
+    white-space: nowrap;
+  }

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="/static/css/franchise_detail.css">
+
+{% load widget_tweaks %}
+<div class="row">
+  <div class="col-md-3 ">
+      <div class="filter-menu">
+          <form method="GET" id="filter-form">
+              <a href='?category' class="text-white ficon" id="f-icon"><img class="spoon_fork" src="   https://cdn-icons-png.flaticon.com/512/5593/5593592.png "></a>
+              {% for category in categories %}
+                  <li><a href="?category={{ category.title }}" class="ftitle">{{ category.title }}</a></li>
+              {% endfor %}
+          </form>
+      </div>
+  </div>
+  <div class="col-12 col-md-9 py-2">
+    <div class="row">
+      <div class="col-12 py-2">
+        <h2 class="text-white">Моя франшиза</h2>
+        <p style="text-align: center;">{{ franchise.title }}</p>
+        <p style="text-align: center;">Адрес: {{ franchise.address }}</p>
+      </div>
+                
+
+  
+  
+</div>
+<div class="bluda">
+  <h2>Блюда</h2>
+  <a class="button-reg" href="/check_food">Добавить товар</a>
+ 
+</div>
+
+<ul style = "color : white">
+  <div class="franchise">
+  {% for food in food_list %}
+    <!-- <div class="col-12 col-md-6 d-flex custom-card"> -->
+    <div class="franchise_block">
+      <div class="food-list">
+          <h5>{{ food.title }}</h5>
+          
+          <a href="{% url 'food_edit' pk=franchise.pk slug=food.slug %}">Изменить</a>
+          
+
+      </div>
+      <div class="food-image">
+        <!-- <img class="card-img-top img-fluid w-25 h-75 align-self-center m-3" src="{{ food.image.url }}"> -->
+        <img class="food_photo" src="{{ food.image.url }}">
+      </div>
+    </div>
+      {% empty %}
+      <li>Нет доступных блюд.</li>
+    {% endfor %}
+      </div>
+    </div>
+  </div>
+  <a class="button-reg2" href="/check_food">Добавить товар</a>
+</ul>
+{% endblock %}

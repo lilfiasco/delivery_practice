@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+<!-- {% load static %} 
+
+{% block css_add %} -->
+<link rel="stylesheet" type="text/css" href="/static/css/profile.css">
+<!-- {% endblock %} -->
+
+<!-- {% block title %}Sign Page{% endblock title %} -->
+{% block content %}
+
+  <div class="container">
+    <div class="body d-md-flex align-items-center justify-content-between">
+        <div class="box-1 mt-md-0">
+            <img class="profile-img" src="https://images.pexels.com/photos/1667427/pexels-photo-1667427.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                class="" alt="">
+        </div>
+        <div class=" box-2 d-flex flex-column h-100">
+            <div class="mt-5">
+                <p style="color: aliceblue;">Имя: {{ user.first_name }} </p>
+                <p style="color: aliceblue;">Фамилия: {{ user.last_name }} </p>
+                <div class="d-flex flex-column ">
+                    <p style="color: aliceblue;">Дата рождения: {{ user.birth_date }} </p>
+                    <p style="color: aliceblue;">Номер телефона: {{ user.phone_number }} </p>
+                    <div class="d-flex align-items-center">
+                        <form action="{% url 'update_profile' user.pk %}">
+                            <button class="button-profile" type="submit">Обновить данные</button>
+                        </form>
+
+                        <form action="{% url 'change_password'  %}">
+                            <button class="button-profile" type="submit">Обновить пароль</button>
+                        </form>
+                    
+                    <!-- <div class="justify-content-center"> -->
+                    </div>
+                    <div class="mt-5">
+                        <form action="{% url 'logout' %}">
+                            <button class="button-exit" type="submit">Выйти из аккаунта</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-auto">
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

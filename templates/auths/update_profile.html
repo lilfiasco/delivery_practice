@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+<!-- {% load static %}
+
+{% block css_add %} -->
+<link rel="stylesheet" type="text/css" href="/static/css/profile.css">
+<!-- {% endblock %} -->
+
+{% block content %}
+
+<form method="post" action="{% url 'update_profile' user.pk %}">
+    {% csrf_token %}
+    {{ form.media }}
+    <div style="color: aliceblue;">{{ form.errors }}</div>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-6 row justify-content-center">
+                <h1>Редактирование профиля</h1>
+                <form method="post">
+                    <!-- {% csrf_token %}
+                    {{ form.media }}
+                    {{ form.errors }} -->
+                    <div class="col-12 d-flex flex-row justify-content-between">
+                        <div class="form-group">
+                            <label style="color: aliceblue;" for="{{ form.first_name.id_for_label }}">Имя</label>
+                            <input class="user_profile_input" type="text" name="{{ form.first_name.html_name }}" value="{{object.first_name}}">
+                        </div>
+                        
+                            
+                        <div class="form-group">
+                            <label style="color: aliceblue" for="{{ form.first_name.id_for_label }}">Фамилия</label>
+                            <input class="user_profile_input" type="text" name="{{ form.last_name.html_name }}" value="{{object.last_name}}">
+                        </div> 
+                    </div> 
+                    <div class="col-12 justify-content-center">
+                    
+                        <div class="form-group ">
+                            <label style="color: aliceblue;" for="{{ form.phone_number.id_for_label }}">Phone Number:</label>
+                            <input type="text" class="user_profile_input" name="{{ form.phone_number.html_name }}" value="{{object.phone_number}}">
+                        </div>
+
+                        <div class="form-group ">
+                            <label style="color: aliceblue;" for="{{ form.birth_date.id_for_label }}">Изменить дату рождения</label>
+                            <input type="date" class="user_profile_input" name="{{ form.birth_date.html_name }}" value="{{user.birth_date|date:'Y-m-d' }}">
+                        </div>
+                    </div>
+
+                    <button class="button-update" type="submit">
+                        <img class="img-update" src="https://cdn-icons-png.flaticon.com/512/3597/3597088.png">
+                        Изменить профиль
+                      </button>
+                      
+                </form>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+  {% endblock %}

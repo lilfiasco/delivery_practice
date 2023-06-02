@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% load static %}
+
+{% load widget_tweaks %}
+    <div class="row">
+            <div class="col-md-2  pr-2 py-2">
+                <div class="filter-menu">
+                    <form method="GET" id="filter-form">
+                        <input type="button"><button type="button"  class="text-white ficon" id="f-icon"><img class="spoon_fork" src="https://i.postimg.cc/Dzvp5qFc/che.png"></button>
+                        {% for category in categories %}
+                            <li><a href="/menu/?category={{ category.title }}" class="ftitle">{{ category.title }}</a></li>
+                        {% endfor %}
+                    </form>
+                </div>
+            </div>
+            <div class="col-12 col-md-8 pr-2 py-2">
+                <div class="form-outline">
+                    <p class='page-name'> Все товары</p>
+                    <input type="search" id="form1" class="search-food" placeholder="Type query" aria-label="Search"/>
+                </div>
+                <div class="row">
+                    {% if food %}
+                        {% for item in food %}
+                            <div class="col-12  col-sm-6 col-md-6 col-lg-4">
+                                <div class="row custom-card">
+                                    <div class="col-6 pl-2 py-2 d-flex flex-column justify-content-around align-items-center">
+                                        <a href="{{item.slug}}" class="food-link"><h5 class="ctitle">{{ item.title }}</h5></a>
+                                        <p class="ctext">{{ item.price }}</p>
+                                        <div class="row ml-1">
+                                            <button class="decrement" onclick="changeQuantity(this, -1)">-</button>
+                                            <input type="text" class="quantity" value="0" min="0">
+                                            <button class="increment" onclick="changeQuantity(this, 1)">+</button>
+                                        </div>
+                                        </div>
+                                        <div class="col-6 p-0">
+                                            <a href="{{item.slug}}"><img src="{{ item.image.url }}" class="img-fluid"></a>
+                                        <div class="d-flex align-items-center">
+                                            <button type="button" class="button-add" data-food-id="{{ item.id }}" data-food-title="{{ item.title }}" data-food-price="{{ item.price }}" data-food-image="{{ item.image }}"onclick="addToCart(this)">ADD</button>
+                                        </div>
+                                       </a> 
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        {% else %}
+                            <p class='pdd'>No food items found.</p>
+                        {% endif %}
+                </div>
+                <script src="/static/js/menu.js"></script>
+                <script>
+                    var cart = JSON.parse(localStorage.getItem("cart")) || {};
+    
+    function addToCart(button) {
+        var foodId = button.getAttribute("data-food-id");
+        var foodTitle = button.getAttribute("data-food-title");
+        var foodPrice = parseFloat(button.getAttribute("data-food-price"));
+        var foodQuantity = parseInt(button.getAttribute("data-food-quantity"));
+        var foodImage = button.getAttribute("data-food-image");
+
+        var quantityInput = button.parentNode.previousElementSibling.querySelector(".quantity");
+        var quantity = parseInt(quantityInput.value);
+
+        if (quantity > 0) {
+            cart[foodId] = {
+                title: foodTitle,
+                price: foodPrice,
+                quantity: quantity,
+                image: foodImage
+            };
+            saveCartToLocalStorage();
+            updateCartDisplay();
+        }else {
+    
+            var foodId = button.getAttribute("data-food-id");
+            delete cart[foodId];
+            saveCartToLocalStorage();
+            updateCartDisplay();
+}
+        
+    }
+
+    function changeQuantity(button, increment) {
+        var quantityInput = button.parentNode.querySelector(".quantity");
+        var currentQuantity = parseInt(quantityInput.value);
+        var newQuantity = currentQuantity + increment;
+
+        if (newQuantity >= 0) {
+            quantityInput.value = newQuantity;
+            saveCartToLocalStorage();
+        }
+        
+    }
+
+    function updateCartDisplay() {
+        var cartItemsDiv = document.getElementById("cart-items");
+        cartItemsDiv.innerHTML = "";
+
+        for (var foodId in cart) {
+            var item = cart[foodId];
+            var itemElement = document.createElement("div");
+            itemElement.innerText = item.title + " - " + item.quantity + item.price;
+            cartItemsDiv.appendChild(itemElement);
+        }
+    }
+    
+    function saveCartToLocalStorage() {
+        localStorage.setItem("cart", JSON.stringify(cart));
+    }
+
+    function checkout() {
+        console.log(cart);
+        localStorage.removeItem("cart");
+    }
+                </script>
+            </div>
+    </div>
+{% endblock %}

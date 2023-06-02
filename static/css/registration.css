@@ -1,0 +1,73 @@
+
+  .button-reg{
+    border: none;
+    background: rgb(12, 240, 88);
+    padding: 8px 25px;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 15px;
+    transition: 0.4s;
+    /* display: flex;
+    justify-content: center; */
+}
+.button-reg:hover {
+    transform: scale(1.3);
+    cursor: pointer;
+}
+a.icon {
+    display: none;
+}
+ 
+  .user-info-container {
+    background-color: rgb(86, 189, 12);
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px; 
+  }
+
+  .form-label {
+    display: flex;
+    text-align: left;
+  }
+
+  .login_form {
+    background-color: rgb(49, 53, 49);
+    border-radius: 25px;
+    color: white;
+  }
+  .form-control {
+    border-radius: 15px; 
+    border: 2px solid rgb(12, 240, 88); 
+    color: rgb(12, 240, 88);
+    margin-top: 1%;
+    padding: 5px;
+    background-color: #343a40;
+    width: 100%;
+    display: flex;
+    justify-content: left;
+  }
+  .form-control:focus {
+    border: 2px solid rgb(12, 240, 88);
+    background-color: #343a40;
+    color: rgb(12, 240, 88);
+  }
+  .form-control::placeholder {
+    color: rgb(12, 240, 88);
+  }
+
+  
+  
+  hr {
+    border: none; 
+    background-color: rgb(12, 240, 88); 
+    color: rgb(12, 240, 88); 
+    height: 4px; 
+  }
+  @media screen and (max-width: 479px) {
+    .button-reg {
+      padding: 10px 15px;
+      font-size: 14px;
+    }
+  }  
+
+ 

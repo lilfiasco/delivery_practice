@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="/static/css/cart.css">
+
+{% load widget_tweaks %}
+
+
+<a href="/menu" class="back-link mt-5 ml-5">
+    <span class="arrow">&#8592;</span>
+    Вернуться к поиску
+</a>
+
+<h1 style="color: white">Корзина</h1>
+<ul id="cart-items" style="color: white"></ul>
+
+
+<div class="title-cart ml-4">
+    <h2>Ваша корзина</h2>
+</div>
+<div class="cart ml-6 mr-6">
+    <div class="col-12 mr-4 d-flex flex-row justify-content-between">
+        
+        <div id="cartItems" class="container">
+            aaa
+        </div>
+
+        <div id="cartTitle" class="cart-title">
+            ...
+        </div>
+
+        <div class="button-wrapper">
+            <div class="quantity-wrapper mr-3">
+              <button class="quantity-button" onclick="decreaseQuantity()">-</button>
+              <p class="quantity-value">0</p>
+              <button class="quantity-button" onclick="increaseQuantity()">+</button>
+            </div>
+        </div>
+
+        <div id="cartPrice" class="cart-price">
+            ...
+        </div>
+
+        <div>
+            <img class="cart-icon" src="https://www.citypng.com/public/uploads/preview/rubbish-bin-basket-trash-white-icon-11637141431rrxgucag5m.png">
+        </div>
+
+        <div class="cart-modal">
+            <p class="from-modal">Итого:</p>
+            <p class="from-modal">Доставка:</p><hr>
+            <p class="from-modal">Всего к оплате:</p>
+        </div>
+    </div>
+</div>
+
+<div id="cartItems" class="container">
+    asdasdasd
+</div>
+
+<script>
+    let quantityValue = 0;
+  
+    function decreaseQuantity() {
+      if (quantityValue > 0) {
+        quantityValue--;
+        document.querySelector('.quantity-value').textContent = quantityValue;
+      }
+    }
+  
+    function increaseQuantity() {
+      quantityValue++;
+      document.querySelector('.quantity-value').textContent = quantityValue;
+    }
+  </script>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var cartItems = JSON.parse(localStorage.getItem("cart"));
+
+        var cartItemsElement = document.getElementById("cartItems");
+        for (var key in cartItems) {
+            if (cartItems.hasOwnProperty(key)) {
+                var item = cartItems[key];
+                var title = item.title;
+                var quantity = item.quantity;
+                var image = item.image;
+                var price = item.price;
+
+                var li = document.createElement("li");
+                li.textContent = title + " - Количество: " + quantity + " " + price * quantity;
+                cartItemsElement.appendChild(li);
+
+                var img = document.createElement('img');
+                img.src = "/media/" + image;
+                img.width = 300;
+                img.height = 250;
+                img.classList.add("cartItemImage");  // Add a CSS class to the element
+                cartItemsElement.appendChild(img);
+
+
+            }
+        }
+    });
+</script>
+
+
+
+
+{% endblock %}

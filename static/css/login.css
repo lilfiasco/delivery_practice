@@ -1,0 +1,124 @@
+.form-control {
+  border-radius: 15px;
+  border: 2px solid rgb(12, 240, 88);
+  color: rgb(12, 240, 88);
+  margin-top: 1%;
+  padding: 5px;
+  background-color: #343a40;
+  width: 100%;
+}
+
+.form-control:focus {
+  border: 2px solid rgb(12, 240, 88);
+  background-color: #343a40;
+  color: rgb(12, 240, 88);
+}
+
+.form-control::placeholder {
+  color: rgb(12, 240, 88);
+}
+
+hr {
+  border: none;
+  background-color: rgb(12, 240, 88);
+  color: rgb(12, 240, 88);
+  height: 4px;
+}
+
+.card {
+  background-color: rgb(42, 38, 38);
+}
+
+.label-tag {
+  text-align: left;
+  display: block;
+  margin-bottom: 3px;
+}
+
+button {
+  border: none;
+  background: rgb(12, 240, 88);
+  padding: 8px 25px;
+  border-radius: 25px;
+  font-weight: bold;
+  font-size: 15px;
+  transition: 0.4s;
+}
+
+button:hover {
+  -webkit-transform: scale(1.3);
+  -ms-transform: scale(1.3);
+  transform: scale(1.3);
+  cursor: pointer;
+}
+
+a.icon {
+  display: none;
+}
+
+.modal-content {
+  background-color: rgb(42, 38, 38);
+}
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: 0.5rem;
+  font-family: inherit;
+  font-weight: 500;
+  line-height: 1.2;
+  color: white;
+}
+
+.form-label {
+  display: flex;
+  justify-content: left;
+  margin-top: -10px;
+}
+
+.log_div {
+  margin-bottom: 5px;
+}
+
+.button-link{
+  border: none;
+  background-color: rgb(42, 38, 38);;
+  border: 2px solid rgb(12, 240, 88); 
+  color: rgb(12, 240, 88);;
+  padding: 4px 20px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 15px;
+  transition: 0.4s;
+  margin-right: 10px;
+  display: flex;
+}
+.button-link:hover {
+  transform: scale(1.07);
+  cursor: pointer;
+}
+a.icon {
+  display: none;
+}
+
+a {
+  color: rgb(12, 240, 88);
+  font-size: 14px;
+}
+
+/* Медиа-запрос для мобильных устройств */
+@media (max-width: 480px) {
+  .form-control,
+  button {
+    width: 100%;
+  }
+}

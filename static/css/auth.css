@@ -1,0 +1,317 @@
+body{
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    background-color: rgb(34, 35, 38);
+}
+.main{
+    width: 100%;
+}
+.navbar{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding-top: 18px;
+    padding-left: 10%;
+    padding-right: 10%;
+    background: rgba(137, 127, 127, 0.534);
+    padding-bottom: 10px;
+}
+.navbar .topnav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.logo .an{
+    display: flex;
+    color: white;
+    text-decoration: none;
+    font-size: 28px;
+    padding-bottom: 10px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    justify-content: center;
+}
+
+.an span {
+    color: #0df10d;
+}
+.logo .an:hover{
+    color: #0df10d;
+    transition: .3s;
+}
+.an span:hover {
+    color: white;
+}
+.navbar ul {
+    display: flex;
+    list-style-type: none;
+    display: inline-block;
+    padding: 10px 10px;
+    font-size: 18px;
+}
+.navbar ul a{
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 16px;
+
+}
+.navbar ul a:hover{
+    color: #228B22;
+    transition: .3s;
+}
+.button-auth{
+    display: flex;
+    border: none;
+    padding: 8px 30px;
+    border-radius: 25px;
+    color: white;
+    background-color: #0df10d;
+    font-weight: bold;
+    font-size: 15px;
+    transition: 0.4s;
+    text-decoration: none;
+}
+.button-reg {
+    display: flex;
+    border: none;
+    padding: 8px 30px;
+    border-radius: 25px;
+    color: white;
+    background-color: #0df10d;
+    font-weight: bold;
+    font-size: 15px;
+    transition: 0.4s;
+    text-decoration: none;
+}
+.data-toggle-a{
+    color: white;
+}
+.button-reg:hover{
+    transform: scale(1.3);
+    cursor: pointer;
+}
+.button-auth:hover {
+    transform: scale(1.3);
+    cursor: pointer;
+}
+
+a.icon {
+    display: none;
+}
+
+@media screen and (max-width: 840px) {
+    .navbar ul {
+        list-style-type: none;
+        display: inline-block;
+        padding: 10px 10px;
+        padding-bottom: 0px;
+        font-size: 15px;
+    
+    }
+    .navbar ul a{
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    .navbar ul a:hover{
+        color: #0df10d;
+        transition: .3s;
+    }
+    .button-auth{
+        border: none;
+        padding: 8px 20px;
+        border-radius: 25px;
+        color: white;
+        font-weight: bold;
+        font-size: 15px;
+        transition: 0.4s;
+        text-decoration: none;
+        color: white;
+    }
+    .button-reg {
+        border: none;
+        padding: 8px 20px;
+        border-radius: 25px;
+        color: white;
+        background-color: #0df10d;
+        font-weight: bold;
+        font-size: 15px;
+        transition: 0.4s;
+        text-decoration: none;
+    }
+    .data-toggle-a{
+        color: white;
+    }
+    .button-reg:hover{
+        transform: scale(1.3);
+        cursor: pointer;
+    }
+    .button-auth:hover {
+        transform: scale(1.3);
+        cursor: pointer;
+    }
+    a.icon {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 820px) {
+    .navbar ul {
+        list-style-type: none;
+        display: inline-block;
+        padding: 10px 10px;
+        padding-bottom: 0px;
+    
+    }
+    .navbar ul a{
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    .navbar ul a:hover{
+        color: #228B22;
+        transition: .3s;
+    }
+    .button-auth{
+        padding: 8px 20px;
+        border-radius: 25px;
+    }
+    .button-reg {
+        padding: 8px 20px;
+        border-radius: 25px;
+    }
+    .button-auth:hover {
+        transform: scale(1.3);
+        cursor: pointer;
+    }
+    a.icon {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 805px) {
+    .navbar ul {
+        list-style-type: none;
+        display: inline-block;
+        padding: 10px 10px;
+        padding-bottom: -10px;
+    
+    }
+    .navbar ul a{
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    .navbar ul a:hover{
+        color: #0df10d;
+        transition: .3s;
+    }
+    .button-auth{
+        border: none;
+        padding: 5px 10px;
+        border-radius: 25px;
+        color: white;
+        font-weight: bold;
+        font-size: 14px;
+        transition: 0.4s;
+        text-decoration: none;
+        color: white;
+    }
+    .button-reg {
+        padding: 8px 20px;
+        border-radius: 25px;
+    }
+    .button-auth:hover {
+        transform: scale(1.3);
+        cursor: pointer;
+    }
+    a.icon {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .topnav.responsive .logo .an{
+        display: flex;
+        color: white;
+        justify-content: left;
+        font-size: 28px;
+        padding-bottom: 15px;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+    .navbar{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .topnav ul a{
+        display: none;
+    }
+    .button-auth{
+        display:  none;
+    }
+    .button-reg {
+        display: none;
+    }
+    .topnav ul a.icon {
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+        margin-top: 0px;
+        display: block;
+        color: white;
+        font-size: 25px;
+    }
+    .topnav.responsive{
+        position: relative;
+    }
+    .topnav.responsive .ul{
+        float: none;
+    }
+    .topnav.responsive ul a.icon{
+        position: relative;
+        top: -50px;
+        right: -250px;
+    }
+    .topnav.responsive ul a{
+        float: none;
+        display: block;
+        text-align: left;
+    }
+    .data-toggle-a {
+
+    }
+    .navbar{
+        width: 100%;
+    }
+}
+
+
+ /* hen the screen is less than 600 pixels wide, hide all links, except for the first one ("Home"). Show the link that contains should open and close the topnav (.icon) */
+ @media screen and (max-width: 600px) {
+    .topnav a:not(:first-child) {display: none;}
+    .topnav a.icon {
+      float: right;
+      display: block;
+    }
+  }
+  
+  /* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. This class makes the topnav look good on small screens (display the links vertically instead of horizontally) */
+  @media screen and (max-width: 600px) {
+    .topnav.responsive {position: relative;}
+    .topnav.responsive a.icon {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+    .topnav.responsive a {
+      float: none;
+      display: block;
+      text-align: left;
+    }
+  } 

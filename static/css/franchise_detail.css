@@ -1,0 +1,370 @@
+h2 {
+        color: white;
+
+      }
+ p{
+    color: aliceblue;
+    margin-top: 3%;
+    margin-top: auto;
+    margin-left: 3%;
+}     
+
+
+  .custom-card {
+    .custom-card {
+      word-wrap: break-word;
+      background-color: #383838;
+      background-clip: border-box;
+      border-radius: 0.25rem;
+      margin: 10px 10px;
+      margin-left: 20px;
+  }
+
+    
+}
+  .food-list {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    color: white;
+   
+  }
+  .food-image {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    padding-left: 10%;
+    padding-right: 10%;
+
+}
+
+.franchise {
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto 10%;
+    margin: 7 rem;
+}
+
+.franchise_block {
+    background: rgb(56, 54, 54);
+    width: 30%;
+    height: 17rem;
+    margin: 0 10px 10px 0;
+    padding: 20px;
+    border-radius: 10px;
+}
+.button-reg {
+  display: block;
+  border: none;
+  width: 40px;
+  height: 40px;
+  background: rgb(12, 240, 88);
+  padding: 8px 15px;
+  border-radius: 25px;
+  font-size: 13px; 
+  transition: 20s;
+  width: fit-content; 
+}
+
+.button-reg2 {
+  display:none;
+  border: none;
+  width: 40px;
+  height: 40px;
+  background: rgb(12, 240, 88);
+  padding: 8px 15px;
+  border-radius: 25px;
+  font-size: 13px; 
+  transition: 20s;
+  width: fit-content; 
+  margin: auto;
+  color: white;
+}
+
+.button-reg:hover {
+  transform: scale(1.3);
+  cursor: pointer;
+}
+
+.food_photo {
+  margin: 0 auto;
+  width: 70%;
+  height: 10rem;
+}
+
+.bluda {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 4% 5% 0 4%;
+}
+
+
+
+.button-food-filter {
+  border: none;
+  background: rgb(12, 240, 88);
+  padding: 8px 25px;
+  border-radius: 25px;
+  font-weight: bold;
+  font-size: 15px;
+  transition: 0.4s;
+}
+.filter-menu {
+  background-color: #383838;
+  background-clip: border-box;
+  border-radius: 0.25rem;
+  margin-left: 20px;
+  margin-top: 20px;
+}
+.ficon {
+  color: white;
+  font-size: 25px;
+  text-decoration: none;
+  margin-left: 10px;
+}
+.ficon:link { 
+  text-decoration: none;
+  color: rgb(12, 240, 88);
+
+}
+.ftitle {
+  color: white;
+  font-size: 20px;
+  text-decoration: none;
+  margin-left: 10px;
+}
+.ftitle:link { 
+  text-decoration: none;
+  color: rgb(12, 240, 88);
+
+}
+li {
+  list-style:none;
+}
+li .ftitle {
+  margin-left: 10px;
+}
+.ftitle:visited { text-decoration: none; }
+
+
+.ftitle:hover { 
+  text-decoration: none;
+  color: #0df10d;
+  transition: .3s }
+
+.ftitle:active { text-decoration: none; }
+.food-link {
+  text-decoration: none;
+}
+
+.food-link:link { text-decoration: none; }
+
+
+.food-link:visited { text-decoration: none; }
+
+
+.food-link:hover { text-decoration: none; }
+
+
+.food-link:active { text-decoration: none; }
+
+.clist{
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  color: white;
+  font-size: 50px;
+}
+.ctitle {
+  color: rgb(250, 250, 250);
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.ctext {
+  color: rgb(0, 255, 30);
+  font-size: 15px;
+}
+.cbtn {
+  color: white;
+  background-color: rgb(0, 255, 30);
+  text-align: center;
+  border-radius: 8px;
+  padding: 5px 8px;
+  font-size: 20px;
+  transition-duration: 0.4s;
+}
+.cbtn:hover {
+  background-color: #dfe9df;
+  color: white;
+}
+
+.intro {
+  height:auto;
+}
+
+.spoon_fork {
+  width: 30px;
+  height: 30px;
+}.button-food-filter {
+  border: none;
+  background: rgb(12, 240, 88);
+  padding: 8px 25px;
+  border-radius: 25px;
+  font-weight: bold;
+  font-size: 15px;
+  transition: 0.4s;
+}
+.filter-menu {
+  background-color: #383838;
+  background-clip: border-box;
+  border-radius: 0.25rem;
+  margin-left: 20px;
+  margin-top: 20px;
+}
+.ficon {
+  color: white;
+  font-size: 25px;
+  text-decoration: none;
+  margin-left: 10px;
+}
+.ficon:link { 
+  text-decoration: none;
+  color: rgb(12, 240, 88);
+
+}
+.ftitle {
+  color: white;
+  font-size: 20px;
+  text-decoration: none;
+  margin-left: 10px;
+}
+.ftitle:link { 
+  text-decoration: none;
+  color: rgb(12, 240, 88);
+
+}
+li {
+  list-style:none;
+}
+li .ftitle {
+  margin-left: 10px;
+}
+.ftitle:visited { text-decoration: none; }
+
+
+.ftitle:hover { 
+  text-decoration: none;
+  color: #0df10d;
+  transition: .3s }
+
+.ftitle:active { text-decoration: none; }
+
+.custom-card {
+  word-wrap: break-word;
+  background-color: #383838;
+  background-clip: border-box;
+  border-radius: 0.25rem;
+  margin: 10px 10px;
+  margin-left: 20px;
+}
+
+.food-link {
+  text-decoration: none;
+}
+
+.food-link:link { text-decoration: none; }
+
+
+.food-link:visited { text-decoration: none; }
+
+
+.food-link:hover { text-decoration: none; }
+
+
+.food-link:active { text-decoration: none; }
+
+.clist{
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  color: white;
+  font-size: 50px;
+}
+.ctitle {
+  color: rgb(250, 250, 250);
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.ctext {
+  color: rgb(0, 255, 30);
+  font-size: 15px;
+}
+.cbtn {
+  color: white;
+  background-color: rgb(0, 255, 30);
+  text-align: center;
+  border-radius: 8px;
+  padding: 5px 8px;
+  font-size: 20px;
+  transition-duration: 0.4s;
+}
+.cbtn:hover {
+  background-color: #dfe9df;
+  color: white;
+}
+
+.intro {
+  height:auto;
+}
+
+.spoon_fork {
+  width: 30px;
+  height: 30px;
+}
+
+@media screen and (max-width: 1200px) {
+  .cimage {
+      padding-left: 10%;
+      padding-right: 10%;
+      width: 200px;
+      height: 200px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .cimage {
+      padding-left: 10%;
+      padding-right: 10%;
+      width: 200px;
+      height: 200px;
+  }
+}
+
+
+@media screen and (max-width: 800px) {
+  .cimage {
+      padding-left: 10%;
+      padding-right: 10%;
+      width: 200px;
+      height: 200px;
+  }
+  .cbtn{
+      font-size: 20px;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .cimage {
+      padding-left: 10%;
+      padding-right: 10%;
+      width: 200px;
+      height: 200px;
+  }
+  .button-reg2 {
+    display: block;
+  }
+
+  .button-reg {
+    display: none;
+  }
+}
+

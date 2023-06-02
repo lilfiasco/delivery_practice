@@ -1,0 +1,179 @@
+h2 {
+  color: white;
+}
+
+
+p{
+color: aliceblue;
+margin-top: 3%;
+margin-top: auto;
+margin-left: 3%;
+}     
+
+.button-food {
+border: none;
+background: rgb(12, 240, 88);
+padding: 8px 25px;
+border-radius: 25px;
+font-weight: bold;
+font-size: 15px;
+transition: 0.4s;
+}
+
+.button-food:hover {
+-webkit-transform: scale(1.3);
+-ms-transform: scale(1.3);
+transform: scale(1.3);
+cursor: pointer;
+}
+
+.button-wrapper {
+display: flex;
+justify-content: right;
+margin-top: 20px; 
+}
+
+.quantity-wrapper {
+display: flex;
+align-items: center;
+}
+
+.quantity-button {
+width: 30px;
+height: 30px;
+background-color: #f0f0f0;
+border: none;
+outline: none;
+cursor: pointer;
+display: flex;
+justify-content: center;
+align-items: center;
+font-size: 16px;
+}
+
+.quantity-value {
+margin: 0 10px;
+}
+
+
+.food-photo {
+  width: 350px;
+  height: 300px;
+  /* margin-left: 3%; */
+}
+
+.food-detail {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 10px;
+  margin-right: 50px;
+  justify-content: center;
+}
+
+.food-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.food-title {
+  margin-left: 6px;
+  white-space: nowrap;
+}
+
+
+.food-price-border {
+  border: 2px solid rgb(12, 240, 88);
+  display: inline-block;
+  padding: 5px;
+  white-space: nowrap;
+}
+
+.food-category {
+
+  font-family: 'Open Sans';
+  font-style: italic;
+  font-weight: 700;
+
+  white-space: nowrap;
+  color: #34C759;
+}
+
+.category {
+  color: #34C759;
+}
+
+.back-link {
+  display: inline-block;
+  text-decoration: none;
+  color: white;
+}
+
+.arrow {
+  color: rgb(12, 240, 88);
+  margin-right: 5px;
+}
+
+.text {
+  color: white;
+}
+
+a:hover {
+color: rgb(12, 240, 88);
+text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+.food-detail {
+  margin-right: 0;
+}
+
+.food-image {
+  margin-right: 0;
+  margin-bottom: 10px;
+}
+
+.food-photo {
+  width: 270px;
+  height: 270px;
+  margin-bottom: 2px;
+}
+
+.food-info {
+  align-items: flex-start;
+}
+
+.food-title,
+.food-category,
+.food-price,
+.food-description {
+  margin-left: 0;
+}
+}
+
+
+@media (max-width: 768px) {
+  .food-detail {
+    flex-direction: column;
+    margin-right: 0;
+  }
+
+  .food-image {
+    margin-right: 20%;
+    margin-bottom: 10px;
+  }
+
+
+  .food-info {
+    align-items: flex-start;
+    margin-left: 0;
+  }
+
+  .food-title,
+  .food-category,
+  .food-price,
+  .food-description {
+    margin-left: 0;
+  }
+}
+
+
