@@ -6,16 +6,10 @@
 
 {% load widget_tweaks %}
 
-
 <a href="/menu" class="back-link mt-5 ml-5">
     <span class="arrow">&#8592;</span>
     Вернуться к поиску
 </a>
-
-<!-- <h1 style="color: white">Корзина</h1>
-<ul id="cart-items" style="color: white"></ul> -->
-
-<h1></h1>
 
 <div class="title-cart ml-4">
     <h2>Ваша корзина</h2>
@@ -54,11 +48,13 @@
         </div>
     </div>
 </div>
+
 {% if user.is_authenticated %}
-<button class="cart-button" type="submit"><a href="/">Оформить заказ</a></button>
+    <button class="cart-button" id="checkoutButton" type="button">Оформить заказ</button>
 {% else %}
-<button class="cart-button" type="submit"><a href="{% url 'login' %}">Оформить заказ</a></button>
-{% endif%}
+    <button class="cart-button" type="button"><a href="{% url 'login' %}">Оформить заказ</a></button>
+{% endif %}
+
 <div id="cartItems" class="container">
     asdasdasd
 </div>
@@ -77,8 +73,7 @@
       quantityValue++;
       document.querySelector('.quantity-value').textContent = quantityValue;
     }
-  </script>
-
+</script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -103,14 +98,54 @@
                 img.height = 250;
                 img.classList.add("cartItemImage");  // Add a CSS class to the element
                 cartItemsElement.appendChild(img);
-
-
             }
         }
     });
+
+    document.getElementById("checkoutButton").addEventListener("click", function () {
+        var cartItems = JSON.parse(localStorage.getItem("cart"));
+        var data = [];
+
+        for (var key in cartItems) {
+            if (cartItems.hasOwnProperty(key)) {
+                var item = cartItems[key];
+                var foodId = key;
+                var price = item.price;
+                var quantity = item.quantity;
+                var totalPrice = item.price * quantity;
+                var user = "{{ user.id }}";  // Replace with the appropriate user identifier
+
+                var order = {
+                    food: foodId,
+                    price: price,
+                    quantity: quantity,
+                    total_price: totalPrice,
+                    user: user,
+                };
+
+                data.push(order);
+            }
+        }
+
+        fetch('/checkout/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}',  // Include the CSRF token for Django
+            },
+            body: JSON.stringify(data),
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log("Checkout successful");
+            } else {
+                console.error("Checkout failed");
+            }
+        })
+        .catch(error => {
+            console.error("An error occurred during checkout:", error);
+        });
+    });
 </script>
-
-
-
 
 {% endblock %}

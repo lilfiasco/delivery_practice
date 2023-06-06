@@ -14,6 +14,7 @@ from apps.main.views import(
     cart_view,
     FranchiseListView,
     MenuFranchiseView,
+    checkout
 
 )
 
@@ -23,7 +24,7 @@ urlpatterns = [
     path('cart/', get_cart, name='cart'),
     path('menu/', MenuView.as_view(), name='menu'),
     path('menu/<slug:slug>/', FoodDetailView.as_view(), name="menu_object"),
-    
+    path('checkout/', views.checkout, name='checkout'),
     path('', get_index,name='index'),
     path('check_food/', CreateFoodView.as_view(), name='create_food'),
     path('franchise/', FranchiseListView.as_view(), name='franchise'),

@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
-
 <link rel="stylesheet" type="text/css" href="/static/css/franchise_list.css">
 
 {% load static %}
@@ -11,11 +10,11 @@
     <div class="row">
         {% for franchise in franchises %}
         <div class="col-md-4">
-            <a href="{% url 'menu_franchise' franchise.id %}">
+            <a href="{% url 'menu_franchise' franchise.id %}" onclick="clearCart(event, '{{ franchise.id }}')">
                 <div class="franchise-card mb-4">
                     <img class="franchise-media" src="/media/{{franchise.image}}">
                     <div class="container_franchise_text">
-                        <h2 class="fran-link"><a class="link" href="{% url 'menu_franchise' franchise.id %}" style="color: aliceblue;">{{ franchise.title }}</a></h2>
+                        <h2 class="fran-link"><a class="link" href="{% url 'menu_franchise' franchise.id %}" style="color: aliceblue;" onclick="clearCart(event, '{{ franchise.id }}')">{{ franchise.title }}</a></h2>
                     </div>
                 </div>
             </a>
@@ -27,10 +26,27 @@
 </div>
 
 
-{% if page_obj.has_other_pages %}
-    <div class="pegination">
-        <div class="nav-links">
+<!-- <script>
+    function clearCart() {
+        localStorage.removeItem('cart');
+    }
+</script> -->
+<script>
+    function clearCart(event, franchiseId) {
+        var currentFranchiseId = localStorage.getItem('franchiseId');
+        if (currentFranchiseId !== franchiseId) {
+            localStorage.removeItem('cart');
+        }
+        localStorage.setItem('franchiseId', franchiseId);
+    }
+</script>
 
+
+
+
+{% if page_obj.has_other_pages %}
+    <div class="pagination">
+        <div class="nav-links">
             {% for p in page_obj.paginator.page_range %}
                 {% if page_obj.number == p %}
                 <span class="page-numbers current">{{ p }}</span>
@@ -44,5 +60,5 @@
             {% endif %}
         </div>
     </div>
-    {% endif %}
-{%endblock%}
+{% endif %}
+{% endblock %}

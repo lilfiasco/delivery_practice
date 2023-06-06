@@ -1,10 +1,11 @@
 from typing import Any, Optional
 from django.db.models.query import QuerySet
 from django.forms.models import BaseModelForm
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect,HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+
 from django.db import models
 from django.shortcuts import render,  get_object_or_404
-from django.http import HttpResponse
 from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse_lazy
 from main import forms, models
@@ -112,6 +113,33 @@ class MenuView(TemplateView):
         context['categories'] = categories
         context['selected_category'] = category_title  # Pass selected category to template
         return context
+# class MenuView(TemplateView):
+#     template_name = 'food/menu.html'
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         category_title = self.request.GET.get('category')
+#         food = models.Food.objects.all()
+
+#         if category_title:
+#             food = food.filter(category__title=category_title)
+
+#         # Get the current franchise ID
+#         current_franchise_id = None
+#         if food.exists():
+#             current_franchise_id = food[0].franchise_id
+
+#         # Clear the cart if the franchise ID changes
+#         cart = self.request.session.get('cart')
+#         if cart and 'franchise_id' in cart and cart['franchise_id'] != current_franchise_id:
+#             cart = {}
+#             self.request.session['cart'] = cart
+
+#         categories = models.Category.objects.annotate(food_count=Count('food')).filter(food_count__gt=0)
+#         context['food'] = food
+#         context['categories'] = categories
+#         context['selected_category'] = category_title  # Pass selected category to template
+#         return context
 
 
 
@@ -193,3 +221,13 @@ class FoodDetailView(View):
 def cart_view(request):
     return render(request, 'food/cart.html')
 
+@csrf_exempt
+def checkout(request):
+    if request.method == 'POST':
+        
+        print(request.body)
+        
+       
+        return HttpResponse('Success')  
+    else:
+        ...
