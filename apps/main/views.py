@@ -1,15 +1,15 @@
 from typing import Any, Optional
+from django.db.models.query import QuerySet
 from django.forms.models import BaseModelForm
 from django.http import HttpResponseRedirect
 from django.db import models
-from django.shortcuts import render
+from django.shortcuts import render,  get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.forms import AuthenticationForm
-from django.urls import reverse_lazy,reverse
-from django_filters.views import FilterView
-from .filters import FoodFilter
+from django.urls import reverse_lazy
 from main import forms, models
 from auths import forms as a_forms, models as a_models
+from django.db.models import Count, Q
 from django.views.generic import (
     TemplateView,
     ListView,
@@ -18,9 +18,7 @@ from django.views.generic import (
     DetailView,
     UpdateView
 )
-from django.core.exceptions import ValidationError
-
-
+from django.core.paginator import Paginator, EmptyPage
 
 
 def get_base(request) -> HttpResponse:
@@ -37,8 +35,6 @@ def get_menu(request) -> HttpResponse:
 
 def get_cart(request) -> HttpResponse:
     return render (request, 'orders/cart.html')
-
-
 
 
 class CreateFoodView(CreateView):
@@ -62,11 +58,6 @@ class CreateFoodView(CreateView):
         print("AZAZAZA: ", form.errors)
         return super().form_invalid(form)
 
-    # def form_valid(self, form): 
-        
-    #     food = form.save(commit=False)
-    #     food.save()
-    #     return render(self.request, 'food/add_food_success.html')
     def form_valid(self, form): 
         try:
             food = form.save(commit=False)
@@ -76,10 +67,33 @@ class CreateFoodView(CreateView):
         except ValueError as e:
             form.add_error('image', str(e))  
             return self.form_invalid(form)
-
         
 
+class FranchiseListView(ListView):
+    model = models.Franchise
+    template_name = 'food/franchise_list.html'
+    context_object_name = 'franchises'
+    paginate_by = 6
 
+
+
+
+# class MenuView(TemplateView):
+#     template_name = 'food/menu.html'
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         category_title = self.request.GET.get('category')
+#         food = models.Food.objects.all()
+
+#         if category_title:
+#             food = food.filter(category__title=category_title)
+
+#         categories = models.Category.objects.all()
+#         context['food'] = food
+#         context['categories'] = categories
+#         context['selected_category'] = category_title  # Pass selected category to template
+#         return context
 
 
 class MenuView(TemplateView):
@@ -93,21 +107,23 @@ class MenuView(TemplateView):
         if category_title:
             food = food.filter(category__title=category_title)
 
-        categories = models.Category.objects.all()
+        categories = models.Category.objects.annotate(food_count=Count('food')).filter(food_count__gt=0)
         context['food'] = food
         context['categories'] = categories
         context['selected_category'] = category_title  # Pass selected category to template
         return context
 
 
+
 class FranchiseDetailView(DetailView):
+    pass
     paginate_by = 3 
     model = models.Franchise
     template_name = 'food/franchise_detail.html'
     context_object_name = 'franchise'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+    def get_context_data(self,*args, **kwargs):
+        context = super().get_context_data(*args,**kwargs)
         franchise = self.get_object()
         category_title = self.request.GET.get('category')
         food = franchise.food_set.all() 
@@ -119,11 +135,37 @@ class FranchiseDetailView(DetailView):
         context['selected_category'] = category_title
         return context
     
+
+class MenuFranchiseView(ListView):
+    model = models.Food
+    template_name = 'food/menu_franchise.html'
+    context_object_name = 'food'
+    # paginate_by = 10
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        franchise_id = self.kwargs.get('franchise_id')
+        
+        if franchise_id:
+            queryset = queryset.filter(franchise_id=franchise_id)
+        
+        return queryset
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['franchise'] = models.Franchise.objects.all()
+        return context
+
+
+
+
+
+
 class FranchiseFoodEditView(UpdateView):
     model = models.Food
     template_name = 'food/franchise_food_edit.html'
     context_object_name = 'franchise'
-    fields = ['title', 'description', 'price','franchise']
+    fields = ['title', 'description', 'price','franchise', 'image']
     
     def get_object(self):
         return self.model.objects.get(slug=self.kwargs.get('slug'))
@@ -151,20 +193,3 @@ class FoodDetailView(View):
 def cart_view(request):
     return render(request, 'food/cart.html')
 
-
-class Menu2View(TemplateView):
-    template_name = 'food/menu2.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        category_title = self.request.GET.get('category')
-        food = models.Food.objects.all()
-
-        if category_title:
-            food = food.filter(category__title=category_title)
-
-        categories = models.Category.objects.all()
-        context['food'] = food
-        context['categories'] = categories
-        context['selected_category'] = category_title  # Pass selected category to template
-        return context

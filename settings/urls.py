@@ -7,7 +7,8 @@ from apps.auths.views import (
     CustomLogoutView,
    
 )
-from apps.main.views import(
+from django.urls import path
+from apps.main.views import (
     get_base,
     get_index
 )
@@ -18,7 +19,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     
     path('', include('main.urls')),
-    path('auth/', include('auths.urls')),
+    path('/auth/', include('auths.urls')),
     
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

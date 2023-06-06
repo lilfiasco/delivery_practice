@@ -78,9 +78,9 @@ body {
 }
 
 .index-title-h1{
-width: 1100px;
-height: 163px;
-left: 180px;
+/* width: 1100px;
+height: 163px; */
+/* left: 180px; */
 top: 139px;
 font-family: 'Alegreya';
 font-style: normal;
@@ -106,6 +106,7 @@ h4 {
   font-size: 36px;
   line-height: 44px;
   text-transform: uppercase;
+  color: rgb(12, 240, 88);
 }
 
 .cariusel-caption-two {
@@ -147,27 +148,27 @@ color: #FFFFFF;
 }
 
 .mt-5, .my-5 {
-  margin-top: 17rem !important;
+  margin-top: 17rem ;
 }
 
 .mt-4 {
-  margin-top: 6rem !important;
+  margin-top: 6rem ;
 }
 
 .ml-6 {
-  margin-left: 6rem !important;
+  margin-left: 6rem ;
 }
 
 .ml-7 {
-  margin-left: 8rem !important;
+  margin-left: 8rem ;
 }
 
 .mt-8 {
-  margin-top: 7rem !important;
+  margin-top: 7rem ;
 }
 
 .ml-9 {
-  margin-left: 20rem !important;
+  margin-left: 10rem ;
 }
 
 .icon-text {
@@ -205,6 +206,65 @@ color: #FFFFFF;
   mix-blend-mode: normal;
 
 }
+
+/* Адаптация для маленьких экранов */
+@media screen and (max-width: 576px) {
+  .index-title-h1 {
+    font-size: 20px;
+    margin-left: 6px;
+    margin-top: 2px;
+  }
+
+  .icon {
+    flex-basis: 50%;
+    margin-bottom: 10px;
+  }
+
+  .icon-image {
+    width: 30px;
+    height: 30px;
+    margin-right: 2rem;
+    margin-left: 1rem;
+  }
+
+  .icon-text {
+    font-size: 12px;
+  }
+
+  .icon-podtext {
+    font-size: 12px;
+    margin-left: 0;
+  }
+}
+
+/* Адаптация для средних экранов */
+@media screen and (min-width: 577px) and (max-width: 992px) {
+  .index-title-h1 {
+    font-size: 28px;
+    margin-left: 12px;
+    margin-top: 6px;
+  }
+
+  .icon {
+    flex-basis: 30%;
+    margin-bottom: 0;
+  }
+}
+
+/* Адаптация для больших экранов */
+@media screen and (min-width: 993px) {
+  .index-title-h1 {
+    font-size: 4vw;
+    margin-left: 4rem;
+    margin-top: 4rem;
+    margin-right: auto;
+  }
+
+  .icon-image {
+    margin-top: 4rem;
+  }
+}
+
 
 
 

@@ -11,7 +11,6 @@ h2 {
 
 
   .custom-card {
-    .custom-card {
       word-wrap: break-word;
       background-color: #383838;
       background-clip: border-box;
@@ -21,20 +20,20 @@ h2 {
   }
 
     
-}
-  .food-list {
+
+  /* .food-list {
     display: flex;
     flex-direction: column;
     align-self: center;
     color: white;
    
-  }
+  } */
   .food-image {
     display: flex;
     flex-direction: column;
     align-self: center;
-    padding-left: 10%;
-    padding-right: 10%;
+    /* padding-left: 10%; */
+    padding-right: 15%;
 
 }
 
@@ -42,28 +41,29 @@ h2 {
     display: flex;
     flex-wrap: wrap;
     margin: auto 10%;
-    margin: 7 rem;
+    margin: 1rem;
 }
 
 .franchise_block {
     background: rgb(56, 54, 54);
     width: 30%;
     height: 17rem;
-    margin: 0 10px 10px 0;
-    padding: 20px;
+    margin: 0 5px 10px 0;
+    padding: 15px;
     border-radius: 10px;
 }
 .button-reg {
   display: block;
   border: none;
-  width: 40px;
+  width: 20px;
   height: 40px;
   background: rgb(12, 240, 88);
   padding: 8px 15px;
   border-radius: 25px;
   font-size: 13px; 
   transition: 20s;
-  width: fit-content; 
+  width: fit-content;
+  margin-right: 7%; 
 }
 
 .button-reg2 {
@@ -87,9 +87,9 @@ h2 {
 }
 
 .food_photo {
-  margin: 0 auto;
-  width: 70%;
-  height: 10rem;
+  margin:  auto;
+  width: 115%;
+  height: 12rem;
 }
 
 .bluda {
@@ -320,6 +320,23 @@ li .ftitle {
   width: 30px;
   height: 30px;
 }
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination a {
+  color: white;
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+.pagination .current-page {
+  color: #34C759;
+  font-weight: bold;
+  margin: 0 5px;
+}
 
 @media screen and (max-width: 1200px) {
   .cimage {
@@ -365,6 +382,25 @@ li .ftitle {
 
   .button-reg {
     display: none;
+  }
+
+  h2 {
+    text-align: center;
+  }
+
+  .h2-bluda {
+    margin: auto;
+    margin-bottom: 1rem;
+  }
+
+  .franchise_block {
+    margin-left: 1rem;
+    margin-right: 2rem;
+    width: 100%;
+  }
+
+  .button-reg2 {
+    font-size: 15px;
   }
 }
 

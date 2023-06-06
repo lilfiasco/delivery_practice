@@ -1,4 +1,3 @@
-from typing import Iterable, Optional
 from django.db import models
 from django.utils.text import slugify
 from PIL import Image
@@ -12,6 +11,12 @@ class Franchise(models.Model):
     title = models.CharField(
         max_length=255,
         verbose_name="название"
+    )
+    image = models.ImageField(
+        upload_to="media/",
+        verbose_name="изображение",
+        null=True
+        # validators=[validate_image_size]
     )
     address = models.CharField(
         max_length=255,
@@ -111,6 +116,9 @@ class Food(models.Model):
 
     def __str__(self) -> str:
         return self.title
+    
+
+
 
 # from main.filters import validate_image_size
 

@@ -110,7 +110,24 @@ nav ul a:hover{
   color: #fff;
   margin-right: 10px;
 }
+.button-profile {
+    border: none;
+    background-color: rgb(42, 38, 38);;
+    border: 2px solid rgb(12, 240, 88); 
+    color: rgb(12, 240, 88);;
+    padding: 4px 20px;
+    border-radius: 15px;
+    font-weight: bold;
+    font-size: 14px;
+    transition: 0.4s;
+    margin-right: 10px;
+    display: flex;
+  }
 
+.button-profile:hover {
+    transform: scale(1.07);
+    cursor: pointer;
+}
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 
@@ -238,7 +255,8 @@ nav ul a:hover{
     }
 }
 
-.button-profile{
+
+  .button-profile {
     border: none;
     background-color: rgb(42, 38, 38);;
     border: 2px solid rgb(12, 240, 88); 
@@ -246,11 +264,12 @@ nav ul a:hover{
     padding: 4px 20px;
     border-radius: 20px;
     font-weight: bold;
-    font-size: 15px;
+    font-size: 14px;
     transition: 0.4s;
     margin-right: 10px;
     display: flex;
-}
+  }
+
 .button-profile:hover {
     transform: scale(1.07);
     cursor: pointer;

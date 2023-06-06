@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="/static/css/franchise_list.css">
+
+{% load static %}
+
+<h5 class="franchise_list_title mt-3 ml-3">Франшизы</h5>
+
+<div class="container">
+    <div class="row">
+        {% for franchise in franchises %}
+        <div class="col-md-4">
+            <a href="{% url 'menu_franchise' franchise.id %}">
+                <div class="franchise-card mb-4">
+                    <img class="franchise-media" src="/media/{{franchise.image}}">
+                    <div class="container_franchise_text">
+                        <h2 class="fran-link"><a class="link" href="{% url 'menu_franchise' franchise.id %}" style="color: aliceblue;">{{ franchise.title }}</a></h2>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% empty %}
+        <p>No franchises found.</p>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% if page_obj.has_other_pages %}
+    <div class="pegination">
+        <div class="nav-links">
+
+            {% for p in page_obj.paginator.page_range %}
+                {% if page_obj.number == p %}
+                <span class="page-numbers current">{{ p }}</span>
+                {% elif p > page_obj.number|add:-3 and p < page_obj.number|add:3 %}
+                <a class="page-numbers" href="?page={{ p }}">{{ p }}</a>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+            <a class="page-numbers" href="?page={{ page_obj.next_page_number }}"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+{%endblock%}

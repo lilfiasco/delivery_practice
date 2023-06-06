@@ -1,14 +1,95 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
 
-<h1>Edit Food</h1>
+<link rel="stylesheet" type="text/css" href="/static/css/add_food.css">
+
+{% load widget_tweaks %}
+<!-- <h1>Изменить товар</h1>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Save</button>
         <button type="submit" name="delete" style="color:red">Delete</button>
-    </form>
+    </form> -->
 
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h1>Измените товар</h1>
+        {% for field in form %}
+            {% for error in field.errors %}
+                <p class="text-white">{{field.label}}: {{ error|escape }}</p>>
+            {% endfor %}
+        {% endfor %}
+        {% if form.image.errors %}
+                          <small class="form-text text-danger"  class="text-white">
+                            {% for error in form.image.errors %}
+                              {{ error }}
+                            {% endfor %}
+                          </small>
+                        {% endif %}
+        <div class="form-group">
+            <input type="hidden" name="franchise" value="{{franchise.id}}" id="id_franchise">
+            <!-- <input type="hidden" name="slug" value="{{food.slug}}" id="slug_food"> -->
+        </div> 
+        <div class="form-container">
+            <div class="form-row">
+                <div class="form-col-left">
+                    <div class="image-preview">
+                        <img id="preview-image" class="img-fluid" src="https://images.satu.kz/186644058_w300_h300_slantsevo-seryj-bumazhnyj-fon.jpg" alt="Preview Image">
+                    </div>    
+                    <div class="image-upload">
+                        {{ form.image|attr:"class:form-control"|attr:"placeholder:" }}
+                        <button type="button" class="button-add" onclick="document.getElementById('id_image').click()">Загрузить</button>
+                    </div>
+                </div>
+                
+                
+                
+                <div class="form-col-right">
+                    <label class="form-label text-left" for="{{ form.title.id_for_label }}">Название:</label>
+                    {{ form.title|attr:"class:form-control"|attr:"placeholder:Название" }}
+                    
+                    <label class="form-label text-left" for="{{ form.price.id_for_label }}">Цена:</label>
+                    {{ form.price|attr:"class:form-control"|attr:"placeholder:Введите цену" }}
+    
+                    <label class="form-label text-left" for="{{ form.franchise.id_for_label }}">Франшиза:</label>
+                    {{ form.franchise|attr:"class:form-control"|attr:"placeholder:Франшиза" }}
+    
+                    <label class="form-label text-left" for="{{ form.description.id_for_label }}">Описание:</label>
+                    {{ form.description|attr:"class:form-control"|attr:"placeholder:Описание" }}
+                
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="button-wrapper">
+            <button class="button-delete" name="delete" type="submit">Удалить</button>
+            <button class="button-add-tovar" type="submit">Сохранить</button>
+        </div>
+    </form>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        // Preview selected image
+        $("#id_image").change(function() {
+            readURL(this);
+        });
+    
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+    
+                reader.onload = function(e) {
+                    $("#preview-image").attr("src", e.target.result);
+                    $("#preview-image").show();
+                };
+    
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    });
+    </script>
 {% endblock%}

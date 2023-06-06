@@ -12,14 +12,15 @@
     Вернуться к поиску
 </a>
 
-<h1 style="color: white">Корзина</h1>
-<ul id="cart-items" style="color: white"></ul>
+<!-- <h1 style="color: white">Корзина</h1>
+<ul id="cart-items" style="color: white"></ul> -->
 
+<h1></h1>
 
 <div class="title-cart ml-4">
     <h2>Ваша корзина</h2>
 </div>
-<div class="cart ml-6 mr-6">
+<div class="cart ml-6 mr-6 mt-3">
     <div class="col-12 mr-4 d-flex flex-row justify-content-between">
         
         <div id="cartItems" class="container">
@@ -46,14 +47,18 @@
             <img class="cart-icon" src="https://www.citypng.com/public/uploads/preview/rubbish-bin-basket-trash-white-icon-11637141431rrxgucag5m.png">
         </div>
 
-        <div class="cart-modal">
+        <div class="cart-modal ml-6">
             <p class="from-modal">Итого:</p>
-            <p class="from-modal">Доставка:</p><hr>
+            <p class="from-modal">Доставка:</p><hr class="hr-cart">
             <p class="from-modal">Всего к оплате:</p>
         </div>
     </div>
 </div>
-
+{% if user.is_authenticated %}
+<button class="cart-button" type="submit"><a href="/">Оформить заказ</a></button>
+{% else %}
+<button class="cart-button" type="submit"><a href="{% url 'login' %}">Оформить заказ</a></button>
+{% endif%}
 <div id="cartItems" class="container">
     asdasdasd
 </div>

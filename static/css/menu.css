@@ -21,47 +21,32 @@
 }
 
 .ficon {
-    color: white;
     font-size: 25px;
-    text-decoration: none;
     margin-left: 10px;
 }
-.ficon:link { 
-    text-decoration: none;
-    color: rgb(12, 240, 88);
-
-}
 .decrement{
-    border-radius: 30px;
-    color: white;
     background-color: #8c8f8c;
-    font-weight: bold;
+    color: white;
     font-size: 15px;
     text-decoration: none;
     padding: 5px 10px; /* Установите внутренние отступы кнопки */
-    line-height: 20px; 
 
+}
+.decrement:hover{
+    transition: 0.4s;
 }
 .increment {
-    border-radius: 30px;
-    color: white;
     background-color: #8c8f8c;
-    font-weight: bold;
+    color: white;
     font-size: 15px;
-    transition: 0.4s;
     text-decoration: none;
-    padding: 5px 10px; /* Установите внутренние отступы кнопки */
-    line-height: 20px; 
+    padding: 5px 10px; /* Установите внутренние отступы кнопки */ 
 }
-.quantity{
-    background-color: rgb(255, 255, 255);
-    border: 2px solid rgb(12, 240, 88); 
-    float: none;
-    display: block;
-    text-align: left;
-    width: 25%;
-    height: 15px;
-    border-radius: 20px;
+.increment:hover{
+    transition: 0.4s;
+}
+.quantity-display{
+    color: white;
 }
 .button-add {
     border: none;
@@ -106,8 +91,7 @@ li .ftitle {
     background-color: #383838;
     background-clip: border-box;
     border-radius: 0.25rem;
-    margin: 10px 10px;
-    margin-left: 20px;
+    margin: 5px 0px;
 }
 
 .food-link {
@@ -164,9 +148,6 @@ li .ftitle {
 }
 
 @media screen and (max-width: 1200px) {
-    .col-md-8{
-        
-    }
     .cimage {
         padding-left: 10%;
         padding-right: 10%;
@@ -253,6 +234,11 @@ li .ftitle {
 .page-name {
     color: white; 
     font-size: 30px;
+    margin-left: 8%;
+}
+.back {
+    color: white; 
+    font-size: 10px;
     margin-left: 10%;
 }
 .pdd {
@@ -269,8 +255,8 @@ li .ftitle {
     text-align: left;
     width: 95%;
     height: 15px;
-    margin: 0;
+    margin: 5px 5px;
     padding: 14px;
     border-radius: 20px;
-    margin-left: 10%;
+    margin-left: 5%;
 }

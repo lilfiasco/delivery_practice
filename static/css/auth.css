@@ -24,7 +24,6 @@ body{
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
 }
 .logo .an{
     display: flex;
@@ -33,7 +32,6 @@ body{
     font-size: 28px;
     padding-bottom: 10px;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    justify-content: center;
 }
 
 .an span {
@@ -51,14 +49,13 @@ body{
     list-style-type: none;
     display: inline-block;
     padding: 10px 10px;
-    font-size: 18px;
 }
 .navbar ul a{
     color: white;
     text-decoration: none;
     font-weight: bold;
     padding: 10px 16px;
-
+    font-size: 20px;
 }
 .navbar ul a:hover{
     color: #228B22;
@@ -68,7 +65,7 @@ body{
     display: flex;
     border: none;
     padding: 8px 30px;
-    border-radius: 25px;
+    border-radius: 30px;
     color: white;
     background-color: #0df10d;
     font-weight: bold;
@@ -104,6 +101,12 @@ a.icon {
     display: none;
 }
 
+@media screen and (max-width: 1050px) {
+    .navbar ul a{
+        padding: 8px 8px;
+        font-size: 15px;
+    }
+}
 @media screen and (max-width: 840px) {
     .navbar ul {
         list-style-type: none;
@@ -117,10 +120,7 @@ a.icon {
         color: white;
         text-decoration: none;
         font-weight: bold;
-    }
-    .navbar ul a:hover{
-        color: #0df10d;
-        transition: .3s;
+        font-size: 12px;
     }
     .button-auth{
         border: none;
@@ -128,7 +128,7 @@ a.icon {
         border-radius: 25px;
         color: white;
         font-weight: bold;
-        font-size: 15px;
+        font-size: 10px;
         transition: 0.4s;
         text-decoration: none;
         color: white;
@@ -140,7 +140,7 @@ a.icon {
         color: white;
         background-color: #0df10d;
         font-weight: bold;
-        font-size: 15px;
+        font-size: 10px;
         transition: 0.4s;
         text-decoration: none;
     }
@@ -164,8 +164,7 @@ a.icon {
     .navbar ul {
         list-style-type: none;
         display: inline-block;
-        padding: 10px 10px;
-        padding-bottom: 0px;
+        padding: 8px 8px;
     
     }
     .navbar ul a{
@@ -195,32 +194,12 @@ a.icon {
 }
 
 @media screen and (max-width: 805px) {
-    .navbar ul {
-        list-style-type: none;
-        display: inline-block;
-        padding: 10px 10px;
-        padding-bottom: -10px;
-    
-    }
     .navbar ul a{
-        color: white;
-        text-decoration: none;
-        font-weight: bold;
-    }
-    .navbar ul a:hover{
-        color: #0df10d;
-        transition: .3s;
+        padding: 8px 8px;
+        font-size: 15px;
     }
     .button-auth{
-        border: none;
-        padding: 5px 10px;
-        border-radius: 25px;
-        color: white;
-        font-weight: bold;
-        font-size: 14px;
-        transition: 0.4s;
-        text-decoration: none;
-        color: white;
+        font-size: 12px;
     }
     .button-reg {
         padding: 8px 20px;
@@ -238,16 +217,13 @@ a.icon {
 @media screen and (max-width: 800px) {
     .topnav.responsive .logo .an{
         display: flex;
-        color: white;
-        justify-content: left;
+        align-items: flex-start;
         font-size: 28px;
-        padding-bottom: 15px;
-        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        padding-bottom: 10px;
     }
     .navbar{
         display: flex;
         align-items: center;
-        justify-content: space-between;
     }
     .topnav ul a{
         display: none;
@@ -260,15 +236,11 @@ a.icon {
     }
     .topnav ul a.icon {
         display: flex;
-        flex-direction: column;
-        justify-content: end;
-        margin-top: 0px;
-        display: block;
         color: white;
         font-size: 25px;
     }
     .topnav.responsive{
-        position: relative;
+        /* position: relative; */
     }
     .topnav.responsive .ul{
         float: none;
@@ -281,10 +253,7 @@ a.icon {
     .topnav.responsive ul a{
         float: none;
         display: block;
-        text-align: left;
-    }
-    .data-toggle-a {
-
+        
     }
     .navbar{
         width: 100%;

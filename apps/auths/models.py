@@ -140,3 +140,40 @@ class Cart(models.Model):
     def __str__(self) -> str:
         return self.price
 
+
+class Order(models.Model):
+    """
+    Order model.
+    """
+
+    customer = models.ForeignKey(
+        CustomUser,
+        on_delete=models.CASCADE,
+        verbose_name="заказчик"
+    )
+    food = models.ForeignKey(
+        Food,
+        on_delete=models.CASCADE,
+        verbose_name="заказанное блюдо"
+    )
+    price = models.PositiveIntegerField(
+        verbose_name="цена"
+    )
+    quantity = models.PositiveIntegerField(
+        verbose_name="количество",
+        default=0
+    )
+    total_price = models.PositiveIntegerField(
+        verbose_name="итоговая цена"
+    )
+
+    class Meta:
+        ordering = [
+            '-id'
+        ]
+        verbose_name = 'заказ'
+        verbose_name_plural = 'заказы'
+
+    def __str__(self) -> str:
+        return self.total_price
+

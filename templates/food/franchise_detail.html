@@ -8,14 +8,15 @@
 {% load widget_tweaks %}
 <div class="row">
   <div class="col-md-3 ">
-      <div class="filter-menu">
-          <form method="GET" id="filter-form">
-              <a href='?category' class="text-white ficon" id="f-icon"><img class="spoon_fork" src="   https://cdn-icons-png.flaticon.com/512/5593/5593592.png "></a>
-              {% for category in categories %}
-                  <li><a href="?category={{ category.title }}" class="ftitle">{{ category.title }}</a></li>
-              {% endfor %}
-          </form>
-      </div>
+    <div class="filter-menu">
+      <form method="GET" id="filter-form">
+        <a href='?category' class="text-white ficon" id="f-icon"><img class="spoon_fork"
+            src="  https://i.postimg.cc/Dzvp5qFc/che.png"></a>
+        {% for category in categories %}
+        <li><a href="?category={{ category.title }}" class="ftitle">{{ category.title }}</a></li>
+        {% endfor %}
+      </form>
+    </div>
   </div>
   <div class="col-12 col-md-9 py-2">
     <div class="row">
@@ -24,40 +25,161 @@
         <p style="text-align: center;">{{ franchise.title }}</p>
         <p style="text-align: center;">Адрес: {{ franchise.address }}</p>
       </div>
-                
 
-  
-  
-</div>
-<div class="bluda">
-  <h2>Блюда</h2>
-  <a class="button-reg" href="/check_food">Добавить товар</a>
- 
-</div>
 
-<ul style = "color : white">
-  <div class="franchise">
-  {% for food in food_list %}
-    <!-- <div class="col-12 col-md-6 d-flex custom-card"> -->
-    <div class="franchise_block">
-      <div class="food-list">
-          <h5>{{ food.title }}</h5>
-          
-          <a href="{% url 'food_edit' pk=franchise.pk slug=food.slug %}">Изменить</a>
-          
 
-      </div>
-      <div class="food-image">
-        <!-- <img class="card-img-top img-fluid w-25 h-75 align-self-center m-3" src="{{ food.image.url }}"> -->
-        <img class="food_photo" src="{{ food.image.url }}">
-      </div>
+
     </div>
-      {% empty %}
-      <li>Нет доступных блюд.</li>
-    {% endfor %}
-      </div>
+    <div class="bluda">
+      <h2>Блюда</h2>
+      <a class="button-reg" href="/check_food">Добавить товар</a>
+
     </div>
+
+    <ul style="color : white">
+      <div class="franchise">
+        {% for food in food_list %}
+        <!-- <div class="col-12 col-md-6 d-flex custom-card"> -->
+        <div class="franchise_block">
+          <div class="food-list">
+            <h5>{{ food.title }}</h5>
+
+            <a href="{% url 'food_edit' pk=franchise.pk slug=food.slug %}">Изменить</a>
+
+
+          </div>
+          <div class="food-image">
+            <!-- <img class="card-img-top img-fluid w-25 h-75 align-self-center m-3" src="{{ food.image.url }}"> -->
+            <img class="food_photo" src="{{ food.image.url }}">
+          </div>
+        </div>
+        {% empty %}
+        <li>Нет доступных блюд.</li>
+        {% endfor %}
+      </div>
   </div>
-  <a class="button-reg2" href="/check_food">Добавить товар</a>
+</div>
+<a class="button-reg2" href="/check_food">Добавить товар</a>
 </ul>
+
+<script>
+  var savedCart = JSON.parse(localStorage.getItem("cart")) || {};
+
+  var foodItems = document.querySelectorAll('.button-food');
+  foodItems.forEach(function(item) {
+  var foodId = item.getAttribute("data-food-id");
+  if (foodId in savedCart) {
+      var quantity = savedCart[foodId].quantity;
+      var quantityDisplay = item.parentNode.parentNode.querySelector(".quantity-display");
+      if (quantityDisplay) {
+      quantityDisplay.setAttribute("data-quantity", quantity);
+      quantityDisplay.innerText = quantity;
+      }
+  }
+  });
+
+  var cart = JSON.parse(localStorage.getItem("cart")) || {};
+
+  // function addToCart(button,) {
+  //     var foodId = button.getAttribute("data-food-id");
+  //     var foodTitle = button.getAttribute("data-food-title");
+  //     var foodPrice = parseFloat(button.getAttribute("data-food-price"));
+  //     var foodImage = button.getAttribute("data-food-image");
+  //     var foodQuantity = parseInt(button.getAttribute("data-food-quantity"));
+
+  //     var quantityDisplay = button.parentNode.parentNode.querySelector(".quantity-display");
+  //     var quantity = parseInt(quantityDisplay.getAttribute("data-quantity"));
+
+  //     if (quantity > 0 ) {
+  //         cart[foodId] = {
+  //             title: foodTitle,
+  //             price: foodPrice,
+  //             quantity: quantity,
+  //             image: foodImage
+  //         };
+  //         saveCartToLocalStorage();
+  //         updateCartDisplay();
+
+  //     }
+  //     else {
+  //         delete cart[foodId];
+  //         saveCartToLocalStorage();
+  //         updateCartDisplay();
+  //     } 
+  // }
+
+function changeQuantity(button, increment) {
+var quantityDisplay = button.parentNode.querySelector(".quantity-display");
+var currentQuantity = parseInt(quantityDisplay.getAttribute("data-quantity"));
+var newQuantity = currentQuantity + increment;
+
+if (newQuantity >= 0) {
+  quantityDisplay.setAttribute("data-quantity", newQuantity);
+  quantityDisplay.innerText = newQuantity;
+  var foodId = button.parentNode.parentNode.querySelector(".button-food").getAttribute("data-food-id");
+
+  if (newQuantity === 0 && foodId in cart) {
+      delete cart[foodId]; // Remove the item from the cart
+  } else {
+      if (foodId in cart) {
+          cart[foodId].quantity = newQuantity;
+      } else {
+          var foodTitle = button.parentNode.parentNode.querySelector(".button-food").getAttribute("data-food-title");
+          var foodPrice = parseFloat(button.parentNode.parentNode.querySelector(".button-food").getAttribute("data-food-price"));
+          var foodImage = button.parentNode.parentNode.querySelector(".button-food").getAttribute("data-food-image");
+
+          cart[foodId] = {
+              title: foodTitle,
+              price: foodPrice,
+              quantity: newQuantity,
+              image: foodImage
+          };
+      }
+  }
+
+  saveCartToLocalStorage();
+  updateCartDisplay();
+}
+}
+
+
+ 
+  function updateQuantityDisplay(container, quantity) {
+      var quantityDisplay = container.querySelector(".quantity-display");
+      quantityDisplay.innerText = quantity;
+  }
+
+  
+  function updateCartDisplay() {
+      var cartItemsDiv = document.getElementById("cart-items");
+      cartItemsDiv.innerHTML = "";
+
+      for (var foodId in cart) {
+          var item = cart[foodId];
+          var itemElement = document.createElement("div");
+          itemElement.innerText = item.title + " - " + item.quantity + item.price;
+          cartItemsDiv.appendChild(itemElement);
+      }
+  }
+
+
+  function saveCartToLocalStorage() {
+      localStorage.setItem("cart", JSON.stringify(cart));
+  }
+
+
+  if (Object.keys(cart).length > 0) {
+      updateCartDisplay();
+  }
+
+
+  window.addEventListener("beforeunload", function() {
+      saveCartToLocalStorage();
+  });
+
+  function checkout() {
+      console.log(cart);
+      localStorage.removeItem("cart");
+  }
+</script>
 {% endblock %}

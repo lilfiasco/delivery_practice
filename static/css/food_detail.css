@@ -38,17 +38,22 @@ display: flex;
 align-items: center;
 }
 
+
 .quantity-button {
-width: 30px;
-height: 30px;
-background-color: #f0f0f0;
-border: none;
-outline: none;
-cursor: pointer;
-display: flex;
-justify-content: center;
-align-items: center;
-font-size: 16px;
+  width: 30px;
+  height: 30px;
+  background-color: #f0f0f0;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+}
+
+.quantity-button:hover {
+  transform: scale(1.05);
 }
 
 .quantity-value {
@@ -175,5 +180,6 @@ text-decoration: underline;
     margin-left: 0;
   }
 }
+
 
 
