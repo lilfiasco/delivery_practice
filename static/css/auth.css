@@ -210,7 +210,7 @@ a.icon {
         cursor: pointer;
     }
     a.icon {
-        display: none;
+        display: block;
     }
 }
 
@@ -257,6 +257,9 @@ a.icon {
     }
     .navbar{
         width: 100%;
+    }
+    a.icon {
+        display: block;
     }
 }
 

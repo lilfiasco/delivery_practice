@@ -34,6 +34,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import DetailView, UpdateView
 from django.utils.decorators import method_decorator
+from rest_framework.generics import CreateAPIView
 
 #Local
 from auths import (
@@ -147,47 +148,9 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
         messages.success(self.request, 'Профиль успешно обновлен!')
         return super().form_valid(form)
 
-# class CustomUserPasswordChange(View):
-   
 
-#     template_name: str = "auths/change_password.html"
-
-#     def get(self, request, *args, **kwargs):
-#         context = {
-#             "user": request.user
-#         }
-#         return render(request, self.template_name, context)
-
-#     def post(
-#         self,
-#         request,
-#         *args: tuple,
-#         **kwargs: dict
-#     ) -> HttpResponse:
-
-#         old_password = request.POST.get('old_pass')
-#         new_password = request.POST.get('new_pass')
-#         confirm_new_passord = request.POST.get('confirm_new_pass')
-#         user = authenticate(
-#             phone_number=request.user.phone_number,
-#             password=old_password
-#         )
-#         if not user:
-#             return HttpResponse("U cant")
-        
-#         user.password = make_password(
-#             new_password
-#         )
-#         user.save(
-#             update_fields=(
-#                 'password',
-#             )
-#         )
-
-#         return HttpResponse("жесть работает?")
 class CustomUserPasswordChange(View):
     template_name = "auths/change_password.html"
-    # user = get_object_or_404(models.CustomUser)
     def get(self, request, *args, **kwargs):
         context = {"user": request.user}
         
@@ -195,8 +158,6 @@ class CustomUserPasswordChange(View):
 
     def post(self, request, *args, **kwargs):
         current_password = request.POST.get("old_pass")
-        # new_password = request.POST.get("new_pass")
-        # confirm_new_password = request.POST.get("confirm_new_pass")
         if current_password:
             if request.user.check_password(current_password):
                 new_password = request.POST.get('new_pass', '').strip()
@@ -223,39 +184,19 @@ class CustomUserPasswordChange(View):
                     'messages':messages,
                 }
                 return render(request, 'auths/change_profile', context)
-        # user = authenticate(
-        #     phone_number=request.user.phone_зnumber, password=old_password
-        # )
-        # if not user:
-        #     return HttpResponse("Incorrect Password")
-
-        # if new_password and confirm_new_password and new_password == confirm_new_password:
-        #     user.password = make_password(new_password)
-        #     user.save(update_fields=("password",))
-        #     return HttpResponse("Password updated successfully")
-        # else:
-        #     message = "New Password and Confirm Password should match"
-        #     context = {"user": user, "message": message}
-        #     return render(request, self.template_name, context)
+            
 
 
 
+from .serializers import OrderSerializer
 
+class OrderCreateAPIView(CreateAPIView):
+    serializer_class = OrderSerializer
 
+    def perform_create(self, serializer):
+        serializer.validated_data['customer'] = self.request.user
 
+        total_price = 0
+        serializer.validated_data['total_price'] = total_price
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        serializer.save()

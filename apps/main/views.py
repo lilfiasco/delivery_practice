@@ -193,3 +193,7 @@ class FoodDetailView(View):
 def cart_view(request):
     return render(request, 'food/cart.html')
 
+
+
+
+

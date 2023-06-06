@@ -7,7 +7,7 @@
 {% load widget_tweaks %}
 
 
-<a href="/menu" class="back-link mt-5 ml-5">
+<a  class="back-link ml-5 mt-5" href="/franchise">
     <span class="arrow">&#8592;</span>
     Вернуться к поиску
 </a>
@@ -22,20 +22,20 @@
 </div>
 <div class="cart ml-6 mr-6 mt-3">
     <div class="col-12 mr-4 d-flex flex-row justify-content-between">
-        
+
         <div id="cartItems" class="container">
-            aaa
+            
         </div>
 
         <div id="cartTitle" class="cart-title">
-            ...
+
         </div>
 
         <div class="button-wrapper">
             <div class="quantity-wrapper mr-3">
-              <button class="quantity-button" onclick="decreaseQuantity()">-</button>
-              <p class="quantity-value">0</p>
-              <button class="quantity-button" onclick="increaseQuantity()">+</button>
+                <button class="quantity-button" onclick="decreaseQuantity()">-</button>
+                <p class="quantity-value">0</p>
+                <button class="quantity-button" onclick="increaseQuantity()">+</button>
             </div>
         </div>
 
@@ -44,40 +44,70 @@
         </div>
 
         <div>
-            <img class="cart-icon" src="https://www.citypng.com/public/uploads/preview/rubbish-bin-basket-trash-white-icon-11637141431rrxgucag5m.png">
+            <img class="cart-icon"
+                src="https://www.citypng.com/public/uploads/preview/rubbish-bin-basket-trash-white-icon-11637141431rrxgucag5m.png">
         </div>
 
         <div class="cart-modal ml-6">
             <p class="from-modal">Итого:</p>
-            <p class="from-modal">Доставка:</p><hr class="hr-cart">
+            <p class="from-modal">Доставка:</p>
+            <hr class="hr-cart">
             <p class="from-modal">Всего к оплате:</p>
+            {% if user.is_authenticated %}
+            <button type="button" class="cart-button" data-mdb-toggle="modal" data-mdb-target="#exampleModal" >Оформить заказ</button>
+            {% else %}
+            <button class="cart-button" href="#">Оформить заказ</button>
+            {% endif%}
+            <button type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
+                Launch demo modal
+              </button>
+            
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                      <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">...</div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
         </div>
     </div>
 </div>
-{% if user.is_authenticated %}
+<!-- {% if user.is_authenticated %}
 <button class="cart-button" type="submit"><a href="/">Оформить заказ</a></button>
 {% else %}
 <button class="cart-button" type="submit"><a href="{% url 'login' %}">Оформить заказ</a></button>
-{% endif%}
-<div id="cartItems" class="container">
-    asdasdasd
-</div>
+{% endif%} -->
 
+
+
+
+
+
+<script src="/static/js/Cart.js"></script>
 <script>
     let quantityValue = 0;
-  
+
     function decreaseQuantity() {
-      if (quantityValue > 0) {
-        quantityValue--;
-        document.querySelector('.quantity-value').textContent = quantityValue;
-      }
+        if (quantityValue > 0) {
+            quantityValue--;
+            document.querySelector('.quantity-value').textContent = quantityValue;
+        }
     }
-  
+
     function increaseQuantity() {
-      quantityValue++;
-      document.querySelector('.quantity-value').textContent = quantityValue;
+        quantityValue++;
+        document.querySelector('.quantity-value').textContent = quantityValue;
     }
-  </script>
+</script>
 
 
 <script>
@@ -93,22 +123,72 @@
                 var image = item.image;
                 var price = item.price;
 
-                var li = document.createElement("li");
-                li.textContent = title + " - Количество: " + quantity + " " + price * quantity;
-                cartItemsElement.appendChild(li);
+                var container = document.createElement("div");
+                container.classList.add("cartItemContainer");
 
                 var img = document.createElement('img');
                 img.src = "/media/" + image;
-                img.width = 300;
-                img.height = 250;
-                img.classList.add("cartItemImage");  // Add a CSS class to the element
-                cartItemsElement.appendChild(img);
+                img.width = 100;
+                img.height = 100;
+                img.classList.add("cartItemImage");
 
+                var info = document.createElement("div");
+                info.classList.add("cartItemInfo");
 
+                var titleElement = document.createElement("p");
+                titleElement.textContent = title;
+
+                var quantityElement = document.createElement("p");
+                quantityElement.textContent = "Количество: ";
+
+                var quantityValue = document.createElement("span");
+                quantityValue.textContent = quantity;
+                quantityValue.classList.add("quantityValue");
+
+                var decreaseButton = document.createElement("button");
+                decreaseButton.textContent = "-";
+                decreaseButton.classList.add("quantityButton");
+                decreaseButton.addEventListener("click", decreaseQuantity);
+
+                var increaseButton = document.createElement("button");
+                increaseButton.textContent = "+";
+                increaseButton.classList.add("quantityButton");
+                increaseButton.addEventListener("click", increaseQuantity);
+
+                var priceElement = document.createElement("p");
+                priceElement.textContent = "Цена: " + price * quantity;
+
+                info.appendChild(titleElement);
+                quantityElement.appendChild(decreaseButton);
+                quantityElement.appendChild(quantityValue);
+                quantityElement.appendChild(increaseButton);
+                info.appendChild(quantityElement);
+                info.appendChild(priceElement);
+
+                container.appendChild(img);
+                container.appendChild(info);
+
+                cartItemsElement.appendChild(container);
             }
         }
     });
+
+    function decreaseQuantity() {
+        var quantityValue = parseInt(this.parentNode.querySelector(".quantityValue").textContent);
+        if (quantityValue > 0) {
+            quantityValue--;
+            this.parentNode.querySelector(".quantityValue").textContent = quantityValue;
+        }
+    }
+
+    function increaseQuantity() {
+        var quantityValue = parseInt(this.parentNode.querySelector(".quantityValue").textContent);
+        quantityValue++;
+        this.parentNode.querySelector(".quantityValue").textContent = quantityValue;
+    }
 </script>
+
+
 
 
 
