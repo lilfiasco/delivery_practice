@@ -224,10 +224,7 @@ def cart_view(request):
 @csrf_exempt
 def checkout(request):
     if request.method == 'POST':
-        
         print(request.body)
-        
-       
         return HttpResponse('Success')  
     else:
-        ...
+        pass
