@@ -1,3 +1,11 @@
+.franchise-media {
+  width: 300px;
+  height: 100%;
+}
+
+
+
+
 h2 {
         color: white;
 
@@ -259,29 +267,11 @@ li .ftitle {
 
 .ftitle:active { text-decoration: none; }
 
-.custom-card {
-  word-wrap: break-word;
-  background-color: #383838;
-  background-clip: border-box;
-  border-radius: 0.25rem;
-  margin: 10px 10px;
-  margin-left: 20px;
-}
-
 .food-link {
   text-decoration: none;
 }
 
-.food-link:link { text-decoration: none; }
 
-
-.food-link:visited { text-decoration: none; }
-
-
-.food-link:hover { text-decoration: none; }
-
-
-.food-link:active { text-decoration: none; }
 
 .clist{
   display: flex;

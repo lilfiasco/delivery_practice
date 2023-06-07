@@ -196,6 +196,8 @@ class OrderCreateAPIView(CreateAPIView):
     def perform_create(self, serializer):
         serializer.validated_data['customer'] = self.request.user
 
+        
+
         total_price = 0
         serializer.validated_data['total_price'] = total_price
 

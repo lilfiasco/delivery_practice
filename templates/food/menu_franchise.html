@@ -1,64 +1,79 @@
 {% extends 'base.html' %}
+
 {% block content %}
-
-{% load static %}
-
-{% load widget_tweaks %}
-
+    {% load static %}
+    {% load widget_tweaks %}
+    
     <div class="row">
-            <div class="col-md-2  pr-2 py-2">
-                <a href="/franchise" class="back-link mt-5 ">
-                    <span class="arrow">&#8592;</span>
-                    Вернуться к списку франшиз
-                  </a>
-                <div class="filter-menu">
-                    <form method="GET" id="filter-form">
-                        <a class="text-white ficon" id="f-icon"><img class="spoon_fork" src="https://i.postimg.cc/Dzvp5qFc/che.png"></a>
-                        {% for category in categories %}
-                            <li><a href="/menu/?category={{ category.title }}" class="ftitle">{{ category.title }}</a></li>
-                        {% endfor %}
-                    </form>
-                </div>
+        <div class="col-md-2 pr-2 py-2">
+            <a href="/franchise" class="back-link mt-5 ml-5">
+                <span class="arrow">&#8592;</span>
+                Вернуться к поиску
+            </a>
+            <div class="filter-menu">
+                <ul>
+                    {% for category in franchise.categories.all %}
+                        <li><a href="/franchise/{{ franchise.id }}/?category={{ category.slug }}" class="ftitle">{{ category.title }}</a></li>
+                    {% endfor %}
+                </ul>
             </div>
-            <div class="col-12 col-md-8 pr-2 py-2">
-                <div class="form-outline">
-                    <p class='page-name'> Все товары</p>
-                    <input type="search" id="form1" class="search-food" placeholder="Type query" aria-label="Search"/>
-                </div>
-                <div class="row">
-                    {% if food %}
-                        {% for item in food %}
-                            <div class="col-12  col-sm-6 col-md-6 col-lg-4">
-                                <div class="row custom-card ml-5">
-                                    <div class="col-6 pl-2 py-2 d-flex flex-column justify-content-around align-items-center">
-                                        <a href="{{item.slug}}" class="food-link"><h5 class="ctitle">{{ item.title }}</h5></a>
-                                        <p class="ctext">{{ item.price }}</p>
-                                        <div class="row">
-                                            <button class="decrement" onclick="changeQuantity(this, -1)">-</button>
-                                              <span class="quantity-display" data-quantity="0">0</span>
-                                            <button class="increment" class="button-food" onclick="changeQuantity(this, 1)"  data-food-id="{{ item.id }}" data-food-title="{{ item.title }}" data-food-price="{{ item.price }}" data-food-image="{{ item.image }}" data-food-quantity="0" onclick="addToCart(this)">+</button>
-                                      </div>
+        </div>
+        <div class="col-12 col-md-8 pr-2 py-2">
+            <div class="form-outline">
+                <p class='page-name'> Все товары</p>
+                <input type="search" id="form1" class="search-food" placeholder="Type query" aria-label="Search"/>
+            </div>
+            <div class="row">
+                {% if food %}
+                    {% for item in food %}
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+                            <div class="row custom-card ml-5">
+                                <div class="col-6 pl-2 py-2 d-flex flex-column justify-content-around align-items-center">
+                                    <a href="/{{item.slug}}" class="food-link">
+                                        <h5 class="ctitle">{{ item.title }}</h5>
+                                    </a>
+                                    <p class="ctext">{{ item.price }}</p>
+                                    <div class="row">
+                                        <button class="decrement" onclick="changeQuantity(this, -1)">-</button>
+                                        <span class="quantity-display" data-quantity="0">0</span>
+                                        <button class="increment button-food" onclick="changeQuantity(this, 1)" data-food-id="{{ item.id }}" data-food-title="{{ item.title }}" data-food-price="{{ item.price }}" data-food-image="{{ item.image }}" data-food-quantity="0" onclick="addToCart(this)">+</button>
+                                    </div>
               
-                                      <div class="button-wrapper"  hidden >
-                                          <button  type="button"  class="button-food" data-food-id="{{ item.id }}" data-food-title="{{ item.title }}" data-food-price="{{ item.price }}" data-food-image="{{ item.image }}" data-food-quantity="0" onclick="addToCart(this)">Добавить в корзину</button>
-                                      </div>
-                                        </div>
-                                        <div class="col-6 p-0">
-                                            <a href="{{item.slug}}"><img src="{{ item.image.url }}" class="img-fluid"></a>
-                                       </a> 
+                                    <div class="button-wrapper" hidden>
+                                        <button type="button" class="button-food" data-food-id="{{ item.id }}" data-food-title="{{ item.title }}" data-food-price="{{ item.price }}" data-food-image="{{ item.image }}" data-food-quantity="0" onclick="addToCart(this)">Добавить в корзину</button>
                                     </div>
                                 </div>
+                                <div class="col-6 p-0">
+                                    <a href="/{{item.slug}}" class="food-link">
+                                        <img src="{{ item.image.url }}" class="img-fluid" style="width: auto; height: 100%;">
+                                    </a>
+                                </div>
                             </div>
-                        {% endfor %}
-                        {% else %}
-                            <p class='pdd'>No food items found.</p>
-                        {% endif %}
-                </div>
-                <script src="/static/js/menu.js"></script>
-                <script>
-                    var savedCart = JSON.parse(localStorage.getItem("cart")) || {};
-            
-                    var foodItems = document.querySelectorAll('.button-food');
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class='pdd'>No food items found.</p>
+                {% endif %}
+            </div>
+            <script src="/static/js/menu.js"></script>
+            <script>
+                var savedCart = JSON.parse(localStorage.getItem("cart")) || {};
+                var cart = savedCart;
+
+                // Clear the cart
+                function clearCart() {
+                    cart = {};
+                    saveCartToLocalStorage();
+                    updateCartDisplay();
+                }
+
+                // Function to handle franchise change
+                function changeFranchise(franchiseId) {
+                    clearCart();
+                    // You can perform any additional logic here, such as updating the UI or making an API request to fetch the menu for the selected franchise
+                }
+
+                var foodItems = document.querySelectorAll('.button-food');
                     foodItems.forEach(function(item) {
                     var foodId = item.getAttribute("data-food-id");
                     if (foodId in savedCart) {

@@ -26,8 +26,11 @@
         </div>
         <div>
           <ul>
+          {% if user.coworker.is_authenticated %}
+          {% else %}
             <a href="{% url 'menu' %}">Меню</a>
             <a href="{% url 'franchise' %}">Рестораны</a>
+          {% endif %}
             <a href="#">Рекомендации</a>
           {% if user.coworker.is_authenticated %}
             <a href="{% url 'franchise_detail' pk=user.coworker.franchise.pk %}">Франшиза</a>

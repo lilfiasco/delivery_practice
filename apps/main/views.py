@@ -136,30 +136,35 @@ class FranchiseDetailView(DetailView):
         return context
     
 
+
+
+
+
 class MenuFranchiseView(ListView):
     model = models.Food
     template_name = 'food/menu_franchise.html'
     context_object_name = 'food'
-    # paginate_by = 10
 
     def get_queryset(self):
         queryset = super().get_queryset()
+
         franchise_id = self.kwargs.get('franchise_id')
+        franchise = get_object_or_404(models.Franchise, id=franchise_id)
         
-        if franchise_id:
-            queryset = queryset.filter(franchise_id=franchise_id)
+        category = self.request.GET.get('category')
+        if category:
+            queryset = queryset.filter(category__slug=category)
         
-        return queryset
-    
+        return queryset.filter(franchise=franchise)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['franchise'] = models.Franchise.objects.all()
+
+        franchise_id = self.kwargs.get('franchise_id')
+        franchise = get_object_or_404(models.Franchise, id=franchise_id)
+        context['franchise'] = franchise
+
         return context
-
-
-
-
-
 
 class FranchiseFoodEditView(UpdateView):
     model = models.Food

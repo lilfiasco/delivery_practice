@@ -66,18 +66,19 @@ color:white;
   }
 
 
-  .pegination {
+  .pagination {
     margin-top: 60px;
     margin-bottom: 60px;
+    justify-content: center;
 }
 
-.pegination .nav-links {
+.pagination .nav-links {
     margin: 0;
     padding: 0;
     text-align: center;
 }
 
-.pegination .nav-links .page-numbers {
+.pagination .nav-links .page-numbers {
     border: 1px solid rgb(12, 240, 88);
     border-radius: 50%;
     color: rgb(12, 240, 88);
@@ -97,17 +98,17 @@ color:white;
     margin: 0 20px 0 40px;
 }
 
-.pegination .nav-links .page-numbers.current {
+.pagination .nav-links .page-numbers.current {
     background: rgb(12, 240, 88);
     color: #fff;
 }
 
-.pegination .nav-links .page-numbers:hover {
+.pagination .nav-links .page-numbers:hover {
     background: rgb(12, 240, 88);
     color: #fff;
 }
 
-.pegination .nav-links a {
+.pagination .nav-links a {
     text-decoration: none;
 }
   

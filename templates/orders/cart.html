@@ -7,7 +7,7 @@
 {% load widget_tweaks %}
 
 
-<a  class="back-link ml-5 mt-5" href="/franchise">
+<a class="back-link ml-5 mt-5" href="/franchise">
     <span class="arrow">&#8592;</span>
     Вернуться к поиску
 </a>
@@ -24,14 +24,14 @@
     <div class="col-12 mr-4 d-flex flex-row justify-content-between">
 
         <div id="cartItems" class="container">
-            
+
         </div>
 
         <div id="cartTitle" class="cart-title">
 
         </div>
 
-        <div class="button-wrapper">
+        <!-- <div class="button-wrapper">
             <div class="quantity-wrapper mr-3">
                 <button class="quantity-button" onclick="decreaseQuantity()">-</button>
                 <p class="quantity-value">0</p>
@@ -46,7 +46,7 @@
         <div>
             <img class="cart-icon"
                 src="https://www.citypng.com/public/uploads/preview/rubbish-bin-basket-trash-white-icon-11637141431rrxgucag5m.png">
-        </div>
+        </div> -->
 
         <div class="cart-modal ml-6">
             <p class="from-modal">Итого:</p>
@@ -54,30 +54,52 @@
             <hr class="hr-cart">
             <p class="from-modal">Всего к оплате:</p>
             {% if user.is_authenticated %}
-            <button type="button" class="cart-button" data-mdb-toggle="modal" data-mdb-target="#exampleModal" >Оформить заказ</button>
+            <button type="button" class="cart-button" data-mdb-toggle="modal" data-mdb-target="#exampleModal">Оформить
+                заказ</button>
             {% else %}
             <button class="cart-button" href="#">Оформить заказ</button>
             {% endif%}
             <button type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
                 Launch demo modal
-              </button>
-            
-              <!-- Modal -->
-              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
                 <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                      <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <button type="button" class="btn-close" data-mdb-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">...</div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
                     </div>
-                    <div class="modal-body">...</div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                  </div>
                 </div>
-              </div>
+            </div>
+            <script>
+                // Get the modal element
+                const modal = document.getElementById('exampleModal');
+
+                // Create a new Bootstrap Modal instance
+                const bootstrapModal = new bootstrap.Modal(modal);
+
+                // Open the modal when the button is clicked
+                const triggerButton = document.querySelector('.btn-primary');
+                triggerButton.addEventListener('click', function () {
+                    bootstrapModal.show();
+                });
+
+                // Close the modal when the "Close" button is clicked
+                const closeButton = document.querySelector('.btn-close');
+                closeButton.addEventListener('click', function () {
+                    bootstrapModal.hide();
+                });
+            </script>
         </div>
     </div>
 </div>
@@ -158,17 +180,25 @@
                 var priceElement = document.createElement("p");
                 priceElement.textContent = "Цена: " + price * quantity;
 
+                var imageElement = document.createElement("img");
+                imageElement.src = "https://www.citypng.com/public/uploads/preview/rubbish-bin-basket-trash-white-icon-11637141431rrxgucag5m.png";
+                imageElement.width = 20;
+                imageElement.height = 20;
+                imageElement.classList.add("additionalImage");
+
                 info.appendChild(titleElement);
                 quantityElement.appendChild(decreaseButton);
                 quantityElement.appendChild(quantityValue);
                 quantityElement.appendChild(increaseButton);
                 info.appendChild(quantityElement);
                 info.appendChild(priceElement);
+                info.appendChild(imageElement);
 
                 container.appendChild(img);
                 container.appendChild(info);
 
                 cartItemsElement.appendChild(container);
+
             }
         }
     });

@@ -27,8 +27,8 @@
                 <div class="row">
                     {% if food %}
                         {% for item in food %}
-                            <div class="col-12  col-sm-6 col-md-6 col-lg-4">
-                                <div class="row custom-card ml-5">
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+                                <div class="row custom-card ">
                                     <div class="col-6 pl-2 py-2 d-flex flex-column justify-content-around align-items-center">
                                         <a href="{{item.slug}}" class="food-link"><h5 class="ctitle">{{ item.title }}</h5></a>
                                         <p class="ctext">{{ item.price }}</p>
@@ -36,15 +36,15 @@
                                             <button class="decrement" onclick="changeQuantity(this, -1)">-</button>
                                               <span class="quantity-display" data-quantity="0">0</span>
                                             <button class="increment" class="button-food" onclick="changeQuantity(this, 1)"  data-food-id="{{ item.id }}" data-food-title="{{ item.title }}" data-food-price="{{ item.price }}" data-food-image="{{ item.image }}" data-food-quantity="0" onclick="addToCart(this)">+</button>
-                                      </div>
-              
-                                      <div class="button-wrapper"  hidden >
-                                          <button  type="button"  class="button-food" data-food-id="{{ item.id }}" data-food-title="{{ item.title }}" data-food-price="{{ item.price }}" data-food-image="{{ item.image }}" data-food-quantity="0" onclick="addToCart(this)">Добавить в корзину</button>
-                                      </div>
                                         </div>
-                                        <div class="col-6 p-0">
-                                            <a href="{{item.slug}}"><img src="{{ item.image.url }}" class="img-fluid"></a>
-                                       </a> 
+              
+                                        <div class="button-wrapper"  hidden >
+                                            <button  type="button"  class="button-food" data-food-id="{{ item.id }}" data-food-title="{{ item.title }}" data-food-price="{{ item.price }}" data-food-image="{{ item.image }}" data-food-quantity="0" onclick="addToCart(this)">Добавить в корзину</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 p-0">
+                                        <a href="{{item.slug}}" ><img src="{{ item.image.url }}" class="img-fluid" style="width: auto; height: 100%;"></a>
+                                        </a> 
                                     </div>
                                 </div>
                             </div>

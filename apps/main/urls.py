@@ -30,6 +30,8 @@ urlpatterns = [
     path('franchise/<int:franchise_id>/',MenuFranchiseView.as_view(), name='menu_franchise'),
     path('/franchise/<int:pk>/edit', FranchiseDetailView.as_view(), name='franchise_detail'),
     path('<slug:slug>/', FoodDetailView.as_view(),name="food_slug" ),
+    
+    # Коворкер редачит
     path('franchise/<int:pk>/<slug:slug>/', FranchiseFoodEditView.as_view(),name="food_edit" ),
 
 ]
