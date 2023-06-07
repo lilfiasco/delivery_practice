@@ -3,17 +3,32 @@
     height: 250px;;
 }
 
-h5 {
+.franchise_list_title {
 color:white;
-
+margin-left: 10%;
+font-size: 25px;
+font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.search-food{
+    background-color: rgb(255, 255, 255);
+    border: 2px solid rgb(12, 240, 88); 
+    float: none;
+    display: block;
+    text-align: left;
+    width: 78%;
+    height: 15px;
+    margin: 5px 5px;
+    padding: 14px;
+    border-radius: 20px;
+    margin-left: 10%;
 }
 
 .mt-3 {
-    margin-top: 2rem !important;
+    margin-top: 2rem;
 }
 
 .ml-3 {
-    margin-left: 4rem !important;
+    margin-left: 4rem;
 }
 
 .franchise_list {
@@ -112,3 +127,19 @@ color:white;
     text-decoration: none;
 }
   
+
+@media (max-width: 1199px) {
+    .franchise_list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .franchise-media {
+        width: 190px;
+        height: 200px;
+    }
+
+    .container_franchise_text {
+        width: 190px;
+        
+    }
+}

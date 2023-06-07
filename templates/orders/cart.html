@@ -6,16 +6,10 @@
 
 {% load widget_tweaks %}
 
-
-<a class="back-link ml-5 mt-5" href="/franchise">
+<a href="/menu" class="back-link mt-5 ml-5">
     <span class="arrow">&#8592;</span>
     Вернуться к поиску
 </a>
-
-<!-- <h1 style="color: white">Корзина</h1>
-<ul id="cart-items" style="color: white"></ul> -->
-
-<h1></h1>
 
 <div class="title-cart ml-4">
     <h2>Ваша корзина</h2>
@@ -103,34 +97,38 @@
         </div>
     </div>
 </div>
-<!-- {% if user.is_authenticated %}
-<button class="cart-button" type="submit"><a href="/">Оформить заказ</a></button>
+
+{% if user.is_authenticated %}
+<button class="cart-button" id="checkoutButton" type="button">Оформить заказ</button>
 {% else %}
-<button class="cart-button" type="submit"><a href="{% url 'login' %}">Оформить заказ</a></button>
-{% endif%} -->
+<button class="cart-button" type="button"><a href="{% url 'login' %}">Оформить заказ</a></button>
+{% endif %}
+
+<div id="cartItems" class="container">
+    asdasdasd
+</div>
 
 
 
 
 
 
-<script src="/static/js/Cart.js"></script>
+
 <script>
     let quantityValue = 0;
-
+  
     function decreaseQuantity() {
-        if (quantityValue > 0) {
-            quantityValue--;
-            document.querySelector('.quantity-value').textContent = quantityValue;
-        }
-    }
-
-    function increaseQuantity() {
-        quantityValue++;
+      if (quantityValue > 0) {
+        quantityValue--;
         document.querySelector('.quantity-value').textContent = quantityValue;
+      }
+    }
+  
+    function increaseQuantity() {
+      quantityValue++;
+      document.querySelector('.quantity-value').textContent = quantityValue;
     }
 </script>
-
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -145,82 +143,65 @@
                 var image = item.image;
                 var price = item.price;
 
-                var container = document.createElement("div");
-                container.classList.add("cartItemContainer");
+                var li = document.createElement("li");
+                li.textContent = title + " - Количество: " + quantity + " " + price * quantity;
+                cartItemsElement.appendChild(li);
 
                 var img = document.createElement('img');
                 img.src = "/media/" + image;
-                img.width = 100;
-                img.height = 100;
-                img.classList.add("cartItemImage");
-
-                var info = document.createElement("div");
-                info.classList.add("cartItemInfo");
-
-                var titleElement = document.createElement("p");
-                titleElement.textContent = title;
-
-                var quantityElement = document.createElement("p");
-                quantityElement.textContent = "Количество: ";
-
-                var quantityValue = document.createElement("span");
-                quantityValue.textContent = quantity;
-                quantityValue.classList.add("quantityValue");
-
-                var decreaseButton = document.createElement("button");
-                decreaseButton.textContent = "-";
-                decreaseButton.classList.add("quantityButton");
-                decreaseButton.addEventListener("click", decreaseQuantity);
-
-                var increaseButton = document.createElement("button");
-                increaseButton.textContent = "+";
-                increaseButton.classList.add("quantityButton");
-                increaseButton.addEventListener("click", increaseQuantity);
-
-                var priceElement = document.createElement("p");
-                priceElement.textContent = "Цена: " + price * quantity;
-
-                var imageElement = document.createElement("img");
-                imageElement.src = "https://www.citypng.com/public/uploads/preview/rubbish-bin-basket-trash-white-icon-11637141431rrxgucag5m.png";
-                imageElement.width = 20;
-                imageElement.height = 20;
-                imageElement.classList.add("additionalImage");
-
-                info.appendChild(titleElement);
-                quantityElement.appendChild(decreaseButton);
-                quantityElement.appendChild(quantityValue);
-                quantityElement.appendChild(increaseButton);
-                info.appendChild(quantityElement);
-                info.appendChild(priceElement);
-                info.appendChild(imageElement);
-
-                container.appendChild(img);
-                container.appendChild(info);
-
-                cartItemsElement.appendChild(container);
-
+                img.width = 300;
+                img.height = 250;
+                img.classList.add("cartItemImage");  // Add a CSS class to the element
+                cartItemsElement.appendChild(img);
             }
         }
     });
 
-    function decreaseQuantity() {
-        var quantityValue = parseInt(this.parentNode.querySelector(".quantityValue").textContent);
-        if (quantityValue > 0) {
-            quantityValue--;
-            this.parentNode.querySelector(".quantityValue").textContent = quantityValue;
+    document.getElementById("checkoutButton").addEventListener("click", function () {
+        var cartItems = JSON.parse(localStorage.getItem("cart"));
+        var data = [];
+
+        for (var key in cartItems) {
+            if (cartItems.hasOwnProperty(key)) {
+                var item = cartItems[key];
+                var foodId = key;
+                var price = item.price;
+                var quantity = item.quantity;
+                var totalPrice = item.price * quantity;
+                var user = "{{ user.id }}";  // Replace with the appropriate user identifier
+
+                var order = {
+                    food_id: foodId,
+                    price: price,
+                    quantity: quantity,
+                    total_price: totalPrice,
+                    user_id: user,
+                };
+
+                data.push(order);
+            }
         }
-    }
 
-    function increaseQuantity() {
-        var quantityValue = parseInt(this.parentNode.querySelector(".quantityValue").textContent);
-        quantityValue++;
-        this.parentNode.querySelector(".quantityValue").textContent = quantityValue;
-    }
+        fetch('/order/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}',  // Include the CSRF token for Django
+            },
+            body: JSON.stringify(data),
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log("Checkout successful");
+            } else {
+                console.error("Checkout failed");
+            }
+        })
+        .catch(error => {
+            console.error("An error occurred during checkout:", error);
+        });
+    });
 </script>
-
-
-
-
 
 
 {% endblock %}

@@ -4,7 +4,10 @@
 
 {% load static %}
 
-<h5 class="franchise_list_title mt-3 ml-3">Франшизы</h5>
+<div>
+    <h5 class="franchise_list_title mt-3 ">Франшизы</h5>
+    <input type="search" id="form1" class="search-food" placeholder="Type query" aria-label="Search"/>
+</div>
 
 <div class="container">
     <div class="row">
@@ -22,6 +25,8 @@
                                     <h2 class="fran-link"><a class="link" href="{% url 'franchise_detail' franchise.id %}" style="color: aliceblue;" onclick="clearCart(event, '{{ franchise.id }}')">{{ franchise.title }}</a></h2>
                                     {% else %}
                                     <h2 class="fran-link"><a class="link" href="{% url 'menu_franchise' franchise.id %}" style="color: aliceblue;" onclick="clearCart(event, '{{ franchise.id }}')">{{ franchise.title }}</a></h2>
+                                    <h2 class="fran-link"><a class="link" href="{% url 'menu_franchise2' franchise.id %}" style="color: aliceblue;" onclick="clearCart(event, '{{ franchise.id }}')">a{{ franchise.title }}</a></h2>
+                                    
                                     {% endif %}
                                 </div>
                             </div>

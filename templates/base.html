@@ -31,7 +31,7 @@
             <a href="{% url 'menu' %}">Меню</a>
             <a href="{% url 'franchise' %}">Рестораны</a>
           {% endif %}
-            <a href="#">Рекомендации</a>
+            <!-- <a href="#">Рекомендации</a> -->
           {% if user.coworker.is_authenticated %}
             <a href="{% url 'franchise_detail' pk=user.coworker.franchise.pk %}">Франшиза</a>
           {% else %}
@@ -91,20 +91,12 @@
               </li>
             </ul>
           </div>
-          <div class="d-none col-md-10 d-md-flex justify-content-center">
-              <a class="nav-link" href="{% url 'menu' %}">Меню <span class="sr-only">(current)</span></a>
-              <a class="nav-link" href="{% url 'franchise' %}">Рестораны</a>
-              <a class="nav-link" href="#">Рекомендации</a>
-              {% if user.coworker.is_authenticated %}
-                <a class="nav-link" href="{% url 'franchise_detail' pk=user.coworker.franchise.pk %}">Франшиза</a>
-              {% else %}
-                <a class="nav-link" href="/cart/">Корзина</a>
-              {% endif %}
-              {% if user.is_authenticated %}
+          <div>
+            {% if user.is_authenticated %}
                 <button type="button" class="button-auth" ><a href="{% url 'profile' user.pk %}" class="data-toggle-a">Профиль</a></button>
               {% else %}
                 <button type="button" class="button-reg"><a href="{% url 'login' %}" class="data-toggle-a">Авторизация</a></button>
-              {% endif %}
+            {% endif %}
           </div>
         </div>
       </div> -->

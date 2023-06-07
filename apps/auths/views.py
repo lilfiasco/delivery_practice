@@ -41,6 +41,7 @@ from auths import (
     forms,
     models,
 )
+from main import models as m_models
 
 
 class UserRegisrtrationView(CreateView):
@@ -189,16 +190,26 @@ class CustomUserPasswordChange(View):
 
 
 from .serializers import OrderSerializer
+from rest_framework import mixins, viewsets, response, status
 
-class OrderCreateAPIView(CreateAPIView):
+class OrderCreateViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, viewsets.GenericViewSet):
+    """
+    ViewSet class to transfer Cart's js data to array and rewrite as Order object.
+    """
+    
+    queryset = models.Order.objects.all()
     serializer_class = OrderSerializer
 
-    def perform_create(self, serializer):
-        serializer.validated_data['customer'] = self.request.user
-
+    def create(self, request, *args, **kwargs):
+        is_many = isinstance(request.data, list)
+        if not is_many:
+            return super(OrderCreateViewSet, self).create(request, *args, **kwargs)
+        else:
+            print("ASDASDASD: ", request.data)
+            serializer = self.get_serializer(data=request.data, many=True)
+            serializer.is_valid(raise_exception=True)
+            self.perform_create(serializer)
+            headers=self.get_success_headers(serializer.data)
+            return response.Response(serializer.data, status.HTTP_201_CREATED, headers=headers)
+            print("AAAAAAAAAAAAAAAA REQUEST DATA CHECK:", self.request.data)
         
-
-        total_price = 0
-        serializer.validated_data['total_price'] = total_price
-
-        serializer.save()

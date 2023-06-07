@@ -146,11 +146,6 @@ class Order(models.Model):
     Order model.
     """
 
-    customer = models.ForeignKey(
-        CustomUser,
-        on_delete=models.CASCADE,
-        verbose_name="заказчик"
-    )
     food = models.ForeignKey(
         Food,
         on_delete=models.CASCADE,
@@ -165,6 +160,11 @@ class Order(models.Model):
     )
     total_price = models.PositiveIntegerField(
         verbose_name="итоговая цена"
+    )
+    user = models.ForeignKey(
+        CustomUser,
+        on_delete=models.CASCADE,
+        verbose_name="заказчик"
     )
 
     class Meta:

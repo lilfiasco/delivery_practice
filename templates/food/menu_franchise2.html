@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-2 pr-2 py-2">
+        <a href="/menu/?category" class="back-link mt-5 ml-5">
+            <span class="arrow">&#8592;</span>
+            Вернуться к поиску
+        </a>
+    </div>
+    <div>
+        <a href="{% url 'menu_franchise2' franchise_id=franchise.id %}">Все категорий</a>
+        {% for category in non_empty_categories %}
+            <a href="{% url 'menu_franchise2' franchise_id=franchise.id %}?category={{ category.title }}"
+               class="category-link{% if category.title == selected_category %} active{% endif %}">
+                {{ category.title }}
+            </a>
+        {% endfor %}
+    </div>
+    <div class="col-12 col-md-8 pr-2 py-2">
+        <div class="form-outline">
+            <p class='page-name'> Все товары</p>
+            {% if selected_category %}
+                {% for food in food %}
+                    {% if food.category.title == selected_category %}
+                        <p>{{ food.title }}</p>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                {% for category in non_empty_categories %}
+                    <h3 class="category-title">{{ category.title }}</h3>
+                    {% for food in category.food_set.all %}
+                        <p>{{ food.title }}</p>
+                    {% endfor %}
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    // Get the selected category from the URL parameter
+    var urlParams = new URLSearchParams(window.location.search);
+    var selectedCategory = urlParams.get('category');
+
+    // Add the 'active' class to the selected category link
+    $(".category-link").each(function() {
+        if ($(this).text().trim() === selectedCategory) {
+            $(this).addClass("active");
+        }
+    });
+
+    // Show only the food items of the selected category
+    if (selectedCategory) {
+        $(".category-title, p").hide();
+        $(".category-title:contains(" + selectedCategory + ")").show();
+        $(".category-title:contains(" + selectedCategory + ") + p").show();
+    }
+});
+</script>
+{% endblock %}

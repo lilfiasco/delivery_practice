@@ -223,6 +223,29 @@ li .ftitle {
     }
 }
 
+@media screen and (max-width: 470px) {
+    .decrement{
+        padding: 2px 1px;
+        font-size: 8px;
+        float: left;
+    }
+    .decrement:hover{
+        background: rgb(136, 26, 9);
+    }
+    .increment {
+        padding: 2px 1px;
+        font-size: 8px;
+        float: right;
+    }
+    
+    .increment:hover{
+        background: rgb(9, 135, 51);
+    }
+
+    .quantity-display {
+        margin: 0 5px;
+    }
+}
 #container{
     margin-top:200px;
 }

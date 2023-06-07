@@ -22,14 +22,15 @@
     <div class="row">
       <div class="col-12 py-2">
         <h2 class="text-white">Моя франшиза</h2>
-        <div class="franchise-image">
-          <img class="franchise-media" src="/media/{{franchise.image}}">
-          <p class="franchise-title" style="text-align: center;margin-top: -10px;">{{ franchise.title }}</p>
-          <p class="franchise-address" style="text-align: center;">Адрес: {{ franchise.address }}</p>
+        <div class="franchise-image d-flex">
+          <!-- <div class=""> -->
+            <img class="franchise-media" src="/media/{{franchise.image}}">	
+            <div class="pl-3">
+        <p style="text-align: center;">{{ franchise.title }}</p>
+        <p style="text-align: center;">Адрес: {{ franchise.address }}</p>
       </div>
     </div>
-    <div>
-  </div>
+    </div>
 
 
     </div>

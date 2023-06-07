@@ -165,7 +165,35 @@ class MenuFranchiseView(ListView):
         context['franchise'] = franchise
 
         return context
+    
+    
+class MenuFranchiseView2(ListView):
+    model = models.Food
+    template_name = 'food/menu_franchise2.html'
+    context_object_name = 'food'
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        franchise_id = self.kwargs.get('franchise_id')
+        franchise = get_object_or_404(models.Franchise, id=franchise_id)
+        
+        category = self.request.GET.get('category')
+        if category:
+            queryset = queryset.filter(category__title=category)
+        
+        return queryset.filter(franchise=franchise)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        franchise_id = self.kwargs.get('franchise_id')
+        franchise = get_object_or_404(models.Franchise, id=franchise_id)
+        context['franchise'] = franchise
+        non_empty_categories = models.Category.objects.filter(food__franchise=franchise).annotate(food_count=Count('food')).filter(food_count__gt=0)
+        context['non_empty_categories'] = non_empty_categories
+
+        return context
 class FranchiseFoodEditView(UpdateView):
     model = models.Food
     template_name = 'food/franchise_food_edit.html'
@@ -202,3 +230,15 @@ def cart_view(request):
 
 
 
+
+
+
+
+
+# @csrf_exempt
+# def checkout(request):
+#     if request.method == 'POST':
+#         print(request.body)
+#         return HttpResponse('Success')  
+#     else:
+#         pass
