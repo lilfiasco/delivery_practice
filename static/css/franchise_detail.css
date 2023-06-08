@@ -72,6 +72,7 @@ h2 {
   transition: 20s;
   width: fit-content;
   margin-right: 7%; 
+  color:white;
 }
 
 .button-reg2 {
@@ -270,9 +271,6 @@ li .ftitle {
 .food-link {
   text-decoration: none;
 }
-
-
-
 .clist{
   display: flex;
   flex-direction: column;
@@ -282,6 +280,7 @@ li .ftitle {
 }
 .ctitle {
   color: rgb(250, 250, 250);
+  font-size: 15px;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 .ctext {
@@ -391,6 +390,34 @@ li .ftitle {
 
   .button-reg2 {
     font-size: 15px;
+  }
+}
+@media (max-width: 768px) {
+  .col-md-3 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .col-12.col-md-9 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+@media (max-width: 1024px) {
+  .franchise-image {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .pl-3 {
+    margin-top: 10px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .franchise-image {
+    margin-bottom: 20px;
   }
 }
 

@@ -28,14 +28,14 @@
                         </form>
 
                         <form action="{% url 'change_password'  %}">
-                            <button class="button-profile" type="submit">Обновить пароль</button>
+                            <button class="button-profile2" type="submit">Обновить пароль</button>
                         </form>
                     
                     <!-- <div class="justify-content-center"> -->
                     </div>
                     <div class="mt-5">
                         <form action="{% url 'logout' %}">
-                            <button class="button-exit" type="submit">Выйти из аккаунта</button>
+                            <button class="button-exit" type="submit" id="logout">Выйти из аккаунта</button>
                         </form>
                     </div>
                 </div>
@@ -46,4 +46,14 @@
         </div>
     </div>
 </div>
+<script>
+document.getElementById('logout').addEventListener('click', function(){
+ var cart = localStorage.getItem("cart");
+ if (cart){
+    localStorage.removeItem("cart");
+ } else {
+    console.log('No data found in local storage.');
+ }
+});
+</script>
 {%endblock%}

@@ -20,7 +20,7 @@
 <body>
   <div class="main">
     <div class="navbar">
-      <div class="topnav d-flex justify-content-between" id="mynavBar">
+      <div class="topnav" id="mynavBar">
         <div class="logo">
           <h2><a href="{% url 'index' %}" class="an">Area <span>Nefor</span></a></h2>
         </div>
@@ -28,7 +28,7 @@
           <ul>
           {% if user.coworker.is_authenticated %}
           {% else %}
-            <a href="{% url 'menu' %}">Меню</a>
+            <!-- <a href="{% url 'menu' %}">Меню</a> -->
             <a href="{% url 'franchise' %}">Рестораны</a>
           {% endif %}
             <!-- <a href="#">Рекомендации</a> -->
@@ -44,11 +44,11 @@
           {% if user.is_authenticated %}
               <button type="button" class="button-auth" ><a href="{% url 'profile' user.pk %}" class="data-toggle-a">Профиль</a></button>
               {% else %}
-              <button type="button" class="button-reg"><a href="{% url 'login' %}" class="data-toggle-a">Авторизация</a></button>
+              <button type="button" class="button-regg"><a href="{% url 'login' %}" class="data-toggle-a">Авторизация</a></button>
           {% endif %}
         </div>
       </div>
-    </div class="navbar">
+    </div>
       {%block content%}
       {%endblock%}
   </div>

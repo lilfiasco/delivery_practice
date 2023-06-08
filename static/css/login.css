@@ -119,6 +119,6 @@ a {
 @media (max-width: 480px) {
   .form-control,
   button {
-    width: 100%;
+    /* width: 100%; */
   }
 }

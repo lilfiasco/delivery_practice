@@ -9,6 +9,8 @@
     transition: 0.4s;
     /* display: flex;
     justify-content: center; */
+    margin-right: 1rem;
+    color: black;
 }
 .button-reg:hover {
     transform: scale(1.3);

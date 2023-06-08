@@ -177,3 +177,32 @@ class Order(models.Model):
     def __str__(self) -> str:
         return self.total_price
 
+
+class PaymentTypes(models.IntegerChoices):
+    """
+    Payment types statuses.
+    """
+
+    CASH = 1, 'Опата курьеру'
+    CARD = 2, 'Оплата картой'
+
+
+class Purchase(models.Model):
+    """
+    Purchase model.
+    """
+
+    order = models.ForeignKey(
+        Order,
+        on_delete=models.CASCADE
+    )
+    payment = models.IntegerField(
+        default=PaymentTypes.CASH, choices=PaymentTypes.choices
+    )
+
+    class Meta:
+        ordering = [
+            '-id'
+        ]
+        verbose_name = 'оплата'
+        verbose_name_plural = 'оплаты'

@@ -7,17 +7,24 @@
 {% load widget_tweaks %}
 
 <a href="/menu" class="back-link mt-5 ml-5">
-    <span class="arrow">&#8592;</span>
+    <img class="back-icon" src="https://i.postimg.cc/wTmB78pf/Vector2.png">
     Вернуться к поиску
 </a>
 
 <div class="title-cart ml-4">
-    <h2>Ваша корзина</h2>
+    <h2>Название франшизы</h2>
 </div>
+
+<div class="korzina">
+    <p>
+        Ваша корзина
+    </p>
+</div>
+
 <div class="cart ml-6 mr-6 mt-3">
     <div class="col-12 mr-4 d-flex flex-row justify-content-between">
 
-        <div id="cartItems" class="container">
+        <div id="cartItems" class="cart-items">
 
         </div>
 
@@ -58,16 +65,14 @@
             </button>
 
             <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
+            <div class="modal fade left" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                            <button type="button" class="btn-close" data-mdb-dismiss="modal"
-                                aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">...</div>
+                        <div class="modal-body">Тут будут филды корзины</div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
                             <button type="button" class="btn btn-primary">Save changes</button>
@@ -105,7 +110,7 @@
 {% endif %}
 
 <div id="cartItems" class="container">
-    asdasdasd
+
 </div>
 
 
@@ -132,30 +137,91 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        var cartItems = JSON.parse(localStorage.getItem("cart"));
+    var cartItems = JSON.parse(localStorage.getItem("cart"));
 
-        var cartItemsElement = document.getElementById("cartItems");
-        for (var key in cartItems) {
-            if (cartItems.hasOwnProperty(key)) {
-                var item = cartItems[key];
-                var title = item.title;
-                var quantity = item.quantity;
-                var image = item.image;
-                var price = item.price;
+    var cartItemsElement = document.getElementById("cartItems");
+    for (var key in cartItems) {
+        if (cartItems.hasOwnProperty(key)) {
+            var item = cartItems[key];
+            var title = item.title;
+            var quantity = item.quantity;
+            var image = item.image;
+            var price = item.price;
 
-                var li = document.createElement("li");
-                li.textContent = title + " - Количество: " + quantity + " " + price * quantity;
-                cartItemsElement.appendChild(li);
+            var container = document.createElement("div");
+            container.classList.add("cartItemContainer");
 
-                var img = document.createElement('img');
-                img.src = "/media/" + image;
-                img.width = 300;
-                img.height = 250;
-                img.classList.add("cartItemImage");  // Add a CSS class to the element
-                cartItemsElement.appendChild(img);
-            }
+            var img = document.createElement('img');
+            img.src = "/media/" + image;
+            img.width = 100;
+            img.height = 100;
+            img.classList.add("cartItemImage");
+
+            var row = document.createElement("div");
+            row.classList.add("row");
+
+            var titleElement = document.createElement("div");
+            titleElement.textContent = title;
+            titleElement.classList.add("row-item-title");
+
+            var quantityElement = document.createElement("div");
+            // quantityElement.textContent = "Количество: ";
+            quantityElement.classList.add("row-item-quantity");
+
+            var quantityValue = document.createElement("span");
+            quantityValue.textContent = quantity;
+            quantityValue.classList.add("quantityValue");
+
+            var decreaseButton = document.createElement("button");
+            decreaseButton.textContent = "-";
+            decreaseButton.classList.add("quantityButton");
+            decreaseButton.addEventListener("click", decreaseQuantity);
+
+            var increaseButton = document.createElement("button");
+            increaseButton.textContent = "+";
+            increaseButton.classList.add("quantityButton");
+            increaseButton.addEventListener("click", increaseQuantity);
+
+            var priceElement = document.createElement("div");
+            priceElement.textContent = "Цена: " + price * quantity + " ТГ";
+            priceElement.classList.add("row-item-price");
+
+            var imageElement = document.createElement("img");
+            imageElement.src = "https://i.postimg.cc/TwwwPzkw/bpmn-trash.png";
+            imageElement.width = 30;
+            imageElement.height = 30;
+            imageElement.classList.add("deleteImage");
+
+            row.appendChild(titleElement);
+            row.appendChild(quantityElement);
+            quantityElement.appendChild(decreaseButton);
+            quantityElement.appendChild(quantityValue);
+            quantityElement.appendChild(increaseButton);
+            row.appendChild(priceElement);
+            row.appendChild(imageElement);
+
+            container.appendChild(img);
+            container.appendChild(row);
+
+            cartItemsElement.appendChild(container);
         }
-    });
+    }
+});
+
+
+    function decreaseQuantity() {
+        var quantityValue = parseInt(this.parentNode.querySelector(".quantityValue").textContent);
+        if (quantityValue > 0) {
+            quantityValue--;
+            this.parentNode.querySelector(".quantityValue").textContent = quantityValue;
+        }
+    }
+
+    function increaseQuantity() {
+        var quantityValue = parseInt(this.parentNode.querySelector(".quantityValue").textContent);
+        quantityValue++;
+        this.parentNode.querySelector(".quantityValue").textContent = quantityValue;
+    }
 
     document.getElementById("checkoutButton").addEventListener("click", function () {
         var cartItems = JSON.parse(localStorage.getItem("cart"));

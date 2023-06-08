@@ -73,7 +73,7 @@ body{
     transition: 0.4s;
     text-decoration: none;
 }
-.button-reg {
+.button-regg {
     display: flex;
     border: none;
     padding: 8px 30px;
@@ -133,7 +133,7 @@ a.icon {
         text-decoration: none;
         color: white;
     }
-    .button-reg {
+    .button-regg {
         border: none;
         padding: 8px 20px;
         border-radius: 25px;
@@ -180,7 +180,7 @@ a.icon {
         padding: 8px 20px;
         border-radius: 25px;
     }
-    .button-reg {
+    .button-regg {
         padding: 8px 20px;
         border-radius: 25px;
     }
@@ -228,19 +228,19 @@ a.icon {
     .topnav ul a{
         display: none;
     }
-    .button-auth{
-        display:  none;
-    }
-    .button-reg {
-        display: none;
-    }
     .topnav ul a.icon {
         display: flex;
         color: white;
         font-size: 25px;
     }
+    .topnav.responsive .button-auth {
+        font-size: 12px;
+    }
+    .topnav.responsive .button-regg {
+        font-size: 12px;
+    }
     .topnav.responsive{
-        /* position: relative; */
+        position: relative;
     }
     .topnav.responsive .ul{
         float: none;

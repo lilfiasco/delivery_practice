@@ -129,6 +129,25 @@ nav ul a:hover{
     cursor: pointer;
 }
 
+.button-profile2 {
+    border: none;
+    background-color: rgb(42, 38, 38);;
+    border: 2px solid rgb(12, 240, 88); 
+    color: rgb(12, 240, 88);;
+    padding: 4px 20px;
+    border-radius: 15px;
+    font-weight: bold;
+    font-size: 14px;
+    transition: 0.4s;
+    margin-right: 10px;
+    display: flex;
+  }
+
+.button-profile2:hover {
+    transform: scale(1.07);
+    cursor: pointer;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 
 * {
@@ -253,27 +272,60 @@ nav ul a:hover{
         width: 100%;
         height: 440px;
     }
+
+    .form-group {
+        margin-left: 0;
+    }
+
+    .button-profile {
+        border: none;
+        background-color: rgb(42, 38, 38);;
+        border: 2px solid rgb(12, 240, 88); 
+        color: rgb(12, 240, 88);;
+        padding: 4px 20px;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 14px;
+        transition: 0.4s;
+        margin-right: 10px;
+        display: flex;
+        margin-block-start: 1rem;
+        /* gap: 10px; */
+      }
+
+    
+    .button-profile:hover {
+        transform: scale(1.07);
+        cursor: pointer;
+    }
+
+    .button-profile2 {
+        border: none;
+        background-color: rgb(42, 38, 38);;
+        border: 2px solid rgb(12, 240, 88); 
+        color: rgb(12, 240, 88);;
+        padding: 4px 20px;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 14px;
+        transition: 0.4s;
+        margin-left: 8px;
+        display: flex;
+        margin-block-start: 1rem;
+      }
+    
+    .button-profile2:hover {
+        transform: scale(1.07);
+        cursor: pointer;
+    }
+
+    .button-exit {
+        margin-left: 4rem;
+    }
 }
 
 
-  .button-profile {
-    border: none;
-    background-color: rgb(42, 38, 38);;
-    border: 2px solid rgb(12, 240, 88); 
-    color: rgb(12, 240, 88);;
-    padding: 4px 20px;
-    border-radius: 20px;
-    font-weight: bold;
-    font-size: 14px;
-    transition: 0.4s;
-    margin-right: 10px;
-    display: flex;
-  }
 
-.button-profile:hover {
-    transform: scale(1.07);
-    cursor: pointer;
-}
 a.icon {
     display: none;
 }
@@ -295,6 +347,7 @@ a.icon {
     margin-right: 5%;
     display: flex;
     justify-content: center;
+    margin-left: 4rem;
 }
 .button-exit:hover {
     transform: scale(1.07);
@@ -542,6 +595,7 @@ a.icon {
   @media screen and (max-width: 767px) {
     h1 {
       font-size: 24px;
+      margin-top: 1px;
     }
     
     .col-6 {
@@ -567,6 +621,7 @@ a.icon {
       margin-right: 10px;
     }
   }
+
  
 
 

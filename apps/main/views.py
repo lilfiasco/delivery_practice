@@ -190,10 +190,14 @@ class MenuFranchiseView2(ListView):
         franchise_id = self.kwargs.get('franchise_id')
         franchise = get_object_or_404(models.Franchise, id=franchise_id)
         context['franchise'] = franchise
+        context['selected_category'] = self.request.GET.get('category')
         non_empty_categories = models.Category.objects.filter(food__franchise=franchise).annotate(food_count=Count('food')).filter(food_count__gt=0)
         context['non_empty_categories'] = non_empty_categories
 
         return context
+
+
+
 class FranchiseFoodEditView(UpdateView):
     model = models.Food
     template_name = 'food/franchise_food_edit.html'

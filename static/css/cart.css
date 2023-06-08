@@ -1,87 +1,155 @@
 .arrow {
-    color: rgb(12, 240, 88);
-    margin-right: 5px;
-    margin-top: 2rem;
-  }
+  color: rgb(12, 240, 88);
+  margin-right: 5px;
+  margin-top: 2rem;
+}
+
+.back-link {
+  margin-top: 1rem;
+}
+
+.back-icon {
+  width: 10px;
+  height: 15px;
+}
+
+.korzina {
+  color: white;
+  margin-left: 6rem;
+  width: 174px;
+  height: 33px;
+  left: calc(50% - 174px/2 - 466px);
+  top: 69px;
+
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 33px;
+  /* identical to box height */
+
+  color: #D9D9D9;
 
 
-  .cartItemContainer {
-    display: flex;
-    align-items: center;
-  }
+}
 
-  .cartItemInfo{
-    color: rgb(255, 255, 255);
-    display: flex;
-    flex-direction: column;
-  }
+.cart-items {
+  color: white
+}
 
+.cartItemContainer {
+  display: flex;
+  align-items: center;
+}
 
-  .cartItemImage {
-    width: 300px;
-    height: 250px;
-    margin-right: 10px;
-  }
-
-  .cartItemInfo {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .quantityElement {
-    display: flex;
-    align-items: center;
-    margin-bottom: 5px;
-  }
-  
-  .quantityButton {
-    margin: 0 5px;
-  }
-  
-  .priceElement {
-    margin-top: 5px;
-  }
+.cartItemInfo {
+  color: rgb(255, 255, 255);
+  display: flex;
+  flex-direction: column;
+}
 
 
-  .cart-icon {
-    width: 30px;
-    height: 30px;
-  }
+.cartItemImage {
+  width: 180px;
+  height: 125px;
+  margin-right: 10px;
+  margin-left: 5rem;
+  margin-top: 1rem;
+}
 
-  .title-cart {
-    text-align: center;
-    
-  }
+.row-item-title {
+  margin-left: 3rem;
 
-  .cart-button {
-    display: block;
-    margin: auto;
-    padding: 10px 25px;
-    font-size: 15px;
-    background-color:rgb(12, 240, 88);
-    color:white;
-    border-radius: 25px;
+  width: 173.11px;
+  height: 33px;
+  left: calc(50% - 173.11px/2 - 273.05px);
+  top: 149px;
 
-  }
+  font-family: 'Alegreya';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 33px;
 
-  .quantityButton {
-    background-color: #8c8f8c;
-    color: white;
-    font-size: 15px;
-    text-decoration: none;
-    padding: 5px 6px; /* Установите внутренние отступы кнопки */ 
-    border-radius: 5px;
-    font-weight: bold;
-  }
-  
-  .quantityButton:hover {
-    background: rgb(12, 240, 88);;
-  }
-        
-        .quantity-value {
-        margin: 0 10px;
-        color: white;
-        }
+
+  color: #FFFFFF;
+
+
+}
+
+.row-item-quantity {
+  margin-left: 3rem;
+
+}
+
+.row-item-quantity {
+  margin-left: 3rem;
+}
+
+.row-item-price {
+  margin-left: 3rem;
+}
+
+.deleteImage {
+  margin-left: 1rem;
+}
+
+.quantityElement {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.quantityButton {
+  margin: 0 5px;
+}
+
+.priceElement {
+  margin-top: 5px;
+}
+
+
+.cart-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.title-cart {
+  text-align: center;
+
+}
+
+.cart-button {
+  display: block;
+  margin: auto;
+  padding: 10px 25px;
+  font-size: 15px;
+  background-color: rgb(12, 240, 88);
+  color: white;
+  border-radius: 25px;
+
+}
+
+.quantityButton {
+  background-color: #8c8f8c;
+  color: white;
+  font-size: 15px;
+  text-decoration: none;
+  padding: 5px 6px;
+  /* Установите внутренние отступы кнопки */
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.quantityButton:hover {
+  background: rgb(12, 240, 88);
+  ;
+}
+
+.quantity-value {
+  margin: 0 10px;
+  color: white;
+}
 
 
 h1 {
@@ -111,44 +179,83 @@ h1 {
 } */
 
 .from-modal {
-    color: aliceblue;
+  color: aliceblue;
 }
 
 
 .hr-cart {
   color: rgb(255, 255, 255);
+  background-color: antiquewhite;
 }
-/* .cart-modal {
-    border: 2px solid rgb(12, 240, 88);
-    display: inline-block;
-    padding: 5px;
-    white-space: nowrap;
-  } */
 
-  @media (max-width: 767px) {
-    h1, h2 {
-        text-align: center;
-    }
-    
-    .title-cart {
-        margin-left: 0;
-    }
+.cart-modal {
+  /* border: 2px solid rgb(12, 240, 88); */
+  display: inline-block;
+  padding: 5px;
+  white-space: nowrap;
+  margin-right: 3rem;
+}
 
-    .cart {
-        margin-left: 0;
-        margin-right: 0;
-    }
+@media (max-width: 767px) {
 
-    .col-12 {
-        flex-direction: column;
-    }
+  h1,
+  h2 {
+    text-align: center;
+  }
 
-    .button-wrapper {
-        align-self: center;
-    }
+  .title-cart {
+    margin-left: 0;
+  }
 
-    .cart-modal {
-        margin-left: 0;
-        margin-top: 1rem;
-    }
+  .cart {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .col-12 {
+    flex-direction: column;
+  }
+
+  .button-wrapper {
+    align-self: center;
+  }
+
+  .cart-modal {
+    margin-left: 0;
+    margin-top: 1rem;
+  }
+}
+
+/* Добавьте этот код в ваш файл cart.css или создайте новый файл для адаптивных стилей */
+
+/* Стили для мобильных устройств */
+@media (max-width: 767px) {
+  .cart-modal {
+    width: 90%;
+    margin: 0 auto;
+    padding: 10px;
+  }
+
+  .from-modal, .hr-cart {
+    font-size: 14px;
+    margin-top: 8px;
+  }
+
+  .from-modal {
+    margin-bottom: 4px;
+  }
+
+  .cart-button {
+    font-size: 14px;
+    padding: 8px 16px;
+    margin-top: 16px;
+  }
+
+  .modal-dialog {
+    margin-top: 50px;
+  }
+
+  .modal-content {
+    border-radius: 0;
+  }
 }
