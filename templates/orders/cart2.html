@@ -50,10 +50,10 @@
         </div> -->
 
         <div class="cart-modal ml-6">
-            <p class="from-modal">Итого:</p>
-            <p class="from-modal">Доставка:</p>
+            <p id="totalPrice" class="from-modal"></p>
+            <p id="deliveryPrice" class="from-modal">Доставка: 500 ТГ</p>
             <hr class="hr-cart">
-            <p class="from-modal">Всего к оплате:</p>
+            <p id="totalPayment" class="from-modal"></p>
 
             {% if user.is_authenticated %}
             <button type="button" class="cart-button" id="radioCart">Оформить заказ</button>
@@ -169,7 +169,6 @@
     var hiddenElement = document.getElementById('hiddenElement');
     var cardRadio = document.getElementById('card');
     var cashRadio = document.getElementById('cash');
-    var payment = 1
   
     // Обработчик события для кнопки "Оформить заказ"
     var radioCartButton = document.getElementById('radioCart');
@@ -187,7 +186,6 @@
     cashRadio.addEventListener('change', function() {
       if (this.checked) {
         console.log('Выбран способ оплаты при получении');
-        payment = 2
       }
     });
 </script>
@@ -228,10 +226,77 @@
 </script>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    function decreaseQuantity(key) {
     var cartItems = JSON.parse(localStorage.getItem("cart"));
+    var item = cartItems[key];
 
+    if (item.quantity > 1) {
+        item.quantity--;
+        localStorage.setItem("cart", JSON.stringify(cartItems));
+        updateQuantityElement(key, item.quantity);
+        updatePrice(key, item.quantity);
+        calculateTotalPrice();
+    }
+}
+
+function increaseQuantity(key) {
+    var cartItems = JSON.parse(localStorage.getItem("cart"));
+    var item = cartItems[key];
+
+    item.quantity++;
+    localStorage.setItem("cart", JSON.stringify(cartItems));
+    updateQuantityElement(key, item.quantity);
+    updatePrice(key, item.quantity);
+    calculateTotalPrice();
+}
+
+function updatePrice(key, quantity) {
+    var item = JSON.parse(localStorage.getItem("cart"))[key];
+    var price = item.price;
+    var totalPrice = price * quantity;
+    document.getElementById("price-" + key).textContent = "Цена: " + totalPrice + " ТГ";
+}
+
+function updateQuantityElement(key, quantity) {
+    var quantityElement = document.getElementById("quantity-" + key);
+    quantityElement.textContent = quantity;
+}
+
+function deleteCartItem(key) {
+    var cartItems = JSON.parse(localStorage.getItem("cart"));
+    delete cartItems[key];
+    localStorage.setItem("cart", JSON.stringify(cartItems));
+
+    var cartItemContainer = document.getElementById("cartItem-" + key);
+    cartItemContainer.remove();
+    calculateTotalPrice();
+}
+
+function calculateTotalPrice() {
+    var cartItems = JSON.parse(localStorage.getItem("cart"));
+    var totalCartPrice = 0;
+
+    for (var key in cartItems) {
+        if (cartItems.hasOwnProperty(key)) {
+            var item = cartItems[key];
+            var price = item.price;
+            var quantity = item.quantity;
+            var itemTotalPrice = price * quantity;
+            totalCartPrice += itemTotalPrice;
+        }
+    }
+
+    var totalPriceElement = document.getElementById("totalPrice");
+    var totalPaymentElement = document.getElementById("totalPayment");
+
+    totalPriceElement.textContent = "Итого: " + totalCartPrice + " ТГ";
+    totalPaymentElement.textContent = "Всего к оплате: " + (totalCartPrice + 500) + " ТГ";
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    var cartItems = JSON.parse(localStorage.getItem("cart"));
     var cartItemsElement = document.getElementById("cartItems");
+
     for (var key in cartItems) {
         if (cartItems.hasOwnProperty(key)) {
             var item = cartItems[key];
@@ -242,20 +307,13 @@
 
             var container = document.createElement("div");
             container.classList.add("cartItemContainer");
-            container.style.borderRight= "2px solid #ffffff";
-            container.style.marginRight = "10px";
-
-            // Задаем цвет границы (в данном случае красный цвет)
+            container.id = "cartItem-" + key;
 
             var img = document.createElement('img');
             img.src = "/media/" + image;
             img.width = 100;
             img.height = 100;
             img.classList.add("cartItemImage");
-
-            var hr = document.createElement("hr");
-            hr.classList.add("vertical-line");
-            // hr.classList.add('d-block')
 
             var row = document.createElement("div");
             row.classList.add("row");
@@ -265,64 +323,45 @@
             titleElement.classList.add("row-item-title");
 
             var quantityElement = document.createElement("div");
-            // quantityElement.textContent = "Количество: ";
+            quantityElement.textContent = quantity;
+            quantityElement.id = "quantity-" + key;
             quantityElement.classList.add("row-item-quantity");
-
-            var quantityValue = document.createElement("span");
-            quantityValue.textContent = quantity;
-            quantityValue.classList.add("quantityValue");
 
             var decreaseButton = document.createElement("button");
             decreaseButton.textContent = "-";
             decreaseButton.classList.add("quantityButton");
-            decreaseButton.addEventListener("click", decreaseQuantity);
+            decreaseButton.addEventListener("click", decreaseQuantity.bind(null, key));
 
             var increaseButton = document.createElement("button");
             increaseButton.textContent = "+";
             increaseButton.classList.add("quantityButton");
-            increaseButton.addEventListener("click", increaseQuantity);
+            increaseButton.addEventListener("click", increaseQuantity.bind(null, key));
 
             var priceElement = document.createElement("div");
-            priceElement.textContent = price * quantity + " ТГ";
+            priceElement.textContent = "Цена: " + price + " ТГ";
+            priceElement.id = "price-" + key;
             priceElement.classList.add("row-item-price");
 
-            var imageElement = document.createElement("img");
-            imageElement.src = "https://i.postimg.cc/TwwwPzkw/bpmn-trash.png";
-            imageElement.width = 30;
-            imageElement.height = 30;
-            imageElement.classList.add("deleteImage");
+            var deleteButton = document.createElement("button");
+            deleteButton.textContent = "Удалить";
+            deleteButton.classList.add("row-item-delete");
+            deleteButton.addEventListener("click", deleteCartItem.bind(null, key));
 
+            row.appendChild(img);
             row.appendChild(titleElement);
+            row.appendChild(decreaseButton);
             row.appendChild(quantityElement);
-            quantityElement.appendChild(decreaseButton);
-            quantityElement.appendChild(quantityValue);
-            quantityElement.appendChild(increaseButton);
+            row.appendChild(increaseButton);
             row.appendChild(priceElement);
-            row.appendChild(imageElement);
+            row.appendChild(deleteButton);
 
-            container.appendChild(img);
             container.appendChild(row);
-
-
             cartItemsElement.appendChild(container);
         }
     }
+
+    calculateTotalPrice();
 });
-
-
-    function decreaseQuantity() {
-        var quantityValue = parseInt(this.parentNode.querySelector(".quantityValue").textContent);
-        if (quantityValue > 0) {
-            quantityValue--;
-            this.parentNode.querySelector(".quantityValue").textContent = quantityValue;
-        }
-    }
-
-    function increaseQuantity() {
-        var quantityValue = parseInt(this.parentNode.querySelector(".quantityValue").textContent);
-        quantityValue++;
-        this.parentNode.querySelector(".quantityValue").textContent = quantityValue;
-    }
 
     document.getElementById("checkoutButton").addEventListener("click", function () {
         var cartItems = JSON.parse(localStorage.getItem("cart"));
@@ -384,44 +423,7 @@ document.querySelector(".close").addEventListener("click", function() {
     document.getElementById("modal1").style.display = "none";
 });
 
-document.getElementById("checkoutForm").addEventListener("submit", function(event) {
-    event.preventDefault();
-
-    // Получение значений из полей формы
-    var cardNumber = document.getElementById("cardNumber").value;
-    var address = document.getElementById("address").value;
-
-    // Отправка данных на сервер
-    fetch('/submit-order/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': '{{ csrf_token }}',  // Включите токен CSRF для Django
-        },
-        body: JSON.stringify({
-            cardNumber: cardNumber,
-            address: address
-        }),
-    })
-    .then(response => {
-        if (response.ok) {
-            console.log("Order submitted successfully");
-        } else {
-            console.error("Failed to submit order");
-        }
-    })
-    .catch(error => {
-        console.error("An error occurred while submitting the order:", error);
-    });
-
-    // Закрытие модального окна
-    document.getElementById("modal1").style.display = "none";
-
-});
-</script>
-
-<script>
-    document.getElementById("openModal").addEventListener("click", function() {
+document.getElementById("openModal").addEventListener("click", function() {
     document.getElementById("modal2").style.display = "block";
 });
 
@@ -466,8 +468,9 @@ document.getElementById("checkoutForm").addEventListener("submit", function(even
     });
 
     // Закрытие модального окна
-    document.getElementById("modal2").style.display = "none";
+    document.getElementById("modal").style.display = "none";
 });
+  
 </script>
 
 

@@ -5,13 +5,14 @@ from apps.main.views import(
     get_index,
     get_menu,
     get_cart,
+    get_cart2,
     CreateFoodView,
     MenuView,
     
     FranchiseDetailView,
     FoodDetailView,
     FranchiseFoodEditView,
-    cart_view,
+
     FranchiseListView,
     MenuFranchiseView,
     MenuFranchiseView2,
@@ -19,15 +20,18 @@ from apps.main.views import(
     )
 
 
-from apps.auths.views import OrderCreateViewSet
+from apps.auths.views import OrderCreateViewSet, PurchaseCreateApiView
 
 
 urlpatterns = [
     path('base/', get_base),
     path('cart/', get_cart, name='cart'),
+    path('cart2/', get_cart2, name='cart2'),
     path('menu/', MenuView.as_view(), name='menu'),
 
     path('order/', OrderCreateViewSet.as_view({'get': 'list', 'post': 'create'})),  
+    path('purchase/', PurchaseCreateApiView.as_view()),  
+
     path('menu/<slug:slug>/', FoodDetailView.as_view(), name="menu_object"),
     
     path('', get_index,name='index'),

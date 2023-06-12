@@ -21,6 +21,8 @@ DJANGO_AND_THIRD_PARTY_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'django.contrib.postgres',
+
     'sorl.thumbnail',
 
     'rest_framework',

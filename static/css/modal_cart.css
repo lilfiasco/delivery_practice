@@ -1,0 +1,42 @@
+.modal {
+    display: none;
+    position: fixed;
+    right: 15px;
+    top: 15px;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* z-index: 9999; */
+  }
+  
+  .modal-content {
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: white;
+    
+    width: 300px; /* Измените на нужную вам ширину модального окна */
+    height: 70%;
+    background-color: #595959;
+    padding: 20px 20px;
+  }
+  
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  /* .background {
+    position: fixed;
+    right: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9998;
+  } */
+  

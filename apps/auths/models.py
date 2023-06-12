@@ -167,6 +167,11 @@ class Order(models.Model):
         verbose_name="заказчик"
     )
 
+    is_done = models.BooleanField(
+        default=False,
+        verbose_name='оплачено ли'
+    )
+
     class Meta:
         ordering = [
             '-id'
@@ -192,12 +197,13 @@ class Purchase(models.Model):
     Purchase model.
     """
 
-    order = models.ForeignKey(
-        Order,
-        on_delete=models.CASCADE
-    )
+    order = models.JSONField()
     payment = models.IntegerField(
         default=PaymentTypes.CASH, choices=PaymentTypes.choices
+    )
+    address = models.CharField(
+        max_length=255,
+        verbose_name='адрес доставки'
     )
 
     class Meta:

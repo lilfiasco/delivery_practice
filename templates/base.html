@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="/static/css/auth.css">
     <link rel="stylesheet" type="text/css" href="/static/css/menu.css">
     <link rel="stylesheet" type="text/css" href="/static/css/login.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/modal_cart.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- <link rel="stylesheet" type="text/css" href="/static/css/login.css"> -->
@@ -36,6 +37,7 @@
             <a href="{% url 'franchise_detail' pk=user.coworker.franchise.pk %}">Франшиза</a>
           {% else %}
             <a href="/cart/">Корзина</a>
+            <a href="/cart2/">Супер Корзина</a>
           {% endif %}
             <a href="#" class="icon" id="menu">&#x2630;</a>
           </ul>

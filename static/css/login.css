@@ -8,6 +8,11 @@
   width: 100%;
 }
 
+.alert {
+    color: #dc3545 ;
+    background-color: #343a40;
+}
+
 .form-control:focus {
   border: 2px solid rgb(12, 240, 88);
   background-color: #343a40;

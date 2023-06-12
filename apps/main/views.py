@@ -36,7 +36,8 @@ def get_menu(request) -> HttpResponse:
 def get_cart(request) -> HttpResponse:
     return render (request, 'orders/cart.html')
 
-
+def get_cart2(request) -> HttpResponse:
+    return render (request, 'orders/cart2.html')
 class CreateFoodView(CreateView):
     """
     Add new food.
@@ -227,9 +228,11 @@ class FoodDetailView(View):
         return render(request, 'food/food_detail.html', {"food": food})
     
 
-def cart_view(request):
-    return render(request, 'food/cart.html')
+# def cart_view(request):
+#     return render(request, 'food/cart.html')
 
+# def cart_view2(request):
+#     return render(request, 'food/cart2.html')
 
 
 

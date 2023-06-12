@@ -1,3 +1,16 @@
+.vertical-line {
+  top: 0;
+  left: 120px; /* Adjust this value to move the line to the right */
+  height: 100%;
+  border-left: 2px solid #ffffff;
+}
+
+Чина не дури 
+
+.vertical-line {
+  margin-left: 3rem;
+}
+
 .arrow {
   color: rgb(12, 240, 88);
   margin-right: 5px;
@@ -20,21 +33,19 @@
   height: 33px;
   left: calc(50% - 174px/2 - 466px);
   top: 69px;
-
-  font-family: 'Open Sans';
   font-style: normal;
   font-weight: 600;
   font-size: 24px;
   line-height: 33px;
   /* identical to box height */
-
   color: #D9D9D9;
-
-
 }
 
+
+
 .cart-items {
-  color: white
+  padding-right: 50px;
+  color: white;
 }
 
 .cartItemContainer {
@@ -88,6 +99,7 @@
 
 .row-item-price {
   margin-left: 3rem;
+  color: white;
 }
 
 .deleteImage {
@@ -107,7 +119,6 @@
 .priceElement {
   margin-top: 5px;
 }
-
 
 .cart-icon {
   width: 30px;
@@ -156,6 +167,7 @@ h1 {
   text-align: center;
 }
 
+
 /* .mt-5 {
   margin-top: 3rem;
 }
@@ -194,6 +206,10 @@ h1 {
   padding: 5px;
   white-space: nowrap;
   margin-right: 3rem;
+}
+
+.hiddenElement {
+    display: none;
 }
 
 @media (max-width: 767px) {
@@ -258,4 +274,41 @@ h1 {
   .modal-content {
     border-radius: 0;
   }
+
+
+  .cartItemImage {
+    width: 85px;
+    height: 60px;
+    margin-left: 1rem;
+  }
+
+  .row-item-title {
+    margin-left: 1rem;
+    margin-top: 2rem;
+  }
+
+  .row-item-quantity {
+    margin-left: 1rem;
+  }
+
 }
+@media (max-width: 768px) {
+  /* Adjust font size for smaller screens */
+  .row-item-title,
+  .row-item-quantity,
+  .row-item-price {
+      font-size: 14px;
+  }
+
+}
+
+@media (max-width: 576px) {
+  /* Adjust font size for even smaller screens */
+  .row-item-title,
+  .row-item-quantity,
+  .row-item-price {
+      font-size: 12px;
+  }
+  
+}
+

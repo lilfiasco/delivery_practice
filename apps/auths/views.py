@@ -3,20 +3,15 @@ from typing import Any, Dict
 from django import http
 
 #Django
+from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import (
     render, 
     redirect,
     resolve_url
 )
-import sys  
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib import messages
-from django.shortcuts import redirect, render
 from django.views import View
-from django.contrib.auth.views import PasswordChangeView
-from django.contrib.auth import authenticate
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpRequest, HttpResponse, JsonResponse
+from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.views.generic import (
     CreateView, 
@@ -34,14 +29,14 @@ from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import DetailView, UpdateView
 from django.utils.decorators import method_decorator
-from rest_framework.generics import CreateAPIView
+from rest_framework import mixins, viewsets, response, status, generics
 
 #Local
 from auths import (
     forms,
     models,
 )
-from main import models as m_models
+from .serializers import OrderSerializer, PurchaseSerializer
 
 
 class UserRegisrtrationView(CreateView):
@@ -185,12 +180,7 @@ class CustomUserPasswordChange(View):
                     'messages':messages,
                 }
                 return render(request, 'auths/change_profile', context)
-            
 
-
-
-from .serializers import OrderSerializer
-from rest_framework import mixins, viewsets, response, status
 
 class OrderCreateViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, viewsets.GenericViewSet):
     """
@@ -211,5 +201,36 @@ class OrderCreateViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, viewset
             self.perform_create(serializer)
             headers=self.get_success_headers(serializer.data)
             return response.Response(serializer.data, status.HTTP_201_CREATED, headers=headers)
-            print("AAAAAAAAAAAAAAAA REQUEST DATA CHECK:", self.request.data)
+            
+
+class PurchaseCreateApiView(generics.CreateAPIView):
+    """
+    ViewSet class to create purchase and update is_done status of related orders.
+    """
+
+    queryset = models.Purchase.objects.all()
+    serializer_class = PurchaseSerializer
+
+    def perform_create(self, serializer):
+        user = self.request.user
+        order_data = models.Order.objects.filter(user=user, is_done=False)
+        payment = self.request.data.get('payment', models.PaymentTypes.CASH)
+        address = self.request.data.get('address', '')
+
+        purchase_data = {
+            'order': order_data,
+            'payment': payment,
+            'address': address
+        }
+
+        serializer.save(**purchase_data)
+
+        models.Order.objects.filter(user=user).update(is_done=True)
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+
+        return response.Response(serializer.data, status=status.HTTP_201_CREATED)
         

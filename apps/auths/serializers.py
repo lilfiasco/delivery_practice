@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from auths.models import Order, CustomUser
+from auths.models import Order, CustomUser, Purchase
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -22,10 +22,18 @@ class OrderSerializer(serializers.ModelSerializer):
     quantity = serializers.IntegerField(default=0)
     total_price = serializers.IntegerField()
     user_id = serializers.IntegerField(write_only=True)
-    # user = UserSerializer(read_only=True)
-    # user = user_id = serializers.IntegerField
+    is_done = serializers.BooleanField()
+
     class Meta:
         model = Order
         fields = ('food_id', 'price', 'quantity', 'total_price', 'user_id')
 
-    
+
+class PurchaseSerializer(serializers.ModelSerializer):
+    """
+    Purchase serializer.
+    """
+
+    class Meta:
+        model = Purchase
+        fields = '__all__'
