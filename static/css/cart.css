@@ -1,11 +1,22 @@
-.vertical-line {
-  top: 0;
-  left: 120px; /* Adjust this value to move the line to the right */
-  height: 100%;
-  border-left: 2px solid #ffffff;
+.modal {
+  position: fixed;
+  /* Другие стили для модального окна */
+
+  /* Используем flexbox для расположения модального окна */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
-Чина не дури 
+/* Медиа-запрос для применения стилей на мобильных устройствах */
+@media (max-width: 600px) {
+  .modal {
+    align-items: flex-end;
+    padding-bottom: 20px; /* Дополнительное отступание от нижнего края */
+  }
+}
+  
+
 
 .vertical-line {
   margin-left: 3rem;
@@ -64,46 +75,41 @@
   width: 180px;
   height: 125px;
   margin-right: 10px;
-  margin-left: 5rem;
+  margin-left: 6rem;
   margin-top: 1rem;
 }
 
 .row-item-title {
   margin-left: 3rem;
-
+  margin-top: 3rem;
   width: 173.11px;
   height: 33px;
   left: calc(50% - 173.11px/2 - 273.05px);
   top: 149px;
-
   font-family: 'Alegreya';
   font-style: normal;
   font-weight: 500;
   font-size: 24px;
   line-height: 33px;
-
-
   color: #FFFFFF;
-
-
 }
 
 .row-item-quantity {
-  margin-left: 3rem;
-
-}
-
-.row-item-quantity {
-  margin-left: 3rem;
+  margin-left: 0rem;
+  margin-top: 3.3rem;
 }
 
 .row-item-price {
   margin-left: 3rem;
+  margin-top: 3rem;
   color: white;
 }
 
 .deleteImage {
   margin-left: 1rem;
+  margin-top: 3rem;
+  width: 25px;
+  height: 25px;
 }
 
 .quantityElement {
@@ -114,6 +120,12 @@
 
 .quantityButton {
   margin: 0 5px;
+  margin-top: 3rem;
+}
+
+.quantityButton1 {
+  margin: 0 5px;
+  margin-top: 3rem;
 }
 
 .priceElement {
@@ -142,7 +154,7 @@
 }
 
 .quantityButton {
-  background-color: #8c8f8c;
+  background-color: rgb(26, 23, 23);
   color: white;
   font-size: 15px;
   text-decoration: none;
@@ -150,9 +162,29 @@
   /* Установите внутренние отступы кнопки */
   border-radius: 5px;
   font-weight: bold;
+  height: 37px;
+  border: 1px solid rgb(26, 23, 23); 
 }
 
 .quantityButton:hover {
+  background: rgb(12, 240, 88);
+  ;
+}
+
+.quantityButton1 {
+  background-color: rgb(26, 23, 23);;
+  color: white;
+  font-size: 15px;
+  text-decoration: none;
+  padding: 5px 6px;
+  /* Установите внутренние отступы кнопки */
+  border-radius: 5px;
+  font-weight: bold;
+  height: 37px;
+  border: 1px solid rgb(26, 23, 23);
+}
+
+.quantityButton1:hover {
   background: rgb(12, 240, 88);
   ;
 }
@@ -252,6 +284,27 @@ h1 {
     padding: 10px;
   }
 
+  .row-item-container {
+    flex-direction: column;
+  }
+
+  .row-item-price {
+    margin-left: 6.9rem;
+    margin-top: -3rem;
+    font-size: 14px;
+
+  }
+
+  .col-12 {
+    flex-wrap: wrap;
+  }
+
+  .col-12 .cart-modal {
+    margin-top: 1rem;
+    width: 100%;
+  }
+
+
   .from-modal, .hr-cart {
     font-size: 14px;
     margin-top: 8px;
@@ -278,37 +331,64 @@ h1 {
 
   .cartItemImage {
     width: 85px;
-    height: 60px;
+    height: 70px;
     margin-left: 1rem;
   }
 
   .row-item-title {
     margin-left: 1rem;
-    margin-top: 2rem;
+    margin-top: 0.5rem;
+    margin-left: 0rem;
+    white-space: nowrap;
+    font-size: 18px;
+  }
+
+  .quantityButton {
+    margin-left: -3.4rem;
+    font-size: 15px;
+    padding: 4px 4px;
+    margin-right: 1rem;
+    margin-top: 30px;
+  }
+
+  .quantityButton1{
+    margin-top: 30px;
   }
 
   .row-item-quantity {
-    margin-left: 1rem;
+    /* margin-left: 0.5rem;
+    margin-right: 0.8rem; */
+    margin-top: 2.3rem;
+    margin-right: 0.7rem;
+  }
+
+  .deleteImage {
+    margin-left: 20rem;
+    margin-top: -3.1rem;
   }
 
 }
-@media (max-width: 768px) {
+
+/* @media (max-width: 768px) {
   /* Adjust font size for smaller screens */
-  .row-item-title,
+  /* .row-item-title,
   .row-item-quantity,
   .row-item-price {
-      font-size: 14px;
+      font-size: 18px;
   }
 
-}
+} */ 
 
-@media (max-width: 576px) {
+/* @media (max-width: 576px) { */
   /* Adjust font size for even smaller screens */
-  .row-item-title,
+  /* .row-item-title,
   .row-item-quantity,
   .row-item-price {
-      font-size: 12px;
-  }
-  
+      font-size: 18px;
 }
+  
+} */
 
+ 
+  
+ 

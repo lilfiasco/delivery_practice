@@ -15,7 +15,6 @@
         <div class="filter-menu">
             <form method="GET" id="filter-form">
                 <a href="{% url 'menu_franchise2' franchise_id=franchise.id %}">Show All Categories</a>
-                <!-- <a class="text-white ficon" id="f-icon" href="{% url 'menu_franchise' franchise_id=franchise.id %}"><img class="spoon_fork" src="https://i.postimg.cc/Dzvp5qFc/che.png"></a> -->
                 {% for category in non_empty_categories %}
                     <li><a href="{% url 'menu_franchise2' franchise_id=franchise.id %}?category={{ category.title }}" class="ftitle category-link{% if category.title == selected_category %} active{% endif %}">{{ category.title }}</a></li>
                 {% endfor %}
@@ -98,6 +97,30 @@
     </div>
 </div>
 
+<script>
+    // Получаем ссылку на форму фильтра и список всех элементов
+var filterForm = document.getElementById('filter-form');
+var allItems = document.querySelectorAll('.item');
+
+// Добавляем обработчик события отправки формы
+filterForm.addEventListener('submit', function(e) {
+  e.preventDefault(); // Отменяем отправку формы
+  
+  var selectedCategory = document.querySelector('.category-link.active');
+  
+  // Получаем выбранную категорию
+  var category = selectedCategory ? selectedCategory.textContent : 'all';
+  
+  // Проходимся по всем элементам и скрываем или отображаем их в зависимости от выбранной категории
+  allItems.forEach(function(item) {
+    if (category === 'all' || item.classList.contains(category)) {
+      item.style.display = 'block'; // Показываем элементы
+    } else {
+      item.style.display = 'none'; // Скрываем элементы
+    }
+  });
+});
+</script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     var savedCart = JSON.parse(localStorage.getItem("cart")) || {};

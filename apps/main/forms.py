@@ -10,18 +10,17 @@ class FoodForm(forms.ModelForm):
     class Meta:
         model = Food
         exclude = ('quantity',)
-        # fields = "__all__"
 
     def save(self, commit=True):
         instance = super().save(commit=False)
         
         if commit:
-            instance.save()  # Save the object to the database
+            instance.save()  
             
-        instance.slug = self.generate_slug()  # Generate slug after saving the object
+        instance.slug = self.generate_slug() 
         instance.image = self.validate_image_size(instance)
         if commit:
-            instance.save()  # Update the object with the new slug value
+            instance.save() 
         return instance
 
     def generate_slug(self):

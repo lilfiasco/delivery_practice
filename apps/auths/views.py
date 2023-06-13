@@ -86,7 +86,6 @@ class CoworkerRegisrtrationView(CreateView):
 
 class CustomLoginView(LoginView):
     template_name = 'auths/login.html'
-    # form_class = forms.CustomLoginForm
     def form_invalid(self, form: AuthenticationForm) -> HttpResponse:
         return super().form_invalid(form)
     
@@ -203,6 +202,36 @@ class OrderCreateViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, viewset
             return response.Response(serializer.data, status.HTTP_201_CREATED, headers=headers)
             
 
+# class PurchaseCreateApiView(generics.CreateAPIView):
+#     """
+#     ViewSet class to create purchase and update is_done status of related orders.
+#     """
+
+#     queryset = models.Purchase.objects.all()
+#     serializer_class = PurchaseSerializer
+
+#     def perform_create(self, serializer):
+#         user = self.request.user
+#         order_data = models.Order.objects.filter(user=user, is_done=False)
+#         payment = self.request.data.get('payment', models.PaymentTypes.CASH)
+#         address = self.request.data.get('address', '')
+
+#         purchase_data = {
+#             'order': order_data,
+#             'payment': payment,
+#             'address': address
+#         }
+
+#         serializer.save(**purchase_data)
+
+#         models.Order.objects.filter(user=user).update(is_done=True)
+
+#     # def create(self, request, *args, **kwargs):
+#     #     serializer = self.get_serializer(data=request.data)
+#     #     serializer.is_valid(raise_exception=True)
+#     #     self.perform_create(serializer)
+
+#     #     return response.Response(serializer.data, status=status.HTTP_201_CREATED)
 class PurchaseCreateApiView(generics.CreateAPIView):
     """
     ViewSet class to create purchase and update is_done status of related orders.
@@ -211,14 +240,29 @@ class PurchaseCreateApiView(generics.CreateAPIView):
     queryset = models.Purchase.objects.all()
     serializer_class = PurchaseSerializer
 
+    # def perform_create(self, serializer):
+    #     user = self.request.user
+    #     order_data = models.Order.objects.filter(user=user, is_done=False)
+    #     payment = self.request.data.get('payment', models.PaymentTypes.CASH)
+    #     address = self.request.data.get('address', '')
+
+    #     purchase_data = {
+    #         'order': order_data,
+    #         'payment': payment,
+    #         'address': address
+    #     }
+
+    #     serializer.save(**purchase_data)
+
+    #     models.Order.objects.filter(user=user).update(is_done=True)
     def perform_create(self, serializer):
         user = self.request.user
-        order_data = models.Order.objects.filter(user=user, is_done=False)
+        order_data = models.Order.objects.filter(user=user, is_done=False).values()
         payment = self.request.data.get('payment', models.PaymentTypes.CASH)
         address = self.request.data.get('address', '')
 
         purchase_data = {
-            'order': order_data,
+            'order': list(order_data),
             'payment': payment,
             'address': address
         }

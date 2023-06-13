@@ -14,24 +14,6 @@ class FranchiseAdmin(admin.ModelAdmin):
     ordering = ('-id',)
 
 
-# class RestaurantAdmin(admin.ModelAdmin):
-#     """RestaurantAdmin."""
-
-#     model = models.Restaurant
-
-#     readonly_fields = ()
-#     # list_filter = (
-#     #     'title',
-#     # )
-#     list_display = (
-#         'franchise',
-#         'title',
-#         'address',
-#         'menu',
-#     )
-#     ordering = ('-id',)
-
-
 class CategoryAdmin(admin.ModelAdmin):
     """CategoryAdmin."""
 

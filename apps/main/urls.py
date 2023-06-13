@@ -6,6 +6,8 @@ from apps.main.views import(
     get_menu,
     get_cart,
     get_cart2,
+    test,
+    test_ajax,
     CreateFoodView,
     MenuView,
     
@@ -45,6 +47,9 @@ urlpatterns = [
     
     # Коворкер редачит
     path('franchise/<int:pk>/<slug:slug>/', FranchiseFoodEditView.as_view(),name="food_edit" ),
+
+    path('test', test),
+    path('test_ajax', test_ajax),
 
 ]
 

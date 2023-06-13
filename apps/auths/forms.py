@@ -1,11 +1,10 @@
 import re
-from datetime import timedelta,datetime
+from datetime import datetime
 
 #Django
 from django import forms
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
-from django.contrib.auth.forms import AuthenticationForm
 
 #Local
 from .models import CustomUser, Coworker, Franchise

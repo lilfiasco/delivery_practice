@@ -1,15 +1,13 @@
-from typing import Any, Optional
-from django.db.models.query import QuerySet
 from django.forms.models import BaseModelForm
 from django.http import HttpResponseRedirect
 from django.db import models
 from django.shortcuts import render,  get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse_lazy
 from main import forms, models
-from auths import forms as a_forms, models as a_models
-from django.db.models import Count, Q
+from auths import models as a_models
+from django.db.models import Count
 from django.views.generic import (
     TemplateView,
     ListView,
@@ -18,7 +16,7 @@ from django.views.generic import (
     DetailView,
     UpdateView
 )
-from django.core.paginator import Paginator, EmptyPage
+from django.views.decorators.csrf import csrf_exempt
 
 
 def get_base(request) -> HttpResponse:
@@ -38,6 +36,16 @@ def get_cart(request) -> HttpResponse:
 
 def get_cart2(request) -> HttpResponse:
     return render (request, 'orders/cart2.html')
+
+def test(request) -> HttpResponse:
+    return render (request, 'orders/test.html')
+
+@csrf_exempt
+def test_ajax(request):
+    print("DDDDDD: ", request.POST)
+    return JsonResponse({'success': True}, safe=False)
+
+
 class CreateFoodView(CreateView):
     """
     Add new food.
@@ -75,26 +83,6 @@ class FranchiseListView(ListView):
     template_name = 'food/franchise_list.html'
     context_object_name = 'franchises'
     paginate_by = 6
-
-
-
-
-# class MenuView(TemplateView):
-#     template_name = 'food/menu.html'
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         category_title = self.request.GET.get('category')
-#         food = models.Food.objects.all()
-
-#         if category_title:
-#             food = food.filter(category__title=category_title)
-
-#         categories = models.Category.objects.all()
-#         context['food'] = food
-#         context['categories'] = categories
-#         context['selected_category'] = category_title  # Pass selected category to template
-#         return context
 
 
 class MenuView(TemplateView):
@@ -136,10 +124,6 @@ class FranchiseDetailView(DetailView):
         context['selected_category'] = category_title
         return context
     
-
-
-
-
 
 class MenuFranchiseView(ListView):
     model = models.Food
@@ -198,7 +182,6 @@ class MenuFranchiseView2(ListView):
         return context
 
 
-
 class FranchiseFoodEditView(UpdateView):
     model = models.Food
     template_name = 'food/franchise_food_edit.html'
@@ -222,30 +205,7 @@ class FranchiseFoodEditView(UpdateView):
 
 class FoodDetailView(View):
     def get(self, request, slug):
-        print("FFFFFFFF:", slug)
         food = models.Food.objects.get(slug=slug)
 
         return render(request, 'food/food_detail.html', {"food": food})
     
-
-# def cart_view(request):
-#     return render(request, 'food/cart.html')
-
-# def cart_view2(request):
-#     return render(request, 'food/cart2.html')
-
-
-
-
-
-
-
-
-
-# @csrf_exempt
-# def checkout(request):
-#     if request.method == 'POST':
-#         print(request.body)
-#         return HttpResponse('Success')  
-#     else:
-#         pass

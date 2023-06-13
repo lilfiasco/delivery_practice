@@ -129,7 +129,7 @@
 
 
 
-<script>
+<!-- <script>
     var button = document.getElementById('radioCart');
     button.addEventListener('click', function() {
       button.style.display = 'none';
@@ -342,10 +342,10 @@ document.addEventListener("DOMContentLoaded", function () {
             priceElement.id = "price-" + key;
             priceElement.classList.add("row-item-price");
 
-            var deleteButton = document.createElement("button");
-            deleteButton.textContent = "Удалить";
-            deleteButton.classList.add("row-item-delete");
-            deleteButton.addEventListener("click", deleteCartItem.bind(null, key));
+            var deleteButton = document.createElement("img");
+            deleteButton.src = "https://i.postimg.cc/TwwwPzkw/bpmn-trash.png";
+            deleteButton.classList.add("deleteImage");
+            deleteButton.addEventListener("click", deleteCartItem.bind(null, key)); 
 
             row.appendChild(img);
             row.appendChild(titleElement);
@@ -471,7 +471,7 @@ document.getElementById("checkoutForm").addEventListener("submit", function(even
     document.getElementById("modal").style.display = "none";
 });
   
-</script>
+</script> -->
 
 
 {% endblock %}

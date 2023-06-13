@@ -1,0 +1,52 @@
+
+{% block content %}
+
+    <input type="text" id="login">
+    <input type="text" id="password">
+    <input type="text" id="name">
+    <input type="button" id="submitBtn" class="btn btn-primary" value="ОТПРАВИТЬ">
+
+    <div>
+        СТАТУС ОТВЕТА С СЕРВЕРА: <span id="responseStatus"></span>
+    </div>
+
+{% endblock %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(() => {
+        var selectedMethod = 1; // если наличкой
+        $("#card").change(() => {
+            selectedMethod = 2;
+        })
+        $("#cash").change(() => {
+            selectedMethod = 1;
+        })
+        
+        $("#submitPaymentBtn").click(() => {
+            selectedMethod
+        })
+
+        $("#submitBtn").click((event) => {
+            let login = $("#login").val();
+            let password = $("#password").val();
+            let name = $("#name").val();
+
+            $.ajax({
+                url: '/test_ajax',
+                method: 'POST',
+                data: {
+                    login: login,
+                    password: password,
+                    name: name
+                },
+                success: (response) => {
+                    debugger
+                    $("#responseStatus").append(`ПРИШЕЛ ОТВЕТ: ${response.success}`)
+                },
+                error: (error) => {
+                    debugger
+                }
+            })
+        })
+    });
+</script>

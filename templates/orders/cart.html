@@ -50,19 +50,19 @@
         </div> -->
 
         <div class="cart-modal ml-6">
-            <p class="from-modal">Итого:</p>
-            <p class="from-modal">Доставка:</p>
+            <p id="totalPrice" class="from-modal"></p>
+            <p id="deliveryPrice" class="from-modal">Доставка: 500 ТГ</p>
             <hr class="hr-cart">
-            <p class="from-modal">Всего к оплате:</p>
+            <p id="totalPayment" class="from-modal">Всего к оплате:</p>
 
             {% if user.is_authenticated %}
-            <button type="button" class="cart-button" id="radioCart">Оформить заказ</button>
+            <button id="checkoutButton" type="button" class="cart-button">Оформить заказ</button>
             {% else %}
-            <button type="button" class="cart-button"><a href="{% url 'login' %}" class="data-toggle-a"> Оформить заказ</a></button>
+            <button type="button" class="cart-button"><a href="{% url 'login' %}" class="data-toggle-a">Оформить заказ</a></button>
             {% endif%}
 
             <div class='hiddenElement' id="hiddenElement">
-                <h2>Выберите значения:</h2>
+                <h4>Выберите значения:</h4>
                 <div style="color: white">
                     <input type="radio" id="card" name="status"> 
                     <label for="card">Оплата картой</label>
@@ -74,19 +74,6 @@
 
                 <button type="button" class="cart-button" id="openModal">Оформить заказ</button>
             </div>
-
-            <script>
-                // Обработчик события для кнопки "Оформить заказ"
-                document.getElementById('checkboxCart').addEventListener('click', function() {
-                  var hiddenElement = document.getElementById('hiddenElement');
-            
-                  if (hiddenElement.style.display === 'none') {
-                    hiddenElement.style.display = 'block';
-                  } else {
-                    hiddenElement.style.display = 'none';
-                  }
-                });
-              </script>
             <!-- Modal-card -->
             <div id="modal1" class="modal">
                 <div class="modal-content">
@@ -101,7 +88,7 @@
                                 <label for="address">Адрес</label>
                                 <input type="text" class="form-control" id="address" name="address" required>
                             </div>
-                            <button type="submit" class="cart-button">Оформить заказ</button>
+                            <button type="button" class="cart-button" id="purchase-button">959Заказать</button>
                         </form>
                 </div>
             </div>
@@ -113,13 +100,13 @@
                         <form id="checkoutForm">
                             <div class="form-group">
                                 <label for="cardNumber">Способ оплаты: При получении</label>
-    
                             </div>
                             <div class="form-group">
                                 <label for="address">Адрес</label>
                                 <input type="text" class="form-control" id="address" name="address" required>
                             </div>
-                            <button type="submit" class="cart-button">Оформить заказ</button>
+                            <button type="button" id="purchase-button">959Заказать</button>
+                            <button type="submit" class="cart-button" id="cash-pay">Заказать</button>
                         </form>
                 </div>
             </div>
@@ -127,14 +114,70 @@
     </div>
 </div>
 
-
-
+<script src="/static/js/purchase_modal.js"></script>
 <script>
-    var button = document.getElementById('radioCart');
-    button.addEventListener('click', function() {
-      button.style.display = 'none';
+const purchaseButton = document.getElementById('purchase-button');
+
+// Add click event listener to the purchase button
+purchaseButton.addEventListener('click', () => {
+  // Retrieve the address and payment type values
+  const address = document.getElementById('address').value;
+  const paymentType = document.querySelector('input[name="status"]:checked').id;
+  const payment = paymentType === 'card' ? 2 : 1; // Assign 2 for 'CARD' choice, 1 for 'CASH' choice
+
+  // Create an object with the order data
+//   const orderData = {
+//     address: address,
+//     payment: paymentType
+//   };
+const orderData = {
+  address: address,
+  payment: payment
+};
+  // Get the CSRF token value from the cookie
+  const csrfToken = getCookie('csrftoken');
+
+  // Send the order data to the server using AJAX/fetch
+  fetch('/purchase/', {
+    method: 'POST',
+    body: JSON.stringify(orderData),
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFToken': csrfToken // Include the CSRF token in the request headers
+    }
+  })
+    .then(response => response.json())
+    .then(data => {
+      // Handle the response from the server
+      // You can perform additional actions here, such as displaying a success message
+      console.log('Order data sent:', data);
+    })
+    .catch(error => {
+      // Handle any errors that occurred during the request
+      console.error('Error:', error);
+    });
+});
+
+// Helper function to get the value of a cookie by name
+function getCookie(name) {
+  const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+  return cookieValue ? cookieValue.pop() : '';
+}
+
+  </script>
+<script>
+    // Обработчик события для кнопки "Оформить заказ"
+    document.getElementById('checkoutButton').addEventListener('click', function() {
+      var hiddenElement = document.getElementById('hiddenElement');
+
+      if (hiddenElement.style.display === 'none') {
+        hiddenElement.style.display = 'block';
+      } else {
+        hiddenElement.style.display = 'none';
+      }
     });
 </script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Get the hiddenElement, modal1, and modal2
@@ -148,9 +191,10 @@
     
         // Get the "Оформить заказ" button
         var orderButton = document.getElementById('openModal');
-    
+      
         // Add a click event listener to the "Оформить заказ" button
         orderButton.addEventListener('click', function() {
+            debugger
         // Check if the card radio button is selected
         if (cardRadioButton.checked) {
             // Display modal1 and hide modal2
@@ -169,10 +213,11 @@
     var hiddenElement = document.getElementById('hiddenElement');
     var cardRadio = document.getElementById('card');
     var cashRadio = document.getElementById('cash');
-    var payment = 1
-  
+
+    modal1.style.display = 'none';
+    modal2.style.display = 'none';
     // Обработчик события для кнопки "Оформить заказ"
-    var radioCartButton = document.getElementById('radioCart');
+    var radioCartButton = document.getElementById('checkoutButton');
     radioCartButton.addEventListener('click', function() {
       hiddenElement.style.display = 'block';
     });
@@ -187,18 +232,7 @@
     cashRadio.addEventListener('change', function() {
       if (this.checked) {
         console.log('Выбран способ оплаты при получении');
-        payment = 2
       }
-    });
-</script>
-<script>
-    // Restrict cardNumber input to 16 digits
-    var cardNumberInput = document.getElementById('cardNumber');
-    cardNumberInput.addEventListener('input', function () {
-        this.value = this.value.replace(/[^0-9]/g, '');
-        if (this.value.length > 16) {
-            this.value = this.value.slice(0, 16);
-        }
     });
 </script>
 <script>
@@ -227,7 +261,7 @@
     }
 </script>
 
-<script>
+<!-- <script>
     document.addEventListener("DOMContentLoaded", function () {
     var cartItems = JSON.parse(localStorage.getItem("cart"));
 
@@ -308,21 +342,175 @@
         }
     }
 });
+</script> -->
+<!-- Assuming this code is within the HTML template -->
+<script>
+    document.getElementById("openModal").addEventListener("click", function() {
+    document.getElementById("modal1").style.display = "block";
+});
 
+document.getElementById("modal1").addEventListener("click", function(event) {
+    if (event.target === this) {
+        document.getElementById("modal1").style.display = "none";
+    }
+});
 
-    function decreaseQuantity() {
-        var quantityValue = parseInt(this.parentNode.querySelector(".quantityValue").textContent);
-        if (quantityValue > 0) {
-            quantityValue--;
-            this.parentNode.querySelector(".quantityValue").textContent = quantityValue;
+document.querySelector(".close").addEventListener("click", function() {
+    document.getElementById("modal1").style.display = "none";
+});
+
+document.getElementById("openModal").addEventListener("click", function() {
+    document.getElementById("modal2").style.display = "block";
+});
+
+document.getElementById("modal2").addEventListener("click", function(event) {
+    if (event.target === this) {
+        document.getElementById("modal2").style.display = "none";
+    }
+});
+
+document.querySelector(".close").addEventListener("click", function() {
+    document.getElementById("modal2").style.display = "none";
+});
+</script>
+<script>
+    function decreaseQuantity(key) {
+        var cartItems = JSON.parse(localStorage.getItem("cart"));
+        var item = cartItems[key];
+
+        if (item.quantity > 1) {
+            item.quantity--;
+            localStorage.setItem("cart", JSON.stringify(cartItems));
+            updateQuantityElement(key, item.quantity);
+            updatePrice(key, item.quantity);
+            calculateTotalPrice();
         }
     }
 
-    function increaseQuantity() {
-        var quantityValue = parseInt(this.parentNode.querySelector(".quantityValue").textContent);
-        quantityValue++;
-        this.parentNode.querySelector(".quantityValue").textContent = quantityValue;
+    function increaseQuantity(key) {
+        var cartItems = JSON.parse(localStorage.getItem("cart"));
+        var item = cartItems[key];
+
+        item.quantity++;
+        localStorage.setItem("cart", JSON.stringify(cartItems));
+        updateQuantityElement(key, item.quantity);
+        updatePrice(key, item.quantity);
+        calculateTotalPrice();
     }
+
+    function updatePrice(key, quantity) {
+        var item = JSON.parse(localStorage.getItem("cart"))[key];
+        var price = item.price;
+        var totalPrice = price * quantity;
+        document.getElementById("price-" + key).textContent = "Цена: " + totalPrice + " ТГ";
+    }
+
+    function updateQuantityElement(key, quantity) {
+        var quantityElement = document.getElementById("quantity-" + key);
+        quantityElement.textContent = quantity;
+    }
+
+    function deleteCartItem(key) {
+        var cartItems = JSON.parse(localStorage.getItem("cart"));
+        delete cartItems[key];
+        localStorage.setItem("cart", JSON.stringify(cartItems));
+
+        var cartItemContainer = document.getElementById("cartItem-" + key);
+        cartItemContainer.remove();
+        calculateTotalPrice();
+    }
+
+    function calculateTotalPrice() {
+        var cartItems = JSON.parse(localStorage.getItem("cart"));
+        var totalCartPrice = 0;
+
+        for (var key in cartItems) {
+            if (cartItems.hasOwnProperty(key)) {
+                var item = cartItems[key];
+                var price = item.price;
+                var quantity = item.quantity;
+                var itemTotalPrice = price * quantity;
+                totalCartPrice += itemTotalPrice;
+            }
+        }
+
+        var totalPriceElement = document.getElementById("totalPrice");
+        var totalPaymentElement = document.getElementById("totalPayment");
+
+        totalPriceElement.textContent = "Итого: " + totalCartPrice + " ТГ";
+        totalPaymentElement.textContent = "Всего к оплате: " + (totalCartPrice + 500) + " ТГ";
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var cartItems = JSON.parse(localStorage.getItem("cart"));
+        var cartItemsElement = document.getElementById("cartItems");
+
+        for (var key in cartItems) {
+            if (cartItems.hasOwnProperty(key)) {
+                var item = cartItems[key];
+                var title = item.title;
+                var quantity = item.quantity;
+                var image = item.image;
+                var price = item.price;
+
+                var container = document.createElement("div");
+                container.classList.add("cartItemContainer");
+                container.id = "cartItem-" + key;
+
+                var img = document.createElement('img');
+                img.src = "/media/" + image;
+                img.width = 100;
+                img.height = 100;
+                img.classList.add("cartItemImage");
+
+                var row = document.createElement("div");
+                row.classList.add("row");
+
+                var titleElement = document.createElement("div");
+                titleElement.textContent = title;
+                titleElement.classList.add("row-item-title");
+
+                var quantityElement = document.createElement("div");
+                quantityElement.textContent = quantity;
+                quantityElement.id = "quantity-" + key;
+                quantityElement.classList.add("row-item-quantity");
+
+                var decreaseButton = document.createElement("button");
+                decreaseButton.textContent = "-";
+                decreaseButton.classList.add("quantityButton");
+                decreaseButton.addEventListener("click", decreaseQuantity.bind(null, key));
+
+                var increaseButton = document.createElement("button");
+                increaseButton.textContent = "+";
+                increaseButton.classList.add("quantityButton1");
+                increaseButton.addEventListener("click", increaseQuantity.bind(null, key));
+
+                var priceElement = document.createElement("div");
+                var totalPrice = price * quantity;
+                priceElement.textContent = "Цена: " + totalPrice + " ТГ";
+                priceElement.id = "price-" + key;
+                priceElement.classList.add("row-item-price");
+
+                var deleteButton = document.createElement("img");
+                deleteButton.src = "https://i.postimg.cc/TwwwPzkw/bpmn-trash.png";
+                deleteButton.classList.add("deleteImage");
+                deleteButton.addEventListener("click", deleteCartItem.bind(null, key));
+
+                row.appendChild(img);
+                row.appendChild(titleElement);
+                row.appendChild(decreaseButton);
+                row.appendChild(quantityElement);
+                row.appendChild(increaseButton);
+                row.appendChild(priceElement);
+                row.appendChild(deleteButton);
+
+                container.appendChild(row);
+                cartItemsElement.appendChild(container);
+            }
+        }
+
+        calculateTotalPrice();
+    });
 
     document.getElementById("checkoutButton").addEventListener("click", function () {
         var cartItems = JSON.parse(localStorage.getItem("cart"));
@@ -369,106 +557,5 @@
         });
     });
 </script>
-<script>
-   document.getElementById("openModal").addEventListener("click", function() {
-    document.getElementById("modal1").style.display = "block";
-});
-
-document.getElementById("modal1").addEventListener("click", function(event) {
-    if (event.target === this) {
-        document.getElementById("modal1").style.display = "none";
-    }
-});
-
-document.querySelector(".close").addEventListener("click", function() {
-    document.getElementById("modal1").style.display = "none";
-});
-
-document.getElementById("checkoutForm").addEventListener("submit", function(event) {
-    event.preventDefault();
-
-    // Получение значений из полей формы
-    var cardNumber = document.getElementById("cardNumber").value;
-    var address = document.getElementById("address").value;
-
-    // Отправка данных на сервер
-    fetch('/submit-order/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': '{{ csrf_token }}',  // Включите токен CSRF для Django
-        },
-        body: JSON.stringify({
-            cardNumber: cardNumber,
-            address: address
-        }),
-    })
-    .then(response => {
-        if (response.ok) {
-            console.log("Order submitted successfully");
-        } else {
-            console.error("Failed to submit order");
-        }
-    })
-    .catch(error => {
-        console.error("An error occurred while submitting the order:", error);
-    });
-
-    // Закрытие модального окна
-    document.getElementById("modal1").style.display = "none";
-
-});
-</script>
-
-<script>
-    document.getElementById("openModal").addEventListener("click", function() {
-    document.getElementById("modal2").style.display = "block";
-});
-
-document.getElementById("modal2").addEventListener("click", function(event) {
-    if (event.target === this) {
-        document.getElementById("modal2").style.display = "none";
-    }
-});
-
-document.querySelector(".close").addEventListener("click", function() {
-    document.getElementById("modal2").style.display = "none";
-});
-
-document.getElementById("checkoutForm").addEventListener("submit", function(event) {
-    event.preventDefault();
-
-    // Получение значений из полей формы
-    var cardNumber = document.getElementById("cardNumber").value;
-    var address = document.getElementById("address").value;
-
-    // Отправка данных на сервер
-    fetch('/submit-order/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': '{{ csrf_token }}',  // Включите токен CSRF для Django
-        },
-        body: JSON.stringify({
-            cardNumber: cardNumber,
-            address: address
-        }),
-    })
-    .then(response => {
-        if (response.ok) {
-            console.log("Order submitted successfully");
-        } else {
-            console.error("Failed to submit order");
-        }
-    })
-    .catch(error => {
-        console.error("An error occurred while submitting the order:", error);
-    });
-
-    // Закрытие модального окна
-    document.getElementById("modal2").style.display = "none";
-});
-</script>
-
 
 {% endblock %}

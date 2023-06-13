@@ -29,7 +29,6 @@
           <ul>
           {% if user.coworker.is_authenticated %}
           {% else %}
-            <!-- <a href="{% url 'menu' %}">Меню</a> -->
             <a href="{% url 'franchise' %}">Рестораны</a>
           {% endif %}
             <!-- <a href="#">Рекомендации</a> -->
@@ -37,9 +36,9 @@
             <a href="{% url 'franchise_detail' pk=user.coworker.franchise.pk %}">Франшиза</a>
           {% else %}
             <a href="/cart/">Корзина</a>
-            <a href="/cart2/">Супер Корзина</a>
+            <!-- <a href="/cart2/">Супер Корзина</a> -->
           {% endif %}
-            <a href="#" class="icon" id="menu">&#x2630;</a>
+            <a href="#" class="icon" id="nav-menu">&#x2630;</a>
           </ul>
         </div>
         <div>
