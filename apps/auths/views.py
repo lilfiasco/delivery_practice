@@ -29,6 +29,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import DetailView, UpdateView
 from django.utils.decorators import method_decorator
+from django.utils import timezone
 from rest_framework import mixins, viewsets, response, status, generics
 
 #Local
@@ -194,44 +195,54 @@ class OrderCreateViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, viewset
         if not is_many:
             return super(OrderCreateViewSet, self).create(request, *args, **kwargs)
         else:
-            print("ASDASDASD: ", request.data)
-            serializer = self.get_serializer(data=request.data, many=True)
-            serializer.is_valid(raise_exception=True)
-            self.perform_create(serializer)
-            headers=self.get_success_headers(serializer.data)
-            return response.Response(serializer.data, status.HTTP_201_CREATED, headers=headers)
+            user_id = request.data[0].get('user_id')
+            existing_orders = models.Order.objects.filter(user_id=user_id, is_done=False)
+            existing_orders_map = {order.food_id: order for order in existing_orders}
+            updated_orders = []
+
+            for order_data in request.data:
+                food_id = order_data.get('food_id')
+                existing_order = existing_orders_map.get(food_id)
+
+                if existing_order:
+                    # Check if quantity, price, or total_price has changed
+                    if (existing_order.quantity != order_data['quantity'] or
+                            existing_order.price != order_data['price'] or
+                            existing_order.total_price != order_data['total_price']):
+                        existing_order.quantity = order_data['quantity']
+                        existing_order.price = order_data['price']
+                        existing_order.total_price = order_data['total_price']
+                        existing_order.save()
+                        updated_orders.append(existing_order)
+                else:
+                    order_data['food'] = food_id
+                    order_data['user'] = user_id
+                    serializer = OrderSerializer(data=order_data)
+                    serializer.is_valid(raise_exception=True)
+                    updated_order = serializer.save()
+                    updated_orders.append(updated_order)
+
+            # Delete remaining orders in existing_orders_map (deleted items from cart)
+            for order in existing_orders_map.values():
+                order.delete()
+
+            response_serializer = OrderSerializer(updated_orders, many=True)
+            headers = self.get_success_headers(response_serializer.data)
+            return response.Response(response_serializer.data, status.HTTP_201_CREATED, headers=headers)
+
+    # def create(self, request, *args, **kwargs):
+    #     is_many = isinstance(request.data, list)
+    #     if not is_many:
+    #         return super(OrderCreateViewSet, self).create(request, *args, **kwargs)
+    #     else:
+    #         serializer = self.get_serializer(data=request.data, many=True)
+    #         serializer.is_valid(raise_exception=True)
+    #         self.perform_create(serializer)
+    #         headers=self.get_success_headers(serializer.data)
+    #         return response.Response(serializer.data, status.HTTP_201_CREATED, headers=headers)
             
+    
 
-# class PurchaseCreateApiView(generics.CreateAPIView):
-#     """
-#     ViewSet class to create purchase and update is_done status of related orders.
-#     """
-
-#     queryset = models.Purchase.objects.all()
-#     serializer_class = PurchaseSerializer
-
-#     def perform_create(self, serializer):
-#         user = self.request.user
-#         order_data = models.Order.objects.filter(user=user, is_done=False)
-#         payment = self.request.data.get('payment', models.PaymentTypes.CASH)
-#         address = self.request.data.get('address', '')
-
-#         purchase_data = {
-#             'order': order_data,
-#             'payment': payment,
-#             'address': address
-#         }
-
-#         serializer.save(**purchase_data)
-
-#         models.Order.objects.filter(user=user).update(is_done=True)
-
-#     # def create(self, request, *args, **kwargs):
-#     #     serializer = self.get_serializer(data=request.data)
-#     #     serializer.is_valid(raise_exception=True)
-#     #     self.perform_create(serializer)
-
-#     #     return response.Response(serializer.data, status=status.HTTP_201_CREATED)
 class PurchaseCreateApiView(generics.CreateAPIView):
     """
     ViewSet class to create purchase and update is_done status of related orders.
@@ -240,21 +251,6 @@ class PurchaseCreateApiView(generics.CreateAPIView):
     queryset = models.Purchase.objects.all()
     serializer_class = PurchaseSerializer
 
-    # def perform_create(self, serializer):
-    #     user = self.request.user
-    #     order_data = models.Order.objects.filter(user=user, is_done=False)
-    #     payment = self.request.data.get('payment', models.PaymentTypes.CASH)
-    #     address = self.request.data.get('address', '')
-
-    #     purchase_data = {
-    #         'order': order_data,
-    #         'payment': payment,
-    #         'address': address
-    #     }
-
-    #     serializer.save(**purchase_data)
-
-    #     models.Order.objects.filter(user=user).update(is_done=True)
     def perform_create(self, serializer):
         user = self.request.user
         order_data = models.Order.objects.filter(user=user, is_done=False).values()

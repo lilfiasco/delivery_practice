@@ -1,21 +1,17 @@
 .modal {
   position: fixed;
-  /* Другие стили для модального окна */
-
-  /* Используем flexbox для расположения модального окна */
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
 }
-
-/* Медиа-запрос для применения стилей на мобильных устройствах */
 @media (max-width: 600px) {
   .modal {
     align-items: flex-end;
-    padding-bottom: 20px; /* Дополнительное отступание от нижнего края */
+    padding-bottom: 20px; 
   }
 }
-  
+
+
 
 
 .vertical-line {
@@ -273,17 +269,12 @@ h1 {
     margin-top: 1rem;
   }
 }
-
-/* Добавьте этот код в ваш файл cart.css или создайте новый файл для адаптивных стилей */
-
-/* Стили для мобильных устройств */
 @media (max-width: 767px) {
   .cart-modal {
     width: 90%;
     margin: 0 auto;
     padding: 10px;
   }
-
   .row-item-container {
     flex-direction: column;
   }

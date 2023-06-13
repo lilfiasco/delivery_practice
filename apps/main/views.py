@@ -33,7 +33,6 @@ def get_menu(request) -> HttpResponse:
 
 def get_cart(request) -> HttpResponse:
     return render (request, 'orders/cart.html')
-
 def get_cart2(request) -> HttpResponse:
     return render (request, 'orders/cart2.html')
 
@@ -208,4 +207,6 @@ class FoodDetailView(View):
         food = models.Food.objects.get(slug=slug)
 
         return render(request, 'food/food_detail.html', {"food": food})
+    
+
     

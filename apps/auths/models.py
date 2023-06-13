@@ -7,6 +7,7 @@ from django.contrib.auth.base_user import (
 from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import PermissionsMixin
+from django.utils import timezone
 
 #Local
 from auths.utils import generate_code
@@ -166,6 +167,11 @@ class Order(models.Model):
     is_done = models.BooleanField(
         default=False,
         verbose_name='оплачено ли'
+    )
+
+    datetime_created = models.DateTimeField(
+        default=timezone.now(),
+        verbose_name='дата и время создания'
     )
 
     class Meta:
