@@ -102,7 +102,6 @@ class Food(models.Model):
             super(Food, self).save(*args, **kwargs)
             img = Image.open(self.image.path)
             if img.height > 150 or img.width > 150:
-                print("ASDASDASDASDASDSAD", img.height, img.width)
                 output_size = (150,150)
                 img.resize(output_size)
                 img.save(self.image.path)

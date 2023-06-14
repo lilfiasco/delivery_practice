@@ -50,7 +50,6 @@ class UserRegisrtrationView(CreateView):
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        print('FFFFFFFFF: ', context)
         return context
     
     def form_valid(self, form):
@@ -72,7 +71,6 @@ class CoworkerRegisrtrationView(CreateView):
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        print('FFFFрFFFFF: ', context)
         return context
     
     def form_valid(self, form):
@@ -195,7 +193,6 @@ class OrderCreateViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, viewset
         if not is_many:
             return super(OrderCreateViewSet, self).create(request, *args, **kwargs)
         else:
-            print("ASDASDASD: ", request.data)
             serializer = self.get_serializer(data=request.data, many=True)
             serializer.is_valid(raise_exception=True)
             self.perform_create(serializer)

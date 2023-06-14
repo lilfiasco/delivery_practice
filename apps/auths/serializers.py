@@ -22,7 +22,6 @@ class OrderSerializer(serializers.ModelSerializer):
     quantity = serializers.IntegerField(default=0)
     total_price = serializers.IntegerField()
     user_id = serializers.IntegerField(write_only=True)
-    is_done = serializers.BooleanField()
 
     class Meta:
         model = Order

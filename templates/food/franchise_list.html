@@ -22,9 +22,9 @@
                                 <img class="franchise-media" src="/media/{{franchise.image}}">
                                 <div class="container_franchise_text">
                                     {% if user.coworker.is_authenticated  %}
-                                    <h2 class="fran-link"><a class="link" href="{% url 'franchise_detail' franchise.id %}"  onclick="clearCart(event, '{{ franchise.id }}')">{{ franchise.title }}</a></h2>
+                                    <a class="link" href="{% url 'franchise_detail' franchise.id %}" onclick="clearCart(event, '{{ franchise.id }}', '{{ franchise.title }}')">{{ franchise.title }}</a></h2>
                                     {% else %}
-                                    <h2 class="fran-link"><a class="link" href="{% url 'menu_franchise2' franchise.id %}"  onclick="clearCart(event, '{{ franchise.id }}')">{{ franchise.title }}</a></h2>
+                                    <h2 class="fran-link"><a class="link" href="{% url 'menu_franchise2' franchise.id %}"  onclick="clearCart(event, '{{ franchise.id }}', '{{ franchise.title }}')">{{ franchise.title }}</a></h2>
                                     
                                     {% endif %}
                                 </div>
@@ -43,7 +43,7 @@
         localStorage.removeItem('cart');
     }
 </script> -->
-<script>
+<!-- <script>
     function clearCart(event, franchiseId) {
         var currentFranchiseId = localStorage.getItem('franchiseId');
         if (currentFranchiseId !== franchiseId) {
@@ -51,9 +51,18 @@
         }
         localStorage.setItem('franchiseId', franchiseId);
     }
+</script> -->
+
+<script>
+    function clearCart(event, franchiseId, franchiseTitle) {
+        var currentFranchiseId = localStorage.getItem('franchiseId');
+        if (currentFranchiseId !== franchiseId) {
+            localStorage.removeItem('cart');
+        }
+        localStorage.setItem('franchiseId', franchiseId);
+        localStorage.setItem('franchiseTitle', franchiseTitle);
+    }
 </script>
-
-
 
 
 {% if page_obj.has_other_pages %}

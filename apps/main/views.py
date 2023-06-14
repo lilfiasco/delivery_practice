@@ -33,11 +33,50 @@ def get_menu(request) -> HttpResponse:
     form = forms.FoodForm
     return render (request, 'food/menu.html', context={ 'form': form })
 
-def get_cart(request) -> HttpResponse:
-    return render (request, 'orders/cart.html')
+# def get_cart(request) -> HttpResponse:
+#     franchise = models.Franchise.objects.all()
+#     return render(request, 'orders/cart.html', context={'franchise': franchise})
+def get_cart(request):
+    franchise_id = request.POST.get('franchiseId')
+    print(franchise_id)
+    franchise = models.Franchise.objects.filter(id=franchise_id).first()
+    return render(request, 'orders/cart.html', {'franchise': franchise})
+# def get_cart(request):
+#     franchise_id = request.META.get('HTTP_X_FRANCHISE_ID')
+#     print(franchise_id)
+#     franchise = models.Franchise.objects.filter(id=franchise_id)
+#     return render(request, 'orders/cart.html', context={'franchise': franchise})  
+# def get_cart(request):
+#     franchise = models.Franchise.objects.all()
+#     franchise_id = request.META.get('HTTP_X_FRANCHISE_ID')
+
+#     print(request.META)  # Print the request headers
+
+#     context = {
+#         'franchise': franchise,
+#         'franchiseId': franchise_id
+#     }
+
+#     return render(request, 'orders/cart.html', context=context)
+
+# def get_cart(request) -> HttpResponse:
+#     franchise = models.Franchise.objects.all()
+#     franchise_id = request.GET.get('franchiseId')
+
+#     # Process the franchiseId value as needed
+#     # ...
+
+#     context = {
+#         'franchise': franchise,
+#         'franchiseId': franchise_id
+#     }
+
+#     return render(request, 'orders/cart.html', context=context)
+
 
 def get_cart2(request) -> HttpResponse:
     return render (request, 'orders/cart2.html')
+
 class CreateFoodView(CreateView):
     """
     Add new food.
@@ -234,18 +273,3 @@ class FoodDetailView(View):
 # def cart_view2(request):
 #     return render(request, 'food/cart2.html')
 
-
-
-
-
-
-
-
-
-# @csrf_exempt
-# def checkout(request):
-#     if request.method == 'POST':
-#         print(request.body)
-#         return HttpResponse('Success')  
-#     else:
-#         pass
