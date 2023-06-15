@@ -11,9 +11,6 @@
   }
 }
 
-
-
-
 .vertical-line {
   margin-left: 3rem;
 }
@@ -108,6 +105,13 @@
   margin-top: 3.3rem;
 }
 
+.square-border {
+  border: 2px solid rgb(255, 255, 255);
+  padding: 5px;
+  margin-bottom: 120px;
+}
+
+
 .row-item-price {
   margin-left: 3rem;
   margin-top: 3rem;
@@ -151,15 +155,22 @@
 
 }
 
-.cart-button {
+.purchase-button {
   display: block;
+  border: none;
   margin: auto;
   padding: 10px 25px;
   font-size: 15px;
+  font-weight: bold;
   background-color: rgb(12, 240, 88);
-  color: white;
+  color: black;
+  transition: 0.4s;
   border-radius: 25px;
 
+}
+
+.purchase-button:hover {
+  transform: scale(1.1);
 }
 
 .quantityButton {
@@ -336,6 +347,10 @@ h1 {
   .back-icon {
     margin-left: 1rem;
     margin-right: 1rem;
+  }
+
+  .square-border {
+    display: ;
   }
 
   .modal-content {

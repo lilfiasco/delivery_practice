@@ -20,7 +20,6 @@ $(document).ready(() => {
         let cardNumber = $("#cardNumber").val();
         let address = $("#address").val();
         let csrfToken = getCookie('csrftoken');
-        debugger
         let payment = 2;
 
         $.ajax({
@@ -37,9 +36,35 @@ $(document).ready(() => {
                 'X-CSRFToken': csrfToken
             },
             success: (response) => {
+                alert("ну работает");
+            },
+            error: (error) => {
+                alert('Не добавлена');
+            }
+        });
+    });
+
+    $("#purchase-button").click((event) => {
+        let address = $("#address").val();
+        let csrfToken = getCookie('csrftoken');
+        debugger
+        let payment = 2;
+
+        $.ajax({
+            url: '/purchase/',
+            method: 'POST',
+            contentType:"application/json; charset=utf-8",
+            dataType:"json",
+            data: JSON.stringify({
+                address: address,
+                payment: payment,
+            }),
+            headers: {
+                'X-CSRFToken': csrfToken
+            },
+            success: (response) => {
                 debugger;
                 alert("ну работает");
-                // $("#successModal").append(`ПРИШЕЛ ОТВЕТ: ${response.success}`);
             },
             error: (error) => {
                 debugger;

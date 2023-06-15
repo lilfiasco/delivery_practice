@@ -24,7 +24,7 @@
                                     {% if user.coworker.is_authenticated  %}
                                     <a class="link" href="{% url 'franchise_detail' franchise.id %}" onclick="clearCart(event, '{{ franchise.id }}', '{{ franchise.title }}')">{{ franchise.title }}</a></h2>
                                     {% else %}
-                                    <h2 class="fran-link"><a class="link" href="{% url 'menu_franchise2' franchise.id %}"  onclick="clearCart(event, '{{ franchise.id }}', '{{ franchise.title }}')">{{ franchise.title }}</a></h2>
+                                    <h2 class="fran-link"><a class="link" href="{% url 'menu_franchise' franchise.id %}"  onclick="clearCart(event, '{{ franchise.id }}', '{{ franchise.title }}')">{{ franchise.title }}</a></h2>
                                     
                                     {% endif %}
                                 </div>

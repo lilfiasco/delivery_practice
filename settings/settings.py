@@ -64,6 +64,8 @@ TEMPLATES = [
     },
 ]
 
+AUTH_USER_MODEL = 'auths.CustomUser'
+
 WSGI_APPLICATION = 'settings.wsgi.application'
 
 DATABASES = {
@@ -93,7 +95,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = 'auths.CustomUser'
 
 LANGUAGE_CODE = 'ru-ru'
 

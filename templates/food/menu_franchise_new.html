@@ -4,6 +4,11 @@
 
 <link rel="stylesheet" type="text/css" href="/static/css/menu.css">
 
+<form method="get" action="{% url 'menu_franchise' franchise_id=franchise.id %}">
+    <input type="text" name="search" class="search-food" placeholder="Search..." value="{{ search_query }}">
+    <button type="submit">Search</button>
+</form>
+
 <div class="row">
     <div class="col-md-2  pr-2 py-2">
         <a href="/franchise" class="back-link mt-5 ml-3">
@@ -14,26 +19,12 @@
             <form method="GET" id="filter-form">
                 <a href="{% url 'menu_franchise' franchise_id=franchise.id %}">Show All Categories</a>
                 {% for category, _ in filtered_categories %}
-                <li>
-                    <a href="{% url 'menu_franchise' franchise_id=franchise.id %}?category={{ category.title }}"
-                        class="ftitle category-link{% if category.title == selected_category %} active{% endif %}">
-                        {{ category.title }}
-                    </a>
-                </li>
+                    <li><a href="{% url 'menu_franchise' franchise_id=franchise.id %}?category={{ category.title }}" class="ftitle category-link{% if category.title == selected_category %} active{% endif %}">{{ category.title }}</a></li>
                 {% endfor %}
             </form>
         </div>
     </div>
     <div class="col-12 col-md-8 pr-2 py-2">
-        <div class="ml-5 mr-4">
-            <form method="get" action="{% url 'menu_franchise' franchise_id=franchise.id %}">
-                <input type="search" name="search" class="search-food" placeholder="Search..." value="{{ search_query }}">
-                <!-- <button type="submit" class="icon-button">
-                    <i class="fa fa-search"></i>
-                    <span>Search</span>
-                </button> -->
-            </form>
-        </div>
         {% for category, foods in filtered_categories %}
         <div class="column ml-5 mr-4">
             <div class="category-m-outline">
@@ -78,7 +69,6 @@
     </div>
 </div>
 
-
 <script src="/static/js/menu.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -112,6 +102,34 @@
         });
 
         var cart = JSON.parse(localStorage.getItem("cart")) || {};
+
+        // function addToCart(button,) {
+        //     var foodId = button.getAttribute("data-food-id");
+        //     var foodTitle = button.getAttribute("data-food-title");
+        //     var foodPrice = parseFloat(button.getAttribute("data-food-price"));
+        //     var foodImage = button.getAttribute("data-food-image");
+        //     var foodQuantity = parseInt(button.getAttribute("data-food-quantity"));
+    
+        //     var quantityDisplay = button.parentNode.parentNode.querySelector(".quantity-display");
+        //     var quantity = parseInt(quantityDisplay.getAttribute("data-quantity"));
+    
+        //     if (quantity > 0 ) {
+        //         cart[foodId] = {
+        //             title: foodTitle,
+        //             price: foodPrice,
+        //             quantity: quantity,
+        //             image: foodImage
+        //         };
+        //         saveCartToLocalStorage();
+        //         updateCartDisplay();
+
+        //     }
+        //     else {
+        //         delete cart[foodId];
+        //         saveCartToLocalStorage();
+        //         updateCartDisplay();
+        //     } 
+        // }
     
 function changeQuantity(button, increment) {
     var quantityDisplay = button.parentNode.querySelector(".quantity-display");

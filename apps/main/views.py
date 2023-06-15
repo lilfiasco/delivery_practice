@@ -177,62 +177,127 @@ class FranchiseDetailView(DetailView):
 
 
 
+# class MenuFranchiseView(ListView):
+#     model = models.Food
+#     template_name = 'food/menu_franchise.html'
+#     context_object_name = 'food'
+
+#     def get_queryset(self):
+#         queryset = super().get_queryset()
+
+#         franchise_id = self.kwargs.get('franchise_id')
+#         franchise = get_object_or_404(models.Franchise, id=franchise_id)
+        
+#         category = self.request.GET.get('category')
+#         if category:
+#             queryset = queryset.filter(category__slug=category)
+        
+#         return queryset.filter(franchise=franchise)
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+
+#         franchise_id = self.kwargs.get('franchise_id')
+#         franchise = get_object_or_404(models.Franchise, id=franchise_id)
+#         context['franchise'] = franchise
+
+#         return context
 class MenuFranchiseView(ListView):
-    model = models.Food
-    template_name = 'food/menu_franchise.html'
-    context_object_name = 'food'
+    template_name = 'food/menu_franchise_new.html'
+    context_object_name = 'categories'
 
     def get_queryset(self):
-        queryset = super().get_queryset()
-
         franchise_id = self.kwargs.get('franchise_id')
-        franchise = get_object_or_404(models.Franchise, id=franchise_id)
-        
-        category = self.request.GET.get('category')
-        if category:
-            queryset = queryset.filter(category__slug=category)
-        
-        return queryset.filter(franchise=franchise)
+        return models.Category.objects.filter(food__franchise_id=franchise_id).distinct()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
         franchise_id = self.kwargs.get('franchise_id')
-        franchise = get_object_or_404(models.Franchise, id=franchise_id)
-        context['franchise'] = franchise
+        search_query = self.request.GET.get('search', '')
+        selected_category = self.request.GET.get('category')
 
-        return context
-    
+        categories = context['categories'].filter(food__franchise_id=franchise_id).distinct()
+        filtered_categories = []
+
+        for category in categories:
+            filtered_foods = category.food_set.filter(franchise_id=franchise_id)
+            if search_query:
+                filtered_foods = filtered_foods.filter(
+                    Q(title__icontains=search_query) |
+                    Q(category__title__icontains=search_query)
+                )
+            if selected_category and selected_category != category.title:
+                filtered_foods = filtered_foods.none()
+            if filtered_foods.exists():
+                filtered_categories.append((category, filtered_foods))
+
+        context['filtered_categories'] = filtered_categories
+        context['franchise'] = models.Franchise.objects.get(id=franchise_id)
+        context['search_query'] = search_query
+        context['selected_category'] = selected_category
+        return context    
     
 class MenuFranchiseView2(ListView):
-    model = models.Food
+    # model = models.Food
+    # template_name = 'food/menu_franchise2.html'
+    # context_object_name = 'food'
+
+    # def get_queryset(self):
+    #     queryset = super().get_queryset()
+
+    #     franchise_id = self.kwargs.get('franchise_id')
+    #     franchise = get_object_or_404(models.Franchise, id=franchise_id)
+        
+    #     category = self.request.GET.get('category')
+    #     if category:
+    #         queryset = queryset.filter(category__title=category)
+        
+    #     return queryset.filter(franchise=franchise)
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+
+    #     franchise_id = self.kwargs.get('franchise_id')
+    #     franchise = get_object_or_404(models.Franchise, id=franchise_id)
+    #     context['franchise'] = franchise
+    #     context['selected_category'] = self.request.GET.get('category')
+    #     non_empty_categories = models.Category.objects.filter(food__franchise=franchise).annotate(food_count=Count('food')).filter(food_count__gt=0)
+    #     context['non_empty_categories'] = non_empty_categories
+
+    #     return context
     template_name = 'food/menu_franchise2.html'
-    context_object_name = 'food'
+    context_object_name = 'categories'
 
     def get_queryset(self):
-        queryset = super().get_queryset()
-
         franchise_id = self.kwargs.get('franchise_id')
-        franchise = get_object_or_404(models.Franchise, id=franchise_id)
-        
-        category = self.request.GET.get('category')
-        if category:
-            queryset = queryset.filter(category__title=category)
-        
-        return queryset.filter(franchise=franchise)
+        return models.Category.objects.filter(food__franchise_id=franchise_id).distinct()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
         franchise_id = self.kwargs.get('franchise_id')
-        franchise = get_object_or_404(models.Franchise, id=franchise_id)
-        context['franchise'] = franchise
-        context['selected_category'] = self.request.GET.get('category')
-        non_empty_categories = models.Category.objects.filter(food__franchise=franchise).annotate(food_count=Count('food')).filter(food_count__gt=0)
-        context['non_empty_categories'] = non_empty_categories
+        search_query = self.request.GET.get('search', '')
+        selected_category = self.request.GET.get('category')
 
-        return context
+        categories = context['categories'].filter(food__franchise_id=franchise_id).distinct()
+        filtered_categories = []
 
+        for category in categories:
+            filtered_foods = category.food_set.filter(franchise_id=franchise_id)
+            if search_query:
+                filtered_foods = filtered_foods.filter(
+                    Q(title__icontains=search_query) |
+                    Q(category__title__icontains=search_query)
+                )
+            if selected_category and selected_category != category.title:
+                filtered_foods = filtered_foods.none()
+            if filtered_foods.exists():
+                filtered_categories.append((category, filtered_foods))
+
+        context['filtered_categories'] = filtered_categories
+        context['franchise'] = models.Franchise.objects.get(id=franchise_id)
+        context['search_query'] = search_query
+        context['selected_category'] = selected_category
+        return context   
 
 
 class FranchiseFoodEditView(UpdateView):

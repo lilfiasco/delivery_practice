@@ -83,6 +83,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     objects = CustomUserManager()
 
     class Meta:
+        # app_label = 'auths_customuser'
+
         ordering = ('-id',)
         verbose_name = 'User'
         verbose_name_plural = 'Users'
@@ -208,11 +210,11 @@ class Purchase(models.Model):
     payment = models.IntegerField(
         default=PaymentTypes.CASH, choices=PaymentTypes.choices
     )
-    card_number = models.CharField(
-        max_length=16,
-        null=True,
-        verbose_name='номер карты'
-    )
+    # card_number = models.CharField(
+    #     max_length=16,
+    #     null=True,
+    #     verbose_name='номер карты'
+    # )
     address = models.CharField(
         max_length=255,
         verbose_name='адрес доставки'

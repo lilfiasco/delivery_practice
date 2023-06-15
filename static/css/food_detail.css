@@ -140,6 +140,27 @@ text-decoration: underline;
   margin-right: 0;
 }
 
+.f-title {
+  margin-left: 3rem;
+}
+
+.category {
+  margin-right: 0rem;
+}
+
+.f-description {
+  margin-left: 3rem;
+}
+
+.food-price-border {
+  margin-left: 3rem;
+}
+
+.button-wrapper {
+  margin-top: 1rem;
+  margin-left: 2rem;
+}
+
 .food-image {
   margin-right: 0;
   margin-bottom: 10px;
@@ -149,6 +170,7 @@ text-decoration: underline;
   width: 270px;
   height: 270px;
   margin-bottom: 2px;
+  margin-left: 1rem;
 }
 
 .food-info {

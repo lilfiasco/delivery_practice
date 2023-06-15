@@ -27,11 +27,11 @@ app.autodiscover_tasks(
 )
 app.conf.beat_schedule = {
     'every-1-minute-every-day': {
-        'task': 'check-order-status',
+        'task': 'check_order_status',
         'schedule': crontab(minute='*/1')
     }
 }
 
 app.conf.broker_connection_retry_on_startup = True
 
-app.conf.timezone = 'UTC+6'
+app.conf.timezone = 'Asia/Almaty'

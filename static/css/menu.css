@@ -286,9 +286,27 @@ li .ftitle {
     float: none;
     display: block;
     text-align: left;
-    width: 95%;
+    width: 85%;
     height: 15px;
     margin: 5px 5px;
     padding: 14px;
     border-radius: 20px;
 }
+.icon-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background-color: transparent;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}  
+.icon-button i {
+    margin-right: 5px;
+    color: #0df10d;
+}
+.icon-button span {
+    font-weight: bold;
+    color: #0df10d;
+  }

@@ -89,38 +89,39 @@
             <!-- Modal-card -->
             <div id="modal1" class="modal">
                 <div class="modal-content">
-                  <span class="close">&times;</span>
-                  <h2 class="text-center">Мой заказ</h2>
-                  <form id="checkoutForm">
-                    <div class="form-group">
-                      <label for="cardNumber">Номер карты</label>
-                      <input type="text" class="form-control" id="cardNumber" name="cardNumber" required>
-                    </div>
-                    <div class="form-group">
-                      <label for="cardAddress">Адрес</label>
-                      <input type="text" class="form-control" id="cardAddress" name="address" required>
-                    </div>
-                    <button type="button" class="purchase-button">959Заказать</button>
-                    <button type="submit" class="cart-button">Оформить заказ</button>
-                  </form>
+                    <span class="close">&times;</span>
+                        <h2 class="text-center">Мой заказ</h2>
+                        <form id="checkoutForm">
+                            <div class="form-group">
+                                <label for="cardNumber">Номер карты</label>
+                                <input type="text" class="form-control" id="cardNumber" name="cardNumber" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="address">Адрес</label>
+                                <input type="text" class="form-control" id="address" name="address" required>
+                            </div>
+                            <button type="button" class="cart-button" id="purchase-button">Заказать</button>
+                        </form>
                 </div>
-              </div>
-              
-              <!-- Modal-cash -->
-              <div id="modal2" class="modal">
+            </div>
+            <!-- Modal-cash -->
+            <div id="modal2" class="modal">
                 <div class="modal-content">
-                  <span class="close">&times;</span>
-                  <h2 class="text-center">Мой заказ</h2>
-                  <form id="checkoutForm">
-                    <div class="form-group">
-                      <label for="cashAddress">Адрес</label>
-                      <input type="text" class="form-control" id="cashAddress" name="address" required>
-                    </div>
-                    <button type="button" class="purchase-button">Заказать</button>
-                    <button type="submit" class="cart-button">Оформить заказ</button>
-                  </form>
+                    <span class="close">&times;</span>
+                        <h2 class="text-center">Мой заказ</h2>
+                        <form id="checkoutForm">
+                            <div class="form-group">
+                                <label for="cardNumber">Способ оплаты: При получении</label>
+                            </div>
+                            <div class="form-group">
+                                <label for="address">Адрес</label>
+                                <input type="text" class="form-control" id="address" name="address" required>
+                            </div>
+                            <button type="button" id="purchase-button">Заказать</button>
+                            <button type="submit" class="cart-button" id="cash-pay">Заказать</button>
+                        </form>
                 </div>
-              </div>
+            </div>
             <!-- Modal-success -->
             <div id="successModal" class="modal">
                 <div class="modal-content">
@@ -146,69 +147,50 @@
 <script src="/static/js/purchase_modal.js"></script>
 
 
-<script>
-    const purchaseButtons = document.getElementsByClassName('purchase-button');
-    
-    // Loop through each purchase button and add click event listeners
-    for (let i = 0; i < purchaseButtons.length; i++) {
-      purchaseButtons[i].addEventListener('click', () => {
-        // Retrieve the payment type value
-        const paymentType = document.querySelector('input[name="status"]:checked').id;
-        const payment = paymentType === 'card' ? 2 : 1; // Assign 2 for 'CARD' choice, 1 for 'CASH' choice
-    
-        // Get the corresponding address input field based on the payment type
-        const addressInput = document.getElementById(paymentType === 'card' ? 'cardAddress' : 'cashAddress');
-        if (!addressInput) {
-          console.error('Address input field not found');
-          return;
-        }
-        const address = addressInput.value;
-    
-        // Perform validation checks
-        if (!address) {
-          // Display an error message or take appropriate action if the address is empty
-          console.error('Address is required');
-          return;
-        }
-    
-        // Create an object with the order data
-        const orderData = {
-          address: address,
-          payment: payment
-        };
-    
-        // Get the CSRF token value from the cookie
-        const csrfToken = getCookie('csrftoken');
-    
-        // Send the order data to the server using AJAX/fetch
-        fetch('/purchase/', {
-          method: 'POST',
-          body: JSON.stringify(orderData),
-          headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': csrfToken // Include the CSRF token in the request headers
-          }
-        })
-          .then(response => response.json())
-          .then(data => {
-            // Handle the response from the server
-            // You can perform additional actions here, such as displaying a success message
-            console.log('Order data sent:', data);
-          })
-          .catch(error => {
-            // Handle any errors that occurred during the request
-            console.error('Error:', error);
-          });
-      });
+<!-- <script>
+const purchaseButton = document.getElementById('purchase-button');
+
+// Add click event listener to the purchase button
+purchaseButton.addEventListener('click', () => {
+  // Retrieve the address and payment type values
+  const address = document.getElementById('address').value;
+  const paymentType = document.querySelector('input[name="status"]:checked').id;
+  const payment = paymentType === 'card' ? 2 : 1; // Assign 2 for 'CARD' choice, 1 for 'CASH' choice
+  const orderData = {
+  address: address,
+  payment: payment
+};
+  // Get the CSRF token value from the cookie
+  const csrfToken = getCookie('csrftoken');
+
+  // Send the order data to the server using AJAX/fetch
+  fetch('/purchase/', {
+    method: 'POST',
+    body: JSON.stringify(orderData),
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFToken': csrfToken // Include the CSRF token in the request headers
     }
-    
-    // Helper function to get the value of a cookie by name
-    function getCookie(name) {
-      const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
-      return cookieValue ? cookieValue.pop() : '';
-    }
-    </script>
-    
+  })
+    .then(response => response.json())
+    .then(data => {
+      // Handle the response from the server
+      // You can perform additional actions here, such as displaying a success message
+      console.log('Order data sent:', data);
+    })
+    .catch(error => {
+      // Handle any errors that occurred during the request
+      console.error('Error:', error);
+    });
+});
+
+// Helper function to get the value of a cookie by name
+function getCookie(name) {
+  const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+  return cookieValue ? cookieValue.pop() : '';
+}
+
+</script> -->
 <script>
     // Обработчик события для кнопки "Оформить заказ"
     document.getElementById('checkoutButton').addEventListener('click', function() {
@@ -459,10 +441,6 @@ document.querySelector(".close").addEventListener("click", function() {
                 quantityElement.textContent = quantity;
                 quantityElement.id = "quantity-" + key;
                 quantityElement.classList.add("row-item-quantity");
-                quantityElement.classList.add("square-border");
-
-                // Добавляем стиль box-sizing: border-box;
-                quantityElement.style.boxSizing = "border-box";
 
                 var decreaseButton = document.createElement("button");
                 decreaseButton.textContent = "-";
