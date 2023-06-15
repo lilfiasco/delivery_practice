@@ -220,12 +220,17 @@ class PurchaseCreateApiView(generics.CreateAPIView):
             'address': address
         }
 
+        # purchase = models.Purchase(
+        #     orders = 
+        # )
+
         serializer.save(**purchase_data)
 
         models.Order.objects.filter(user=user).update(is_done=True)
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
+        print("IS VALID TRUE")
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
 

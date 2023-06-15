@@ -25,12 +25,25 @@
 }
 
 .back-link {
-  margin-top: 1rem;
+  display: inline-block;
+  margin-top: 3rem;
+  margin-left: 7rem;
+  color: aliceblue;
+}
+
+.back-link:hover {
+ color: rgb(12, 240, 88);;
 }
 
 .back-icon {
   width: 10px;
   height: 15px;
+  margin-right: 1.5rem;
+}
+
+.franchise-cart-title {
+  margin-top: 2.4rem;
+  margin-left: 18rem;
 }
 
 .korzina {
@@ -104,8 +117,8 @@
 .deleteImage {
   margin-left: 1rem;
   margin-top: 3rem;
-  width: 25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
 }
 
 .quantityElement {
@@ -315,10 +328,30 @@ h1 {
     margin-top: 50px;
   }
 
+  .back-link {
+    margin-top: 1rem;
+    margin-left: 1rem;
+  }
+
+  .back-icon {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+
   .modal-content {
     border-radius: 0;
   }
 
+  .korzina {
+    text-align: center;
+    margin-left: 7.5rem;
+  }
+
+  .franchise-cart-title {
+    margin-top: 1rem;
+    margin-left: 5rem;
+    margin-top: 2.4rem;
+  }
 
   .cartItemImage {
     width: 85px;
@@ -465,10 +498,187 @@ h1 {
 
   .deleteImage {
     margin-left: 7rem;
-    margin-top: 2.1rem;
+    margin-top: 2.3rem;
   }
 
 }
+@media (max-width: 300px){
+  .cart-modal {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  .row-item-container {
+    flex-direction: column;
+  }
+
+  .row-item-price {
+    margin-left: 7.9rem;
+    margin-top: -2rem;
+    font-size: 14px;
+
+  }
+
+  .col-12 {
+    flex-wrap: wrap;
+  }
+
+  .col-12 .cart-modal {
+    margin-top: 1rem;
+    width: 100%;
+  }
+
+
+  .from-modal, .hr-cart {
+    font-size: 14px;
+    margin-top: 8px;
+  }
+
+  .from-modal {
+    margin-bottom: 4px;
+  }
+
+  .cart-button {
+    font-size: 14px;
+    padding: 8px 16px;
+    margin-top: 16px;
+  }
+
+  .modal-dialog {
+    margin-top: 50px;
+  }
+
+  .modal-content {
+    border-radius: 0;
+  }
+
+
+  .cartItemImage {
+    width: 85px;
+    height: 70px;
+    margin-left: 1rem;
+  }
+
+  .row-item-title {
+    margin-left: 1rem;
+    margin-top: 0.5rem;
+    margin-left: 0rem;
+    white-space: nowrap;
+    font-size: 18px;
+  }
+
+  .quantityButton {
+    margin-left: -3.4rem;
+    font-size: 15px;
+    padding: 4px 4px;
+    margin-right: 1rem;
+    margin-top: 30px;
+  }
+
+  .quantityButton1{
+    margin-top: 30px;
+  }
+
+  .row-item-quantity {
+    margin-top: 2.3rem;
+    margin-right: 0.7rem;
+  }
+
+  .deleteImage {
+    margin-left: 14rem;
+    margin-top: -2.0rem;
+  }
+
+} 
+  @media (max-width: 360px) {
+  .cart-modal {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  .row-item-container {
+    flex-direction: column;
+  }
+
+  .row-item-price {
+    margin-left: 6.9rem;
+    margin-top: -3rem;
+    font-size: 14px;
+
+  }
+
+  .col-12 {
+    flex-wrap: wrap;
+  }
+
+  .col-12 .cart-modal {
+    margin-top: 1rem;
+    width: 100%;
+  }
+
+
+  .from-modal, .hr-cart {
+    font-size: 14px;
+    margin-top: 8px;
+  }
+
+  .from-modal {
+    margin-bottom: 4px;
+  }
+
+  .cart-button {
+    font-size: 14px;
+    padding: 8px 16px;
+    margin-top: 16px;
+  }
+
+  .modal-dialog {
+    margin-top: 50px;
+  }
+
+  .modal-content {
+    border-radius: 0;
+  }
+
+
+  .cartItemImage {
+    width: 85px;
+    height: 70px;
+    margin-left: 1rem;
+  }
+
+  .row-item-title {
+    margin-left: 1rem;
+    margin-top: 0.5rem;
+    margin-left: 0rem;
+    white-space: nowrap;
+    font-size: 18px;
+  }
+
+  .quantityButton {
+    margin-left: -3.4rem;
+    font-size: 15px;
+    padding: 4px 4px;
+    margin-right: 1rem;
+    margin-top: 30px;
+  }
+
+  .quantityButton1{
+    margin-top: 30px;
+  }
+
+  .row-item-quantity {
+   
+    margin-top: 2.3rem;
+    margin-right: 0.7rem;
+  }
+
+  .deleteImage {
+    margin-left: 20rem;
+    margin-top: -3.1rem;
+  }
+}
+
 
  
   

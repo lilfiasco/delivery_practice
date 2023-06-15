@@ -10,13 +10,13 @@ from django.conf import settings
 
 
 environ.setdefault(
-    'DJANGO_SETTINGS_MODULE', 'settings.base'
+    'DJANGO_SETTINGS_MODULE', 'settings.settings'
 )
 app: Celery = Celery(
     'settings',
     broker=settings.CELERY_BROKER_URL,
     include=(
-        'main.tasks',
+        'apps.auths.tasks',
     )
 )
 app.config_from_object(
@@ -28,7 +28,10 @@ app.autodiscover_tasks(
 app.conf.beat_schedule = {
     'every-1-minute-every-day': {
         'task': 'check-order-status',
-        'schedule': crontab(minute='*/10')
+        'schedule': crontab(minute='*/1')
     }
 }
-app.conf.timezone = 'UTC'
+
+app.conf.broker_connection_retry_on_startup = True
+
+app.conf.timezone = 'UTC+6'

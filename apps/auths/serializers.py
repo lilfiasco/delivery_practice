@@ -35,4 +35,4 @@ class PurchaseSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Purchase
-        fields = '__all__'
+        exclude = ('order', )

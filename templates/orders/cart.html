@@ -6,7 +6,9 @@
 
 {% load widget_tweaks %}
 
-<a href="{% url 'franchise' %}" class="back-link mt-5 ml-5">
+
+<div class="row">
+<a href="{% url 'franchise' %}" class="back-link">
     <img class="back-icon" src="https://i.postimg.cc/wTmB78pf/Vector2.png">
     Вернуться к поиску
 </a>
@@ -19,7 +21,7 @@
         {{ item.title }}
     {% endif %}
 {% endfor %}
-    <h2> <div style="text-align: center;" id= "franchiseTitleContainer"></h2> </div>    
+    <h2 class="franchise-cart-title"> <div style="text-align: center;" id= "franchiseTitleContainer"></h2> </div>    
 
     
     </div>
@@ -66,9 +68,9 @@
             <p id="totalPayment" class="from-modal">Всего к оплате:</p>
 
             {% if user.is_authenticated %}
-            <button id="checkoutButton" type="button" class="cart-button">1Оформить заказ</button>
+            <button id="checkoutButton" type="button" class="cart-button">Оформить заказ</button>
             {% else %}
-            <button type="button" class="cart-button"><a href="{% url 'login' %}" class="data-toggle-a">2Оформить заказ</a></button>
+            <button type="button" class="cart-button"><a href="{% url 'login' %}" class="data-toggle-a">Оформить заказ</a></button>
             {% endif%}
 
             <div class='hiddenElement' id="hiddenElement">
@@ -82,7 +84,7 @@
                     <label for="cash">Оплата при получении</label>
                 </div>
 
-                <button type="button" class="cart-button" id="openModal">3Оформить заказ</button>
+                <button type="button" class="cart-button" id="openModal">Оформить заказ</button>
             </div>
             <!-- Modal-card -->
             <div id="modal1" class="modal">
@@ -98,7 +100,7 @@
                                 <label for="address">Адрес</label>
                                 <input type="text" class="form-control" id="address" name="address" required>
                             </div>
-                            <button type="button" class="cart-button" id="purchase-button">959Заказать</button>
+                            <button type="button" class="cart-button" id="purchase-button">Заказать</button>
                         </form>
                 </div>
             </div>
@@ -115,7 +117,25 @@
                                 <label for="address">Адрес</label>
                                 <input type="text" class="form-control" id="address" name="address" required>
                             </div>
-                            <button type="button" id="purchase-button">959Заказать</button>
+                            <button type="button" id="purchase-button">Заказать</button>
+                            <button type="submit" class="cart-button" id="cash-pay">Заказать</button>
+                        </form>
+                </div>
+            </div>
+            <!-- Modal-success -->
+            <div id="successModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                        <h2 class="text-center">Мой заказ</h2>
+                        <form id="checkoutForm">
+                            <div class="form-group">
+                                <label for="cardNumber">Способ оплаты: При получении</label>
+                            </div>
+                            <div class="form-group">
+                                <label for="address">Адрес</label>
+                                <input type="text" class="form-control" id="address" name="address" required>
+                            </div>
+                            <button type="button" id="purchase-button">Заказать</button>
                             <button type="submit" class="cart-button" id="cash-pay">Заказать</button>
                         </form>
                 </div>
@@ -127,7 +147,7 @@
 <script src="/static/js/purchase_modal.js"></script>
 
 
-<script>
+<!-- <script>
 const purchaseButton = document.getElementById('purchase-button');
 
 // Add click event listener to the purchase button
@@ -170,7 +190,7 @@ function getCookie(name) {
   return cookieValue ? cookieValue.pop() : '';
 }
 
-  </script>
+</script> -->
 <script>
     // Обработчик события для кнопки "Оформить заказ"
     document.getElementById('checkoutButton').addEventListener('click', function() {
@@ -244,6 +264,8 @@ function getCookie(name) {
 
     modal1.style.display = 'none';
     modal2.style.display = 'none';
+    successModal.style.display = 'none';
+
     // Обработчик события для кнопки "Оформить заказ"
     var radioCartButton = document.getElementById('checkoutButton');
     radioCartButton.addEventListener('click', function() {

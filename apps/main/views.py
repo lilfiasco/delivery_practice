@@ -1,5 +1,3 @@
-from typing import Any, Optional
-from django.db.models.query import QuerySet
 from django.forms.models import BaseModelForm
 from django.http import HttpResponseRedirect
 from django.db import models
@@ -18,7 +16,6 @@ from django.views.generic import (
     DetailView,
     UpdateView
 )
-from django.core.paginator import Paginator, EmptyPage
 
 
 def get_base(request) -> HttpResponse:

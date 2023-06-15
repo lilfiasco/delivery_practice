@@ -125,6 +125,7 @@ h2 {
   border-radius: 0.25rem;
   margin-left: 20px;
   margin-top: 20px;
+  padding-bottom: 10px;
 }
 .ficon {
   color: white;
@@ -226,7 +227,7 @@ li .ftitle {
 .filter-menu {
   background-color: #383838;
   background-clip: border-box;
-  border-radius: 0.25rem;
+  border-radius: 1rem;
   margin-left: 20px;
   margin-top: 20px;
 }

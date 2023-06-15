@@ -35,6 +35,7 @@
             <!-- <a href="#">Рекомендации</a> -->
           {% if user.coworker.is_authenticated %}
             <a href="{% url 'franchise_detail' pk=user.coworker.franchise.pk %}">Франшиза</a>
+            <a href="#">Заказы</a>
           {% else %}
             <a href="/cart/">Корзина</a>
             <!-- <a href="/cart2/">Супер Корзина</a> -->

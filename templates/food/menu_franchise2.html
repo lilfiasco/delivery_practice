@@ -27,7 +27,11 @@
             <div class="column ml-5 mr-4">
                 <div class="form-outline">
                     <h3 class="category-title ml-5">{{ selected_category }}</h3>
-                    <input type="search" id="form1" class="search-food" placeholder="Type query" aria-label="Search"/>
+                    <!-- <input type="search" id="form1" class="search-food" placeholder="Type query" aria-label="Search"/> -->
+                    <form method="get" action="{% url 'menu_franchise' franchise_id=franchise.id %}">
+                        <input type="text" name="search" placeholder="Search..." value="{{ search_query }}">
+                        <button type="submit">Search</button>
+                    </form>
                 </div>
                 <div class="row">
                     {% for food in food %}

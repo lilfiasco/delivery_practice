@@ -4,6 +4,7 @@ from django.contrib.auth.base_user import (
     AbstractBaseUser,
     BaseUserManager,
 )
+from django.utils import timezone
 from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import PermissionsMixin
@@ -171,6 +172,12 @@ class Order(models.Model):
         default=False,
         verbose_name='оплачено ли'
     )
+    datetime_created = models.DateTimeField(
+        auto_now=True,
+        # default=timezone.now(),
+        null=True,
+        verbose_name='время заказа'
+    )
 
     class Meta:
         ordering = [
@@ -201,10 +208,16 @@ class Purchase(models.Model):
     payment = models.IntegerField(
         default=PaymentTypes.CASH, choices=PaymentTypes.choices
     )
+    card_number = models.CharField(
+        max_length=16,
+        null=True,
+        verbose_name='номер карты'
+    )
     address = models.CharField(
         max_length=255,
         verbose_name='адрес доставки'
     )
+
 
     class Meta:
         ordering = [

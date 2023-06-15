@@ -66,9 +66,9 @@
             <p id="totalPayment" class="from-modal">Всего к оплате:</p>
 
             {% if user.is_authenticated %}
-            <button id="checkoutButton" type="button" class="cart-button">1Оформить заказ</button>
+            <button id="checkoutButton" type="button" class="cart-button">Оформить заказ</button>
             {% else %}
-            <button type="button" class="cart-button"><a href="{% url 'login' %}" class="data-toggle-a">2Оформить заказ</a></button>
+            <button type="button" class="cart-button"><a href="{% url 'login' %}" class="data-toggle-a">Оформить заказ</a></button>
             {% endif%}
 
             <div class='hiddenElement' id="hiddenElement">
@@ -82,7 +82,7 @@
                     <label for="cash">Оплата при получении</label>
                 </div>
 
-                <button type="button" class="cart-button" id="openModal">3Оформить заказ</button>
+                <button type="button" class="cart-button" id="openModal">Оформить заказ</button>
             </div>
             <!-- Modal-card -->
             <div id="modal1" class="modal">
@@ -98,7 +98,7 @@
                                 <label for="address">Адрес</label>
                                 <input type="text" class="form-control" id="address" name="address" required>
                             </div>
-                            <button type="button" class="cart-button" id="purchase-button">959Заказать</button>
+                            <button type="button" class="cart-button" id="purchase-button">Заказать</button>
                         </form>
                 </div>
             </div>
