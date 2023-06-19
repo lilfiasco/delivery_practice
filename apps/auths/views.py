@@ -318,17 +318,21 @@ class PurchaseCreateApiView(generics.CreateAPIView):
 
     queryset = models.Purchase.objects.all()
     serializer_class = PurchaseSerializer
-
     def perform_create(self, serializer):
         user = self.request.user
         order_data = models.Order.objects.filter(user=user, is_done=False).values()
         payment = self.request.data.get('payment', models.PaymentTypes.CASH)
         address = self.request.data.get('address', '')
+        franchise_id = self.request.data.get("franchise")
+
+        # Retrieve the Franchise instance
+        franchise = models.Franchise.objects.get(id=franchise_id)
 
         purchase_data = {
             'order': list(order_data),
             'payment': payment,
-            'address': address
+            'address': address,
+            'franchise': franchise,
         }
 
         # Convert datetime objects to ISO 8601 string format
@@ -339,6 +343,28 @@ class PurchaseCreateApiView(generics.CreateAPIView):
 
         models.Order.objects.filter(user=user).update(is_done=True)
 
+#     def perform_create(self, serializer):
+#         user = self.request.user
+#         order_data = models.Order.objects.filter(user=user, is_done=False).values()
+#         payment = self.request.data.get('payment', models.PaymentTypes.CASH)
+#         address = self.request.data.get('address', '')
+#         franchise = self.request.data.get('franchise')
+#         purchase_data = {
+#     'order': list(order_data),
+#     'payment': payment,
+#     'address': address,
+#     'franchise': franchise,
+# }
+
+
+#         # Convert datetime objects to ISO 8601 string format
+#         for order in purchase_data['order']:
+#             order['datetime_created'] = order['datetime_created'].isoformat()
+
+#         serializer.save(**purchase_data)
+
+#         models.Order.objects.filter(user=user).update(is_done=True)
+
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -346,3 +372,6 @@ class PurchaseCreateApiView(generics.CreateAPIView):
 
         headers = self.get_success_headers(serializer.data)
         return response.Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+
+

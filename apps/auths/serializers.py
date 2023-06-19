@@ -36,4 +36,4 @@ class PurchaseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Purchase
         # exclude = ('order', )
-        fields = ('payment', 'address',)
+        fields = ('payment', 'address','franchise')

@@ -91,6 +91,7 @@
                 <div class="modal-content">
                   <span class="close">&times;</span>
                   <h2 class="text-center">Мой заказ</h2>
+                  <p id="franchise"></p>
                   <form id="checkoutForm">
                     <div class="form-group">
                       <label for="cardNumber">Номер карты</label>
@@ -100,8 +101,7 @@
                       <label for="cardAddress">Адрес</label>
                       <input type="text" class="form-control" id="cardAddress" name="address" required>
                     </div>
-                    <button type="button" class="purchase-button">959Заказать</button>
-                    <button type="submit" class="cart-button">Оформить заказ</button>
+                    <button type="button" id="purchase-button" class="cart-button">Заказать</button>
                   </form>
                 </div>
               </div>
@@ -111,18 +111,18 @@
                 <div class="modal-content">
                   <span class="close">&times;</span>
                   <h2 class="text-center">Мой заказ</h2>
+                  <p id="franchise"></p>
                   <form id="checkoutForm">
                     <div class="form-group">
                       <label for="cashAddress">Адрес</label>
                       <input type="text" class="form-control" id="cashAddress" name="address" required>
                     </div>
-                    <button type="button" class="purchase-button">Заказать</button>
-                    <button type="submit" class="cart-button">Оформить заказ</button>
+                    <button type="button" id="purchase-btn" class="cart-button">Заказать</button>
                   </form>
                 </div>
               </div>
             <!-- Modal-success -->
-            <div id="successModal" class="modal">
+            <div id="successModal2" class="modal">
                 <div class="modal-content">
                     <span class="close">&times;</span>
                         <h2 class="text-center">Мой заказ</h2>
@@ -134,8 +134,24 @@
                                 <label for="address">Адрес</label>
                                 <input type="text" class="form-control" id="address" name="address" required>
                             </div>
-                            <button type="button" id="purchase-button">Заказать</button>
-                            <button type="submit" class="cart-button" id="cash-pay">Заказать</button>
+                            <!-- <button type="submit" class="cart-button" id="cash-pay">Заказать</button> -->
+                        </form>
+                </div>
+            </div>
+            <!-- Modal-success -->
+            <div id="successModal1" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                        <h2 class="text-center">Мой заказ</h2>
+                        <form id="checkoutForm">
+                            <div class="form-group">
+                                <label for="cardNumber">Способ оплаты: При получении</label>
+                            </div>
+                            <div class="form-group">
+                                <label for="address">Адрес</label>
+                                <input type="text" class="form-control" id="address" name="address" required>
+                            </div>
+                            <!-- <button type="submit" class="cart-button" id="cash-pay">Заказать</button> -->
                         </form>
                 </div>
             </div>
@@ -145,8 +161,7 @@
 
 <script src="/static/js/purchase_modal.js"></script>
 
-
-<script>
+<!-- <script>
     const purchaseButtons = document.getElementsByClassName('purchase-button');
     
     // Loop through each purchase button and add click event listeners
@@ -207,7 +222,7 @@
       const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
       return cookieValue ? cookieValue.pop() : '';
     }
-    </script>
+    </script> -->
     
 <script>
     // Обработчик события для кнопки "Оформить заказ"
@@ -273,6 +288,19 @@
         }
         });
     });
+    // Retrieve the stored franchiseId and franchiseTitle from localStorage
+var storedFranchiseId = localStorage.getItem('franchiseId');
+var storedFranchiseTitle = localStorage.getItem('franchiseTitle');
+
+// Check if the values exist
+if (storedFranchiseId !== null && storedFranchiseTitle !== null) {
+  // Use the values as needed
+  console.log('Franchise ID:', storedFranchiseId);
+  console.log('Franchise Title:', storedFranchiseTitle);
+} else {
+  // The values don't exist in localStorage
+  console.log('Franchise ID or Franchise Title not found in localStorage');
+}
 </script>
 
 <script>
@@ -282,7 +310,8 @@
 
     modal1.style.display = 'none';
     modal2.style.display = 'none';
-    successModal.style.display = 'none';
+    successModal1.style.display = 'none';
+    successModal2.style.display = 'none';
 
     // Обработчик события для кнопки "Оформить заказ"
     var radioCartButton = document.getElementById('checkoutButton');
@@ -459,10 +488,6 @@ document.querySelector(".close").addEventListener("click", function() {
                 quantityElement.textContent = quantity;
                 quantityElement.id = "quantity-" + key;
                 quantityElement.classList.add("row-item-quantity");
-                quantityElement.classList.add("square-border");
-
-                // Добавляем стиль box-sizing: border-box;
-                quantityElement.style.boxSizing = "border-box";
 
                 var decreaseButton = document.createElement("button");
                 decreaseButton.textContent = "-";

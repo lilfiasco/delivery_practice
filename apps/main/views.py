@@ -1,12 +1,12 @@
 from django.forms.models import BaseModelForm
 from django.http import HttpResponseRedirect
 from django.db import models
-from django.shortcuts import render,  get_object_or_404
+from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse_lazy
 from main import forms, models
-from auths import forms as a_forms, models as a_models
+from auths import models as a_models
 from django.db.models import Count, Q
 from django.views.generic import (
     TemplateView,
@@ -329,9 +329,65 @@ class FoodDetailView(View):
         return render(request, 'food/food_detail.html', {"food": food})
     
 
-# def cart_view(request):
-#     return render(request, 'food/cart.html')
 
-# def cart_view2(request):
-#     return render(request, 'food/cart2.html')
 
+
+# class FranchiseOrdersListView(ListView):
+#     model = a_models.Purchase
+#     template_name = 'food/franchise_purchase.html'
+#     context_object_name = 'purchases'
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         franchise_id = self.kwargs['franchise_id']
+#         purchases = a_models.Purchase.objects.filter(franchise_id=franchise_id)
+#         context['purchases'] = purchases
+
+#         # Get the food titles and images for the corresponding food IDs
+#         food_data = models.Food.objects.filter(franchise_id=franchise_id).values('id', 'title', 'image')
+#         food_dict = {food['id']: {'title': food['title'], 'image': food['image']} for food in food_data}
+
+#         # Preprocess the order items to include food titles and images
+#         for purchase in purchases:
+#             order_items = purchase.order
+#             for item in order_items:
+#                 food_id = item['food_id']
+#                 food_info = food_dict.get(food_id)
+#                 if food_info:
+#                     item['food_title'] = food_info['title']
+#                     item['food_image'] = food_info['image']
+
+#         return context
+
+
+
+class FranchiseOrdersListView(ListView):
+    model = a_models.Purchase
+    template_name = 'food/franchise_purchase.html'
+    context_object_name = 'purchases'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        franchise_id = self.kwargs['franchise_id']
+        purchases = a_models.Purchase.objects.filter(franchise_id=franchise_id)
+        context['purchases'] = purchases
+
+        # Get the food titles and images for the corresponding food IDs
+        food_data = models.Food.objects.filter(franchise_id=franchise_id).values('id', 'title', 'image')
+        food_dict = {food['id']: {'title': food['title'], 'image': food['image']} for food in food_data}
+
+        # Preprocess the order items to include food titles and images
+        for purchase in purchases:
+            order_items = purchase.order
+            total_price = 0  # Initialize total price for each purchase
+            for item in order_items:
+                food_id = item['food_id']
+                food_info = food_dict.get(food_id)
+                if food_info:
+                    item['food_title'] = food_info['title']
+                    item['food_image'] = food_info['image']
+                    total_price += item['total_price']  # Accumulate total price
+
+            purchase.total_price = total_price  # Add total price to purchase object
+
+        return context

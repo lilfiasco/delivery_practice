@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<style>
+    body {
+        color: white; /* Set text color to white */
+    }
+
+    .purchase {
+        background: linear-gradient(to right, #ff66cc, #9966ff); /* Set gradient background */
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    .purchase img {
+        float: left;
+        margin-right: 10px;
+        width: 150px;
+        height: 75px;
+    }
+</style>
+
+<h1>Purchases for Franchise {{ franchise_id }}</h1>
+<ul>
+    {% for purchase in purchases %}
+        <li class="purchase">
+            <p>Order:</p>
+            <ul>
+                {% with total_price=0 %}
+                    <p>Payment: {{ purchase.get_payment_display }}</p>
+                    <p>Address: {{ purchase.address }}</p>
+                    <p>Total Order Price: {{ purchase.total_price }}</p>
+                    {% for order_item in purchase.order %}
+                        {% with food_title=order_item.food_title %}
+                            {% if food_title %}
+                                <img src="/media/{{ order_item.food_image }}" alt="{{ food_title }}">
+                                <p>Food Title: {{ food_title }}</p>
+                                <p>Price: {{ order_item.price }}</p>
+                                <p>Quantity: {{ order_item.quantity }}</p>
+                                
+                            {% endif %}
+                        {% endwith %}
+                        {% with total_price=total_price|add:order_item.total_price %}
+                        {% endwith %}
+                    {% endfor %}
+                {% endwith %}
+            </ul>
+        </li>
+    {% empty %}
+        <li>No purchases available</li>
+    {% endfor %}
+</ul>
+{% endblock %}

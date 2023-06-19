@@ -18,8 +18,9 @@ $(document).ready(() => {
 
     $("#purchase-button").click((event) => {
         let cardNumber = $("#cardNumber").val();
-        let address = $("#address").val();
+        let address = $("#cardAddress").val();
         let csrfToken = getCookie('csrftoken');
+        let storedFranchiseId = parseInt(localStorage.getItem('franchiseId')); 
         let payment = 2;
 
         $.ajax({
@@ -31,12 +32,15 @@ $(document).ready(() => {
                 cardNumber: cardNumber,
                 address: address,
                 payment: payment,
+                franchise: storedFranchiseId,
             }),
             headers: {
                 'X-CSRFToken': csrfToken
             },
             success: (response) => {
-                alert("ну работает");
+                debugger
+                $('#modal1').modal('hide');
+                $('#successModal1').modal();
             },
             error: (error) => {
                 alert('Не добавлена');
@@ -44,11 +48,11 @@ $(document).ready(() => {
         });
     });
 
-    $("#purchase-button").click((event) => {
-        let address = $("#address").val();
+    $("#purchase-btn").click((event) => {
+        let address = $("#cashAddress").val();
         let csrfToken = getCookie('csrftoken');
-        debugger
-        let payment = 2;
+        let storedFranchiseId = parseInt(localStorage.getItem('franchiseId'));  
+        let payment = 1;
 
         $.ajax({
             url: '/purchase/',
@@ -58,18 +62,21 @@ $(document).ready(() => {
             data: JSON.stringify({
                 address: address,
                 payment: payment,
+                franchise: storedFranchiseId,
             }),
             headers: {
                 'X-CSRFToken': csrfToken
             },
             success: (response) => {
-                debugger;
-                alert("ну работает");
+                debugger
+                $('#modal2').modal('hide');
+                $('#successModal2').modal();
             },
             error: (error) => {
-                debugger;
+                debugger
                 alert('Не добавлена');
             }
         });
     });
+
 });

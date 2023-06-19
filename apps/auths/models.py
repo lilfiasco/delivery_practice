@@ -219,7 +219,13 @@ class Purchase(models.Model):
         max_length=255,
         verbose_name='адрес доставки'
     )
-
+    franchise = models.ForeignKey(
+        Franchise,
+        on_delete=models.CASCADE,
+        verbose_name="франшиза",
+        default=None,  # Replace None with the desired default value
+        null=True,
+        )
 
     class Meta:
         ordering = [
