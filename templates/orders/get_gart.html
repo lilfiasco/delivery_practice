@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <!-- Здесь можно разместить содержимое страницы -->
+  {% csrf_token %}
+
+  <h1>Корзина</h1>
+  <!-- Вывод информации о франшизе, если необходимо -->
+  <h2>Франшиза: {{ franchise.title }}</h2>
+  <!-- Вывод рекомендуемых блюд -->
+
+  <h3>Рекомендуемые блюда:</h3>
+  <ul id="recommended-food-list">
+    {% for food in recommended_food %}
+      <li>
+        <h4>{{ food.title }}</h4>
+        <p>Цена: {{ food.price }}</p>
+        <p>Количество: {{ food.quantity }}</p>
+        <img src="{{ food.image }}" alt="Изображение блюда">
+      </li>
+    {% empty %}
+      <li>No recommended food found.</li>
+    {% endfor %}
+  </ul>
+
+  <!-- Pagination links -->
+  <div class="pagination">
+    {% if is_paginated %}
+      {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+      {% else %}
+        <span class="disabled">Previous</span>
+      {% endif %}
+
+      <span class="current-page">{{ page_obj.number }}</span>
+      <span class="total-pages">of {{ page_obj.paginator.num_pages }}</span>
+
+      {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Next</a>
+      {% else %}
+        <span class="disabled">Next</span>
+      {% endif %}
+    {% endif %}
+  </div>
+
+  <!-- Place the script here -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+          var cookies = document.cookie.split(';');
+          for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+            }
+          }
+        }
+        return cookieValue;
+      }
+
+      function updateRecommendations(page) {
+        var cartData = localStorage.getItem('cart');
+        var formData = new FormData();
+        formData.append('cartData', cartData);
+        formData.append('page', page);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/get_recomendation/', true);
+        xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));
+        xhr.onload = function() {
+          if (xhr.status === 200) {
+            // Handle successful response
+            var response = JSON.parse(xhr.response);
+            console.log(response);
+
+            // Update the HTML to display recommended food
+            var recommendedFoodList = document.getElementById('recommended-food-list');
+            recommendedFoodList.innerHTML = ''; // Clear previous items
+
+            if (response.recommended_food.length > 0) {
+              response.recommended_food.forEach(function(food) {
+                var listItem = document.createElement('li');
+                listItem.innerHTML = `
+                  <h4>${food.title}</h4>
+                  <p>Цена: ${food.price}</p>
+                  <p>Количество: ${food.quantity}</p>
+                  <img src="${food.image}" alt="Изображение блюда">
+                `;
+                recommendedFoodList.appendChild(listItem);
+              });
+            } else {
+              var noFoodItem = document.createElement('li');
+              noFoodItem.textContent = 'No recommended food found.';
+              recommendedFoodList.appendChild(noFoodItem);
+            }
+
+            // Update pagination links
+            var pagination = document.getElementsByClassName('pagination')[0];
+            pagination.innerHTML = ''; // Clear previous pagination links
+
+            if (response.page_obj.has_previous) {
+              var previousLink = document.createElement('a');
+              previousLink.href = "javascript:void(0);";
+              previousLink.textContent = 'Previous';
+              previousLink.addEventListener('click', function() {
+                updateRecommendations(response.page_obj.previous_page_number);
+              });
+              pagination.appendChild(previousLink);
+            }
+
+            var currentPage = document.createElement('span');
+            currentPage.className = 'current-page';
+            currentPage.textContent = response.page_obj.number;
+            pagination.appendChild(currentPage);
+
+            var totalPage = document.createElement('span');
+            totalPage.className = 'total-pages';
+            totalPage.textContent = 'of ' + response.page_obj.paginator.num_pages;
+            pagination.appendChild(totalPage);
+
+            if (response.page_obj.has_next) {
+              var nextLink = document.createElement('a');
+              nextLink.href = "javascript:void(0);";
+              nextLink.textContent = 'Next';
+              nextLink.addEventListener('click', function() {
+                updateRecommendations(response.page_obj.next_page_number);
+              });
+              pagination.appendChild(nextLink);
+            }
+          } else {
+            // Handle error
+            console.log('An error occurred during the request.');
+          }
+        };
+        xhr.send(formData);
+      }
+
+      // Initial recommendations load
+      updateRecommendations(1);
+    });
+  </script>
+{% endblock %}

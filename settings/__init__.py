@@ -1,7 +1,7 @@
-# Local
-from .celery import app as celery_app
+# # Local
+# from .celery import app as celery_app
 
 
-__all__ = ('celery_app',)
+# __all__ = ('celery_app',)
 
 

@@ -1,5 +1,5 @@
 from django.forms.models import BaseModelForm
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect,JsonResponse
 from django.db import models
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -7,6 +7,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse_lazy
 from main import forms, models
 from auths import models as a_models
+import json
 from django.db.models import Count, Q
 from django.views.generic import (
     TemplateView,
@@ -16,6 +17,65 @@ from django.views.generic import (
     DetailView,
     UpdateView
 )
+from django.core import serializers
+from django.core.paginator import Paginator
+from django.shortcuts import render
+from django.http import HttpResponse
+import json
+
+from django.core import serializers
+
+from django.views.generic import ListView
+from rest_framework.views import APIView
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.pagination import PageNumberPagination
+import json
+import random
+
+class RecommendationView(View):
+    def get(self, request):
+        return render(request, 'orders/get_gart.html')
+    def post(self, request):
+        cart_data = request.POST.get('cartData')
+        cart_data = json.loads(cart_data)  # Convert JSON string to Python object
+        food_ids = cart_data.keys()
+        franchise_id = models.Food.objects.filter(id__in=food_ids).values_list('franchise_id', flat=True).first()
+        cluster_ids = models.Food.objects.filter(id__in=food_ids).values_list('cluster', flat=True).distinct()
+        recommended_food = models.Food.objects.filter(
+            franchise_id=franchise_id,
+            cluster__in=cluster_ids,
+        ).exclude(id__in=food_ids)
+        recommended_food = list(recommended_food)
+        random.shuffle(recommended_food)
+        paginator = Paginator(recommended_food, 6)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        recommended_food_data = []
+        for food in page_obj:
+            food_data = {
+                'id': food.id,
+                'title': food.title,
+                'price': food.price,
+                'quantity': food.quantity,
+                'image': food.image.url,
+            }
+            recommended_food_data.append(food_data)
+        context = {
+            'recommended_food': recommended_food_data,
+            'page_obj': {
+                'number': page_obj.number,
+                'paginator': {
+                    'num_pages': page_obj.paginator.num_pages
+                }
+            }
+        }
+        response_data = json.dumps(context)
+        return HttpResponse(response_data, content_type='application/json')
 
 
 def get_base(request) -> HttpResponse:
@@ -38,37 +98,7 @@ def get_cart(request):
     print(franchise_id)
     franchise = models.Franchise.objects.filter(id=franchise_id).first()
     return render(request, 'orders/cart.html', {'franchise': franchise})
-# def get_cart(request):
-#     franchise_id = request.META.get('HTTP_X_FRANCHISE_ID')
-#     print(franchise_id)
-#     franchise = models.Franchise.objects.filter(id=franchise_id)
-#     return render(request, 'orders/cart.html', context={'franchise': franchise})  
-# def get_cart(request):
-#     franchise = models.Franchise.objects.all()
-#     franchise_id = request.META.get('HTTP_X_FRANCHISE_ID')
 
-#     print(request.META)  # Print the request headers
-
-#     context = {
-#         'franchise': franchise,
-#         'franchiseId': franchise_id
-#     }
-
-#     return render(request, 'orders/cart.html', context=context)
-
-# def get_cart(request) -> HttpResponse:
-#     franchise = models.Franchise.objects.all()
-#     franchise_id = request.GET.get('franchiseId')
-
-#     # Process the franchiseId value as needed
-#     # ...
-
-#     context = {
-#         'franchise': franchise,
-#         'franchiseId': franchise_id
-#     }
-
-#     return render(request, 'orders/cart.html', context=context)
 
 
 def get_cart2(request) -> HttpResponse:
@@ -113,26 +143,6 @@ class FranchiseListView(ListView):
     paginate_by = 6
 
 
-
-
-# class MenuView(TemplateView):
-#     template_name = 'food/menu.html'
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         category_title = self.request.GET.get('category')
-#         food = models.Food.objects.all()
-
-#         if category_title:
-#             food = food.filter(category__title=category_title)
-
-#         categories = models.Category.objects.all()
-#         context['food'] = food
-#         context['categories'] = categories
-#         context['selected_category'] = category_title  # Pass selected category to template
-#         return context
-
-
 class MenuView(TemplateView):
     template_name = 'food/menu.html'
 
@@ -147,7 +157,7 @@ class MenuView(TemplateView):
         categories = models.Category.objects.annotate(food_count=Count('food')).filter(food_count__gt=0)
         context['food'] = food
         context['categories'] = categories
-        context['selected_category'] = category_title  # Pass selected category to template
+        context['selected_category'] = category_title  
         return context
 
 
@@ -238,33 +248,6 @@ class MenuFranchiseView(ListView):
         return context    
     
 class MenuFranchiseView2(ListView):
-    # model = models.Food
-    # template_name = 'food/menu_franchise2.html'
-    # context_object_name = 'food'
-
-    # def get_queryset(self):
-    #     queryset = super().get_queryset()
-
-    #     franchise_id = self.kwargs.get('franchise_id')
-    #     franchise = get_object_or_404(models.Franchise, id=franchise_id)
-        
-    #     category = self.request.GET.get('category')
-    #     if category:
-    #         queryset = queryset.filter(category__title=category)
-        
-    #     return queryset.filter(franchise=franchise)
-
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-
-    #     franchise_id = self.kwargs.get('franchise_id')
-    #     franchise = get_object_or_404(models.Franchise, id=franchise_id)
-    #     context['franchise'] = franchise
-    #     context['selected_category'] = self.request.GET.get('category')
-    #     non_empty_categories = models.Category.objects.filter(food__franchise=franchise).annotate(food_count=Count('food')).filter(food_count__gt=0)
-    #     context['non_empty_categories'] = non_empty_categories
-
-    #     return context
     template_name = 'food/menu_franchise2.html'
     context_object_name = 'categories'
 
@@ -391,3 +374,6 @@ class FranchiseOrdersListView(ListView):
             purchase.total_price = total_price  # Add total price to purchase object
 
         return context
+
+
+

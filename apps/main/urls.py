@@ -16,6 +16,8 @@ from apps.main.views import(
     FranchiseListView,
     MenuFranchiseView,
     MenuFranchiseView2,
+    # get_recomendation,
+    RecommendationView,
 
     )
 
@@ -42,8 +44,11 @@ urlpatterns = [
     path('franchise/<int:franchise_id>/',MenuFranchiseView2.as_view(), name='menu_franchise'),
     path('/franchise/<int:pk>/edit', FranchiseDetailView.as_view(), name='franchise_detail'),
     path("franchise_orders/<int:franchise_id>/", FranchiseOrdersListView.as_view(), name="franchise_orders"),
-    path('<slug:slug>/', FoodDetailView.as_view(),name="food_slug" ),
-    
+    # path('<slug:slug>/', FoodDetailView.as_view(),name="food_slug" ),
+    # path('get_recomendation/', get_recomendation, name='get_recomendation'),
+   
+    path('get_recomendation/', RecommendationView.as_view(), name='get_recomendation'),
+
     # Коворкер редачит
     path('franchise/<int:pk>/<slug:slug>/', FranchiseFoodEditView.as_view(),name="food_edit" ),
 
